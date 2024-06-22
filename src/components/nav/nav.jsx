@@ -38,11 +38,11 @@ function Navbar() {
 </Link>
 </div>
   <div className="link-container">
-<Link to="https://pakcyberbot.github.io/CTF-Writeups/">
+  <a href="https://pakcyberbot.github.io/CTF-Writeups/">
     <GiBookCover   className="icon" />
   
 <span className="hover-text">CTF Writeups</span>
-</Link>
+</a>
 </div>
 
 <div className="link-container">

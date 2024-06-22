@@ -26,5 +26,13 @@
     display: block; /* Display the hover text when the container is hovered */
   }
 }
+@media (max-width: 500px) {
 
+.link-container:hover .hover-text {
+  display: None; /* Display the hover text when the container is hovered */
+}
+.hover-text {
+  display: none;
+}
+}
 

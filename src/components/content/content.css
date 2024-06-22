@@ -1,0 +1,294 @@
+
+.contentlist:hover{
+  color: rgb(43, 235, 187);
+}
+.contentlist:active{
+  color: rgb(4, 137, 64);
+}
+li:has(.contentlist) {
+  margin: 5px 0px;
+}
+
+.latestcontents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.content-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  min-height: 80vh;
+  margin-top: 100px;
+  padding: 50px;
+}
+
+.content-container h1 {
+  margin: 0 auto;
+  font-size: 22px;
+  font-family: 'Open Sans Condensed';
+  font-weight: 400;
+  color: var(--color-pri);
+}
+
+.content-container .content-links {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.content-container .content {
+  position: inherit;
+  /* height: 450px; */
+  width: 30%;
+  background-color: rgba(0, 0, 0, 0.322);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 30px;
+  margin-right: 30px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.content-container .content:hover {
+  background-color: rgba(255, 255, 255, 0.096);
+  transform: scale(1.1);
+}
+
+.content-container .content .icon {
+  position: relative;
+  font-size: 130px;
+}
+
+.content-container .content h2 {
+  position: relative;
+  margin-top: 15px;
+  font-size: 21px;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  text-transform: capitalize;
+  font-family: 'Open Sans';
+  text-align: center;
+}
+
+.content-container .content h2 span {
+  font-size: 13px;
+  font-weight: 100;
+  margin-top: 3px;
+  color: rgb(202, 202, 202);
+}
+
+@media (max-width: 1200px) {
+  .content-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-height: 80vh;
+    margin-top: 100px;
+    padding: 10px;
+  }
+
+  .content-container h1 {
+    margin: 0 auto;
+    font-size: 40px;
+    font-family: 'Open Sans Condensed';
+    font-weight: 400;
+    color: var(--color-pri);
+  }
+
+  .content-container .content-links {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-top: 30px;
+  }
+
+  .content-container .content {
+    position: inherit;
+    width: 80%;
+    background-color: rgba(0, 0, 0, 0.322);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 25px;
+    backdrop-filter: blur(20px);
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  .content-container .content .icon {
+    position: relative;
+    font-size: 200px;
+  }
+
+  .content-container .content h2 {
+    position: relative;
+    margin-top: 15px;
+    font-size: 30px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    text-transform: capitalize;
+    font-family: 'Open Sans';
+    text-align: center;
+  }
+
+  .content-container .content h2 span {
+    font-size: 25px;
+    font-weight: 100;
+    margin-top: 3px;
+    color: rgb(202, 202, 202);
+  }
+}
+
+@media (max-width: 500px) {
+  .content-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-height: 80vh;
+    margin-top: 100px;
+    padding: 50px;
+  }
+
+  .content-container h1 {
+    margin: 0 auto;
+    font-size: 20px;
+    font-family: 'Open Sans Condensed';
+    font-weight: 400;
+    color: var(--color-pri);
+  }
+
+  .content-container .content-links {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-top: 30px;
+  }
+
+  .content-container .content {
+    position: inherit;
+    width: 95%;
+    background-color: rgba(0, 0, 0, 0.322);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 25px;
+    backdrop-filter: blur(20px);
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  .content-container .content .icon {
+    position: relative;
+    font-size: 130px;
+  }
+
+  .content-container .content h2 {
+    position: relative;
+    margin-top: 15px;
+    font-size: 21px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    text-transform: capitalize;
+    font-family: 'Open Sans';
+    text-align: center;
+  }
+
+  .content-container .content h2 span {
+    font-size: 13px;
+    font-weight: 100;
+    margin-top: 3px;
+    color: rgb(202, 202, 202);
+  }
+}
+
+@media (max-width: 420px) {
+  .content-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-height: 80vh;
+    margin-top: 70px;
+    padding: 30px;
+  }
+
+  .content-container h1 {
+    margin: 0 auto;
+    font-size: 25px;
+    font-family: 'Open Sans Condensed';
+    font-weight: 400;
+    color: var(--color-pri);
+  }
+
+  .content-container .content-links {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-top: 30px;
+  }
+
+  .content-container .content {
+    position: inherit;
+    width: 95%;
+    background-color: rgba(0, 0, 0, 0.322);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 25px;
+    backdrop-filter: blur(20px);
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  .content-container .content .icon {
+    position: relative;
+    font-size: 150px;
+  }
+
+  .content-container .content h2 {
+    position: relative;
+    margin-top: 15px;
+    font-size: 25px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    text-transform: capitalize;
+    font-family: 'Open Sans';
+    text-align: center;
+  }
+
+  .content-container .content h2 span {
+    font-size: 15px;
+    font-weight: 100;
+    margin-top: 3px;
+    color: rgb(202, 202, 202);
+  }
+}

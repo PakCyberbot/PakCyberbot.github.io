@@ -44,12 +44,12 @@ function Home() {
         <img src={img} alt='' />
       </div>
 
-      <a href='https://github.com/PakCyberbot/PakCyberbot/blob/main/assets/vid.gif' target='_blank' className='scroll-down'>
+      {/* <a href='https://github.com/PakCyberbot/PakCyberbot/blob/main/assets/vid.gif' target='_blank' className='scroll-down'>
         <hr />
         <h5> ( T ³ )</h5>
         <BsFillCpuFill className='scroll' />
         <hr />
-      </a>
+      </a> */}
 
       <h2>
         <span>About Me</span> <br />

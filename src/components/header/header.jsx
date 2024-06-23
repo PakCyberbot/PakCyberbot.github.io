@@ -6,7 +6,7 @@ import { useTypewriter, Cursor } from 'react-simple-typewriter'
 
 function Header() {
   const [text] = useTypewriter({
-    words: ['Cybersecurity Enthusiast', 'Ethical Hacker', 'Programmer', 'Digital Investigator', "👇Click my image"],
+    words: ['Cybersecurity Enthusiast', 'Ethical Hacker', 'Programmer', 'Digital Investigator'],
     loop: {},
     typeSpeed: 50,
     typeSpeed: 100

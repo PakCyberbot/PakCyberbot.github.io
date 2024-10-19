@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.aa652c1b.css",
-    "main.js": "/static/js/main.8635a445.js",
+    "main.js": "/static/js/main.216aaa55.js",
     "static/media/Problem Solving Intermediate.png": "/static/media/Problem Solving Intermediate.7374855b2fc400f5e894.png",
     "static/media/Automate Boring Stuff using Python.png": "/static/media/Automate Boring Stuff using Python.3daadb6d2f97bf04eaf0.png",
     "static/media/HTB Cyber Apocalypse 2024.png": "/static/media/HTB Cyber Apocalypse 2024.3f918edab6b686745433.png",
@@ -35,7 +35,7 @@
     "static/media/Databases for developers(Foundation).png": "/static/media/Databases for developers(Foundation).4ff2e6890e82aa96fc90.png",
     "static/media/cyber_badge.png": "/static/media/cyber_badge.0827d9d1e420342f5ac2.png",
     "static/media/Advent Of Cyber 3 (THM).png": "/static/media/Advent Of Cyber 3 (THM).e72df3b73686783d9972.png",
-    "static/media/hacker2.png": "/static/media/hacker2.ac50cd0638f6a5173ae9.png",
+    "static/media/hacker2.png": "/static/media/hacker2.842b2902b8400512b44a.png",
     "static/media/tracelab_coach.png": "/static/media/tracelab_coach.ac5f1efa3d09ae1a5c3d.png",
     "static/media/digitalbadges.png": "/static/media/digitalbadges.d2cd2dc6e8a892977fb8.png",
     "static/media/Microsoft Csharp.png": "/static/media/Microsoft Csharp.288a4a0bb5684d088b9e.png",
@@ -56,10 +56,10 @@
     "static/media/thm.png": "/static/media/thm.3a777980def4abd42b54.png",
     "index.html": "/index.html",
     "main.aa652c1b.css.map": "/static/css/main.aa652c1b.css.map",
-    "main.8635a445.js.map": "/static/js/main.8635a445.js.map"
+    "main.216aaa55.js.map": "/static/js/main.216aaa55.js.map"
   },
   "entrypoints": [
     "static/css/main.aa652c1b.css",
-    "static/js/main.8635a445.js"
+    "static/js/main.216aaa55.js"
   ]
 }

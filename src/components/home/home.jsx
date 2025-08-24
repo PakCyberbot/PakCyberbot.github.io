@@ -1,7 +1,7 @@
 import './home.css';
 import img from '../props/hacker2.png';
 import React, { useState, useEffect } from 'react';
-import { FaGithub, FaLinkedin, FaTwitter, FaHackerrank, FaMicrosoft, FaGoogle, FaShieldAlt, FaTerminal, FaServer, FaLock, FaCode, FaSearch, FaUserSecret, FaFingerprint, FaExternalLinkAlt, FaArrowRight, FaBug, FaNetworkWired, FaClock } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaTwitter, FaHackerrank, FaMicrosoft, FaGoogle, FaShieldAlt, FaTerminal, FaServer, FaLock, FaCode, FaSearch, FaUserSecret, FaFingerprint, FaExternalLinkAlt, FaArrowRight, FaBug, FaNetworkWired, FaClock, FaTrophy } from 'react-icons/fa';
 import { SiTryhackme, SiHackthebox, SiHackernoon } from 'react-icons/si';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
@@ -91,33 +91,60 @@ const socialLinks = [
 ];
 
 function Home() {
-  const [ipInfo, setIpInfo] = useState(null);
-  const [connectionProgress, setConnectionProgress] = useState(0);
   const [activeCategory, setActiveCategory] = useState('all');
   const [hoveredCard, setHoveredCard] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-  useEffect(() => {
-    // Make an API request to get IP address and location information
-    axios.get('http://ip-api.com/json')
-      .then(response => {
-        setIpInfo(response.data);
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching IP info:', error);
-      });
-
-    // Simulate system status
-    const timer = setInterval(() => {
-      setConnectionProgress(prev => {
-        if (prev >= 100) return 100;
-        return prev + 10;
-      });
-    }, 100);
-
-    return () => clearInterval(timer);
-  }, []);
+  const achievements = [
+    {
+      title: "Google IT Support Professional",
+      issuer: "Google",
+      year: 2023,
+      description: "Completed comprehensive IT support training program covering troubleshooting, customer service, networking, operating systems, system administration, and security.",
+      icon: <FaGoogle className="achievement-icon" />,
+      color: "#4285F4"
+    },
+    {
+      title: "Microsoft Security Operations Analyst",
+      issuer: "Microsoft",
+      year: 2023,
+      description: "Certified in identifying, investigating, and responding to security threats using Microsoft Sentinel and Microsoft 365 Defender.",
+      icon: <FaMicrosoft className="achievement-icon" />,
+      color: "#00A4EF"
+    },
+    {
+      title: "Hack The Box Top 5%",
+      issuer: "Hack The Box",
+      year: 2023,
+      description: "Ranked in top 5% of all Hack The Box users, demonstrating advanced penetration testing and cybersecurity skills.",
+      icon: <SiHackthebox className="achievement-icon" />,
+      color: "#9FEF00"
+    },
+    {
+      title: "TryHackMe Top 1%",
+      issuer: "TryHackMe",
+      year: 2023,
+      description: "Achieved top 1% ranking on TryHackMe platform, completing numerous cybersecurity challenges and learning paths.",
+      icon: <SiTryhackme className="achievement-icon" />,
+      color: "#1DB954"
+    },
+    {
+      title: "Certified Ethical Hacker (CEH) Practical",
+      issuer: "EC-Council",
+      year: 2023,
+      description: "Demonstrated practical skills in ethical hacking through rigorous performance-based examination.",
+      icon: <FaUserSecret className="achievement-icon" />,
+      color: "#FF4B4B"
+    },
+    {
+      title: "Google Cybersecurity Professional",
+      issuer: "Google",
+      year: 2023,
+      description: "Completed comprehensive cybersecurity training program covering security operations, network security, and incident response.",
+      icon: <FaGoogle className="achievement-icon" />,
+      color: "#34A853"
+    }
+  ];
 
   const skills = [
     { name: 'Penetration Testing', icon: FaBug, level: 95, color: 'var(--color-pri)' },
@@ -225,66 +252,44 @@ function Home() {
           </div>
         </div>
 
-        {/* System Status Section */}
-        <div className="system-status-section">
-          <div className="connection-status">
-            <div className="status-header">
-              <FaServer className="status-icon" />
-              <h3>CONNECTION STATUS</h3>
-            </div>
-            
-            <div className="connection-details">
-              <div className="progress-container">
-                <div className="progress-bar">
-                  <div 
-                    className="progress-fill" 
-                    style={{ width: `${connectionProgress}%` }}
-                  ></div>
-                </div>
-                <span className="progress-text">{connectionProgress}%</span>
-              </div>
-              
-              <div className="status-indicators">
-                <div className="status-item">
-                  <span className="status-dot online"></span>
-                  <span>Authentication</span>
-                </div>
-                <div className="status-item">
-                  <span className="status-dot online"></span>
-                  <span>Encryption</span>
-                </div>
-                <div className="status-item">
-                  <span className="status-dot online"></span>
-                  <span>Firewall</span>
-                </div>
-              </div>
-            </div>
+        {/* Achievements Section */}
+        <motion.div 
+          className="achievements-section"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <div className="section-header">
+            <FaTrophy className="section-icon" />
+            <h2>ACHIEVEMENTS</h2>
           </div>
-
-          {ipInfo && (
-            <div className="network-info">
-              <div className="info-header">
-                <FaNetworkWired className="info-icon" />
-                <h3>NETWORK INFO</h3>
-              </div>
-              
-              <div className="info-details">
-                <div className="info-row">
-                  <span className="info-label">IP Address:</span>
-                  <span className="info-value">{ipInfo.query}</span>
+          
+          <div className="achievements-grid">
+            {achievements.map((achievement, index) => (
+              <motion.div 
+                key={index}
+                className="achievement-card"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                whileHover={{ y: -5, boxShadow: `0 10px 20px rgba(0,0,0,0.3)` }}
+              >
+                <div className="achievement-header" style={{ backgroundColor: `${achievement.color}20`, borderLeft: `4px solid ${achievement.color}` }}>
+                  <div className="achievement-icon-wrapper" style={{ backgroundColor: achievement.color }}>
+                    {achievement.icon}
+                  </div>
+                  <div className="achievement-title">
+                    <h3>{achievement.title}</h3>
+                    <div className="achievement-issuer">{achievement.issuer} • {achievement.year}</div>
+                  </div>
                 </div>
-                <div className="info-row">
-                  <span className="info-label">Location:</span>
-                  <span className="info-value">{ipInfo.city}, {ipInfo.country}</span>
+                <div className="achievement-body">
+                  <p>{achievement.description}</p>
                 </div>
-                <div className="info-row">
-                  <span className="info-label">Security:</span>
-                  <span className="status-badge online">SECURE</span>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
 
         {/* Enhanced Social Media Section */}
         <motion.section 

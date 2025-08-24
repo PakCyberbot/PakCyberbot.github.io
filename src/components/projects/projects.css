@@ -1,0 +1,340 @@
+:root {
+  --project-bg: rgba(10, 15, 25, 0.6);
+  --project-border: rgba(138, 240, 162, 0.1);
+  --project-hover-border: rgba(138, 240, 162, 0.3);
+  --project-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+  --project-hover-shadow: 0 20px 30px -15px rgba(138, 240, 162, 0.2);
+  --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.projects-section {
+  padding: 80px 0 100px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-header {
+  text-align: center;
+  margin: 0 auto 50px;
+  max-width: 100%;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.section-title {
+  font-size: 2.8rem;
+  color: var(--text-primary);
+  margin: 0;
+  font-weight: 800;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  width: 100%;
+  text-align: center;
+}
+
+.section-title .highlight {
+  color: var(--color-pri);
+  position: relative;
+  display: inline-block;
+}
+
+.section-subtitle {
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 15px auto 0;
+  opacity: 0.8;
+  font-weight: 400;
+  display: block;
+  padding: 0;
+  text-align: center;
+}
+
+@keyframes slide {
+  to { left: 100%; }
+}
+
+@keyframes shine {
+  to {
+    left: 100%;
+  }
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.project-card {
+  background: var(--project-bg);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: var(--transition);
+  border: 1px solid var(--project-border);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--project-shadow);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.project-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--project-hover-shadow);
+  border-color: var(--project-hover-border);
+}
+
+.project-image {
+  position: relative;
+  overflow: hidden;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+.project-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition);
+}
+
+.project-card:hover .project-image img {
+  transform: scale(1.05);
+}
+
+.project-links {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.project-card:hover .project-links {
+  opacity: 1;
+}
+
+.project-links a {
+  color: white;
+  font-size: 1.5rem;
+  transition: var(--transition);
+  background: var(--color-pri);
+  padding: 12px 24px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  min-width: 180px;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.9;
+}
+
+.project-links a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  opacity: 1;
+}
+
+.project-links .link-text {
+  font-size: 0.9rem;
+  margin-left: 5px;
+}
+
+.project-links a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(138, 240, 162, 0.4);
+}
+
+.project-content {
+  padding: 25px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: var(--text-primary);
+}
+
+.project-content p {
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.tag {
+  background: rgba(138, 240, 162, 0.1);
+  color: var(--color-pri);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.tag:hover {
+  background: var(--color-pri);
+  color: #0a0f19;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    margin-top: 30px;
+  }
+  
+  .section-header {
+    margin-bottom: 40px;
+  }
+  
+  .section-title {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .section-subtitle {
+    font-size: 1rem;
+    margin: 10px auto 0;
+    max-width: 90%;
+  }
+  
+  .project-content {
+    padding: 20px;
+  }
+  
+  .project-links {
+    opacity: 0.8;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    transition: opacity 0.3s ease;
+  }
+  
+  .project-links:hover {
+    opacity: 0.9;
+  }
+  
+  .project-links a {
+    min-width: 140px;
+    padding: 10px 15px;
+    font-size: 0.85rem;
+  }
+  
+  .project-links .link-text {
+    display: inline-block;
+  }
+}
+
+@media (max-width: 480px) {
+  .projects-section {
+    padding: 50px 0 70px;
+  }
+  
+  .section-header {
+    margin-bottom: 30px;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+  }
+  
+  .section-subtitle {
+    font-size: 0.95rem;
+    opacity: 0.9;
+  }
+  
+  .project-links {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    opacity: 1;
+  }
+  
+  .project-links a {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+    background: rgba(138, 240, 162, 0.9);
+    color: #0a0f19;
+    font-weight: 600;
+  }
+  
+  .project-links a:hover {
+    transform: translateY(-2px);
+    background: var(--color-pri);
+  }
+}
+
+@media (max-width: 480px) {
+  .projects-section {
+    padding: 60px 0;
+  }
+  
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+  }
+  
+  .project-content h3 {
+    font-size: 1.3rem;
+  }
+  
+  .project-content p {
+    font-size: 0.95rem;
+  }
+}

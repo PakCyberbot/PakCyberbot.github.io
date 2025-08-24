@@ -11,7 +11,7 @@ const navItems = [
   { path: '/', icon: <FaUserSecret />, label: 'Home' },
   { path: '/about', icon: <PiCertificateFill />, label: 'Certificates' },
   { path: '/content', icon: <PiChalkboardTeacherDuotone />, label: 'Content' },
-  { path: '/myprojects', icon: <FaTools />, label: 'Projects' },
+  { path: '/projects', icon: <FaTools />, label: 'Projects' },
 ];
 
 const externalLinks = [
@@ -23,7 +23,7 @@ const externalLinks = [
   { 
     url: 'https://www.linkedin.com/in/pakcyberbot/', 
     icon: <MdOutlineComputer />, 
-    label: 'Experience' 
+    label: 'LinkedIn' 
   },
 ];
 

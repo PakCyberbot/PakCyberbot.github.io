@@ -23,7 +23,7 @@ body {
   animation: move 1s linear infinite forwards;
   overflow-x: hidden;
   background-position: -300px center;
-  padding-top: 110px; /* Add padding to account for fixed header */
+  padding-top: 200px; /* Add padding to account for fixed header */
 }
 
 .main-content {

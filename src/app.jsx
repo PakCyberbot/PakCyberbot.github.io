@@ -6,7 +6,7 @@ import Home from "./components/home/home";
 import About from "./components/about/about";
 import Content from "./components/content/content";
 import Navbar from "./components/nav/nav";
-import Experience from "./components/experience/experience";
+import Projects from "./components/projects/Projects";
 import Footer from "./components/footer/footer";
 import PageTransition from './components/PageTransition/PageTransition';
 
@@ -27,9 +27,9 @@ const AnimatedRoutes = () => {
             <About />
           </PageTransition>
         } />
-        <Route path="/myprojects" element={
+        <Route path="/projects" element={
           <PageTransition>
-            <Experience />
+            <Projects />
           </PageTransition>
         } />
         <Route path="/content" element={

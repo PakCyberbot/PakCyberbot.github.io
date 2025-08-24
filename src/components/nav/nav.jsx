@@ -1,109 +1,183 @@
-import "./nav.css";
-import { PiCertificateFill } from "react-icons/pi"
-import { FaUserSecret } from "react-icons/fa6"
-import {PiChalkboardTeacherDuotone} from "react-icons/pi"
-import { Link } from "react-router-dom";
-import { MdOutlineComputer } from "react-icons/md";
-import { FaTools } from "react-icons/fa";
-import { GiBookCover } from "react-icons/gi";
-import { FaShieldAlt, FaNetworkWired, FaTerminal, FaRocket } from "react-icons/fa";
-import './LinkWithHover.css';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { FaUserSecret, FaTools, FaNetworkWired, FaChevronUp } from 'react-icons/fa';
+import { PiCertificateFill, PiChalkboardTeacherDuotone } from 'react-icons/pi';
+import { GiBookCover } from 'react-icons/gi';
+import { MdOutlineComputer } from 'react-icons/md';
+import { motion, AnimatePresence } from 'framer-motion';
+import './nav.css';
+
+const navItems = [
+  { path: '/', icon: <FaUserSecret />, label: 'Home' },
+  { path: '/about', icon: <PiCertificateFill />, label: 'Certificates' },
+  { path: '/content', icon: <PiChalkboardTeacherDuotone />, label: 'Content' },
+  { path: '/myprojects', icon: <FaTools />, label: 'Projects' },
+];
+
+const externalLinks = [
+  { 
+    url: 'https://pakcyberbot.github.io/CTF-Writeups/', 
+    icon: <GiBookCover />, 
+    label: 'CTF Writeups' 
+  },
+  { 
+    url: 'https://www.linkedin.com/in/pakcyberbot/', 
+    icon: <MdOutlineComputer />, 
+    label: 'Experience' 
+  },
+];
 
 function Navbar() {
+  const location = useLocation();
+  const [isHovered, setIsHovered] = useState(false);
+  const [transitioning, setTransitioning] = useState(false);
+  const [transitionText, setTransitionText] = useState('');
+  const [isExternalOpen, setIsExternalOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Handle scroll to hide/show nav
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleNavClick = (label) => {
+    setTransitioning(true);
+    setTransitionText(label);
+    
+    // Close external dropdown if open
+    if (isExternalOpen) {
+      setIsExternalOpen(false);
+    }
+    
+    // Reset after animation completes
+    setTimeout(() => {
+      setTransitioning(false);
+    }, 1000);
+  };
+  
+  const toggleExternalMenu = (e) => {
+    e.preventDefault();
+    setIsExternalOpen(!isExternalOpen);
+  };
+
   return (
-    <div className="navigation">
-      {/* Enhanced Navigation Header */}
-      <div className="nav-header">
-        <div className="nav-logo">
-          <FaShieldAlt className="nav-shield-icon" />
-          <div className="nav-title">
-            <span className="nav-main-title">PAK CYBERBOT</span>
-            <span className="nav-subtitle">SECURITY NAV</span>
-          </div>
-        </div>
-        <div className="nav-status">
-          <span className="nav-status-dot online"></span>
-          <span className="nav-status-text">SECURE</span>
-        </div>
-      </div>
-
-      {/* Navigation Links */}
-      <div className="nav-links">
-        <div className="link-container">
-          <Link to="/" className="nav-link">
-            <FaUserSecret className="icon active-nav" />
-            <span className="hover-text">Home</span>
-            <div className="link-glow"></div>
-          </Link>
-        </div>
-
-        <div className="link-container">
-          <Link to="/about" className="nav-link">
-            <PiCertificateFill className="icon" />
-            <span className="hover-text">Certificates & Skills</span>
-            <div className="link-glow"></div>
-          </Link>
-        </div>
-
-        <div className="link-container">
-          <Link to="/content" className="nav-link">
-            <PiChalkboardTeacherDuotone className="icon" />
-            <span className="hover-text">My Content</span>
-            <div className="link-glow"></div>
-          </Link>
-        </div>
-
-        <div className="link-container">
-          <Link to="/myprojects" className="nav-link">
-            <FaTools className="icon" />
-            <span className="hover-text">My Projects</span>
-            <div className="link-glow"></div>
-          </Link>
-        </div>
-
-        {/* External Links Section */}
-        <div className="external-links-section">
-          <div className="section-divider">
-            <FaNetworkWired className="divider-icon" />
-            <span>EXTERNAL</span>
-          </div>
-          
-          <div className="link-container">
-            <a href="https://pakcyberbot.github.io/CTF-Writeups/" className="nav-link external">
-              <GiBookCover className="icon" />
-              <span className="hover-text">CTF Writeups</span>
-              <div className="link-glow"></div>
-            </a>
-          </div>
-
-          <div className="link-container">
-            <a href="https://www.linkedin.com/in/pakcyberbot/" className="nav-link external">
-              <MdOutlineComputer className="icon" />
-              <span className="hover-text">Professional Experience</span>
-              <div className="link-glow"></div>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Navigation Footer */}
-      <div className="nav-footer">
-        <div className="nav-connection">
-          <FaTerminal className="connection-icon" />
-          <div className="connection-info">
-            <span className="connection-status">CONNECTED</span>
-            <div className="connection-bar">
-              <div className="connection-fill"></div>
+    <>
+      {/* Transition Overlay */}
+      <AnimatePresence>
+        {transitioning && (
+          <motion.div 
+            className="transition-overlay"
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '-100%' }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="transition-content">
+              <div className="transition-line"></div>
+              <div className="transition-text">{transitionText}</div>
+              <div className="transition-line"></div>
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Main Navigation */}
+      <motion.nav 
+        className={`bottom-nav ${isScrolled ? 'scrolled' : ''}`}
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ 
+          y: 0, 
+          opacity: 1,
+          boxShadow: isScrolled 
+            ? '0 10px 30px rgba(0, 0, 0, 0.5)'
+            : '0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(138, 240, 162, 0.1)'
+        }}
+        transition={{ 
+          y: { duration: 0.6, delay: 0.3, ease: 'easeOut' },
+          opacity: { duration: 0.8, ease: 'easeInOut' },
+          boxShadow: { duration: 0.3, ease: 'easeInOut' }
+        }}
+      >
+        <div className="nav-container">
+          {navItems.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={`nav-item ${location.pathname === item.path ? 'active' : ''}`}
+              onClick={() => handleNavClick(item.label)}
+            >
+              <div className="nav-icon">
+                {item.icon}
+              </div>
+              <span className="nav-label">{item.label}</span>
+            </Link>
+          ))}
+          
+          <div 
+            className={`nav-item external-toggle ${isExternalOpen ? 'active' : ''}`}
+            onClick={toggleExternalMenu}
+          >
+            <div className="nav-icon">
+              <motion.span
+                animate={{ rotate: isExternalOpen ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <FaNetworkWired />
+              </motion.span>
+            </div>
+            <span className="nav-label">More</span>
+            <motion.span 
+              className="chevron-icon"
+              animate={{ rotate: isExternalOpen ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <FaChevronUp size={12} />
+            </motion.span>
+            
+            <motion.div 
+              className="external-dropdown"
+              initial={false}
+              animate={{
+                height: isExternalOpen ? 'auto' : 0,
+                opacity: isExternalOpen ? 1 : 0,
+                pointerEvents: isExternalOpen ? 'auto' : 'none',
+              }}
+              transition={{ 
+                height: { duration: 0.3, ease: 'easeInOut' },
+                opacity: { duration: 0.2, ease: 'easeInOut' }
+              }}
+            >
+              {externalLinks.map((link, index) => (
+                <a
+                  key={index}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="external-link"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNavClick(link.label);
+                  }}
+                >
+                  <span className="external-icon">{link.icon}</span>
+                  {link.label}
+                </a>
+              ))}
+            </motion.div>
           </div>
         </div>
         
-        <div className="nav-version">
-          <FaRocket className="version-icon" />
-          <span className="version-text">v2.0</span>
+        <div className="nav-status">
+          <div className="status-indicator"></div>
+          <span>SECURE CONNECTION</span>
         </div>
-      </div>
-    </div>
+      </motion.nav>
+    </>
   );
 }
 

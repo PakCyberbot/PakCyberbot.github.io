@@ -45,21 +45,17 @@ function MyContentList({category}) {
   }, []);
 
   return (
-    <div className='latestcontents'>
-      {category == 'youtube' ? 
-        <h1>Latest YouTube Videos</h1>
-        :
-        <h1>Latest Medium Articles</h1>
-      }
-      <ul>
+    <div className='latest-contents'>
+      {category === 'youtube' && <h2>Latest Videos</h2>}
+      <div className='content-list'>
         {contentLinks.map((link, index) => (
-          <li key={index} >
-            <a href={link.url} target="_blank" rel="noopener noreferrer" className='contentlist'>
+          <div key={index} className='content-list-item'>
+            <a href={link.url} target="_blank" rel="noopener noreferrer">
               {link.title}
             </a>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

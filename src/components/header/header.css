@@ -1,16 +1,15 @@
-/* Modern Cyberpunk Header */
+/* Modern Header with Navigation */
 :root {
   --color-pri: #8af0a2;
   --color-sec: #00ffcc;
   --color-pri-light: rgba(138, 240, 162, 0.7);
-  --bg-dark: rgba(5, 5, 15, 0.95);
+  --bg-dark: rgba(10, 15, 25, 0.98);
+  --bg-dark-solid: #0a0f19;
   --text-light: #f0f0f0;
+  --text-muted: #8892b0;
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes scanline {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  --border-radius: 12px;
+  --nav-height: 80px;
 }
 
 @keyframes fadeIn {
@@ -18,180 +17,255 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes slideIn {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+
+/* Base Header Styles */
 .header-container {
-  position: sticky;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
   background: var(--bg-dark);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(138, 240, 162, 0.2);
-  padding: 1rem 0;
-  animation: fadeIn 0.6s ease-out;
-  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid rgba(138, 240, 162, 0.1);
+  height: var(--nav-height);
+  transition: var(--transition);
+  animation: slideIn 0.6s ease-out;
+}
+
+.header-container.scrolled {
+  height: 70px;
+  background: rgba(10, 15, 25, 0.95);
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(15px);
 }
 
 .header-content {
-  max-width: 1200px;
+  max-width: 1400px;
+  height: 100%;
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  gap: 1.5rem;
+  position: relative;
 }
 
 /* Identity Section */
 .identity-section {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  text-align: center;
-  position: relative;
-  padding: 1rem 0;
-}
-
-.avatar-container {
-  position: relative;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.avatar-glow {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--color-pri), transparent 70%);
-  opacity: 0.3;
-  animation: pulse 4s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 0.3; }
-  50% { transform: scale(1.1); opacity: 0.5; }
-}
-
-.avatar-icon {
-  font-size: 2rem;
-  color: var(--color-pri);
-  z-index: 2;
-  filter: drop-shadow(0 0 10px var(--color-pri));
-  transition: var(--transition);
+  gap: 1rem;
+  z-index: 1;
 }
 
 .identity-text {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.2rem;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .glitch {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
   font-size: 1.8rem;
   font-weight: 700;
   margin: 0;
   color: var(--color-pri);
-  text-shadow: 
-    0 0 10px var(--color-pri),
-    0 0 20px var(--color-pri);
-  letter-spacing: 2px;
-  position: relative;
-  line-height: 1;
+  background: linear-gradient(90deg, var(--color-pri), var(--color-sec));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
+  line-height: 1.1;
+  transition: var(--transition);
+}
+
+.typewriter-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .aka {
-  font-family: 'Share Tech Mono', monospace;
+  font-family: 'Fira Code', 'Share Tech Mono', monospace;
   font-size: 0.9rem;
   color: var(--color-sec);
   opacity: 0.9;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
-/* Typewriter Section */
-.typewriter-section {
-  text-align: center;
-  position: relative;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.prompt-line {
+/* Navigation */
+.desktop-nav {
   display: flex;
+  gap: 1.5rem;
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 0.3rem;
 }
 
-.terminal-icon {
+.nav-item {
+  position: relative;
+  background: none;
+  border: none;
+  color: var(--text-light);
+  font-family: 'Fira Code', 'Share Tech Mono', monospace;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  transition: var(--transition);
+  overflow: hidden;
+}
+
+.nav-text {
+  position: relative;
+  z-index: 1;
+  transition: var(--transition);
+}
+
+.nav-underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-pri), var(--color-sec));
+  transition: var(--transition);
+  border-radius: 2px;
+}
+
+.nav-item:hover .nav-underline,
+.nav-item.active .nav-underline {
+  width: 100%;
+}
+
+.nav-item:hover .nav-text,
+.nav-item.active .nav-text {
   color: var(--color-pri);
+  text-shadow: 0 0 10px rgba(138, 240, 162, 0.5);
+}
+
+/* Typewriter Effect */
+.typewriter-output {
+  font-family: 'Fira Code', 'Share Tech Mono', monospace;
+  color: var(--text-muted);
   font-size: 1rem;
-  animation: blink 1s infinite;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid var(--color-pri);
+  animation: blink 1s step-end infinite;
+  padding-right: 2px;
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  from, to { border-color: transparent; }
+  50% { border-color: var(--color-pri); }
 }
 
-.prompt-text {
-  font-family: 'Share Tech Mono', monospace;
-  color: var(--color-sec);
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-}
-
-.typewriter-output {
-  font-family: 'Share Tech Mono', monospace;
-  color: var(--text-light);
-  font-size: 1.1rem;
-  min-height: 1.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.3rem;
-}
-
-.typewriter-text {
+/* Mobile Navigation */
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
   color: var(--color-pri);
-  letter-spacing: 1px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  right: 0;
+  background: var(--bg-dark-solid);
+  flex-direction: column;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(138, 240, 162, 0.1);
+  z-index: 999;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+.mobile-nav.active {
+  transform: translateY(0);
+}
+
+.mobile-nav-item {
+  padding: 1rem 2rem;
+  color: var(--text-light);
+  text-align: left;
+  background: none;
+  border: none;
+  font-family: 'Fira Code', 'Share Tech Mono', monospace;
+  font-size: 1rem;
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.mobile-nav-item .nav-underline {
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-pri), transparent);
+}
+
+.mobile-nav-item:hover,
+.mobile-nav-item.active {
+  color: var(--color-pri);
+  background: rgba(138, 240, 162, 0.05);
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .header-content {
-    padding: 0 1rem;
-    gap: 1rem;
-  }
-  
-  .identity-section {
-    flex-direction: column;
-    gap: 0.8rem;
+    padding: 0 1.5rem;
   }
   
   .glitch {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
   
-  .aka {
-    font-size: 0.8rem;
+  .desktop-nav {
+    display: none;
+  }
+  
+  .mobile-menu-toggle {
+    display: block;
+  }
+  
+  .mobile-nav {
+    display: flex;
+  }
+}
+
+@media (max-width: 576px) {
+  .header-content {
+    padding: 0 1rem;
+  }
+  
+  .glitch {
+    font-size: 1.4rem;
+  }
+  
+  .typewriter-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
   }
   
   .typewriter-output {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
   
-  .prompt-text {
-    font-size: 0.8rem;
+  .mobile-nav-item {
+    padding: 0.8rem 1.5rem;
   }
 }
 

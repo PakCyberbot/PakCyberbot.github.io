@@ -61,6 +61,12 @@
   100% { transform: translateX(100%) scaleX(0.5); }
 }
 
+@keyframes about-scanline {
+  0% { transform: translateX(-100%) scaleX(0.5); }
+  50% { transform: translateX(0) scaleX(1); }
+  100% { transform: translateX(100%) scaleX(0.5); }
+}
+
 .profile-header {
   display: flex;
   justify-content: space-between;
@@ -354,11 +360,11 @@
   border: 2px solid var(--color-sec);
   border-radius: 25px;
   padding: 2.5rem;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 0 40px rgba(26, 197, 169, 0.4);
+  margin: 2rem 0;
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px;
   position: relative;
+  overflow: hidden;
 }
 
 .about-section::before {
@@ -367,8 +373,15 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--color-sec), var(--color-pri), var(--color-sec-light), var(--color-sec));
+  height: 3px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    var(--color-sec), 
+    var(--color-pri),
+    var(--color-sec),
+    transparent);
+  animation: about-scanline 4s linear infinite;
+  z-index: 1;
   border-radius: 25px 25px 0 0;
   animation: scanline 4s linear infinite;
 }

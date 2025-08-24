@@ -1,6 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -13,30 +15,19 @@
 body {
   background: rgb(2, 2, 26);
   background-image: url('components/props/pcb.png');
-  background-blend-mode:hard-light;
+  background-blend-mode: hard-light;
   background-position: calc(-30vw) center;
-  /* background-position:  Position the background on the right and center vertically */
-  background-repeat: no-repeat; /* Prevent the background image from repeating */
-  height: 100vh; /* Ensure the body covers the full viewport height */
-  /* display: flex; */
-  position:relative;
-
+  background-repeat: no-repeat;
+  height: 100vh;
+  position: relative;
   min-height: 100vh;
   font-family: "Inter", sans-serif;
   animation: move 1s linear infinite forwards;
-  overflow-x: hidden; /* Hide horizontal scrollbar */
+  overflow-x: hidden;
   background-position: -300px center;
-
-
 }
 
-
-
-
-html {
-  scroll-behavior: smooth;
-}
-
+/* Enhanced background effects */
 body::before {
   content: "";
   position: fixed;
@@ -44,7 +35,9 @@ body::before {
   width: 200px;
   background: rgb(0, 255, 132);
   filter: blur(140px);
+  animation: float1 6s ease-in-out infinite;
 }
+
 body::after {
   content: "";
   position: fixed;
@@ -54,7 +47,9 @@ body::after {
   width: 200px;
   background: rgb(110, 226, 180);
   filter: blur(140px);
+  animation: float2 8s ease-in-out infinite;
 }
+
 .bg-circle1 {
   position: fixed;
   top: 0px;
@@ -63,7 +58,9 @@ body::after {
   width: 200px;
   background: rgb(32, 142, 56);
   filter: blur(140px);
+  animation: float3 7s ease-in-out infinite;
 }
+
 .bg-circle2 {
   position: fixed;
   bottom: 100px;
@@ -72,9 +69,53 @@ body::after {
   width: 200px;
   background: rgb(64, 201, 146);
   filter: blur(150px);
+  animation: float4 9s ease-in-out infinite;
 }
+
+/* Floating animations for background elements */
+@keyframes float1 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(20px) rotate(-180deg); }
+}
+
+@keyframes float3 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(90deg); }
+}
+
+@keyframes float4 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(15px) rotate(-90deg); }
+}
+
+/* Enhanced scrollbar */
 ::-webkit-scrollbar {
-  width: 0;
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-pri), var(--color-sec));
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--color-sec), var(--color-pri));
+  box-shadow: 0 0 10px var(--color-pri);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 :root {
@@ -82,6 +123,9 @@ body::after {
   --color-pri-light: rgba(42, 182, 29, 0.445);
   --color-sec: rgb(26, 197, 169);
   --color-sec-light: rgba(14, 141, 50, 0.436);
+  --color-accent: rgb(255, 0, 110);
+  --color-warning: rgb(255, 170, 0);
+  --color-error: rgb(255, 68, 68);
 
   --pc-width: 75%;
   --tab-width: 90%;
@@ -100,8 +144,176 @@ body::after {
   align-items: center;
 }
 
+/* Enhanced selection */
+::selection {
+  background: var(--color-pri);
+  color: rgb(2, 2, 26);
+}
+
+::-moz-selection {
+  background: var(--color-pri);
+  color: rgb(2, 2, 26);
+}
+
+/* Focus states */
+*:focus {
+  outline: 2px solid var(--color-pri);
+  outline-offset: 2px;
+}
+
+/* Typography enhancements */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Hacker-style text effects */
+.hacker-text {
+  text-shadow: 0 0 10px var(--color-pri);
+  animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+  from { text-shadow: 0 0 10px var(--color-pri); }
+  to { text-shadow: 0 0 20px var(--color-pri), 0 0 30px var(--color-pri); }
+}
+
+/* Enhanced button styles */
+.hacker-button {
+  background: linear-gradient(45deg, rgb(2, 2, 26), rgba(0, 0, 0, 0.8));
+  border: 2px solid var(--color-pri);
+  color: var(--color-pri);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-family: 'Share Tech Mono', monospace;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hacker-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(138, 240, 162, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.hacker-button:hover::before {
+  left: 100%;
+}
+
+.hacker-button:hover {
+  background: linear-gradient(45deg, var(--color-pri), var(--color-sec));
+  color: rgb(2, 2, 26);
+  box-shadow: 0 0 20px var(--color-pri);
+  transform: translateY(-2px);
+}
+
+/* Card styles */
+.hacker-card {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(2, 2, 26, 0.9));
+  border: 1px solid rgba(138, 240, 162, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.hacker-card:hover {
+  border-color: var(--color-pri);
+  box-shadow: 0 12px 40px rgba(138, 240, 162, 0.2);
+  transform: translateY(-4px);
+}
+
+/* Terminal styles */
+.terminal {
+  background: rgb(2, 2, 26);
+  border: 2px solid var(--color-pri);
+  border-radius: 8px;
+  padding: 16px;
+  font-family: 'Share Tech Mono', monospace;
+  position: relative;
+  overflow: hidden;
+}
+
+.terminal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-pri), var(--color-sec), var(--color-accent));
+  animation: scanline 2s linear infinite;
+}
+
+@keyframes scanline {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Status indicators */
+.status-online {
+  color: var(--color-pri);
+  text-shadow: 0 0 10px var(--color-pri);
+}
+
+.status-warning {
+  color: var(--color-warning);
+  text-shadow: 0 0 10px var(--color-warning);
+}
+
+.status-error {
+  color: var(--color-error);
+  text-shadow: 0 0 10px var(--color-error);
+}
+
+/* Matrix rain effect */
+.matrix-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.1;
+}
+
+.matrix-char {
+  position: absolute;
+  color: var(--color-pri);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 14px;
+  animation: matrixFall 3s linear infinite;
+}
+
+@keyframes matrixFall {
+  0% { transform: translateY(-100vh); opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
 @media (max-width: 500px) {
   .container {
     width: var(--phone-width);
+  }
+  
+  .bg-circle1, .bg-circle2 {
+    width: 150px;
+    height: 150px;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-size: 0.9em;
   }
 }

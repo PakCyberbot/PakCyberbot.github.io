@@ -19,14 +19,15 @@ function WebContent() {
       
       <Header />
       <BrowserRouter>
-      <Navbar />
-      <Routes>
-
-        <Route index path="/" exact element={<Home/>} />
-        <Route path="/about" element={<About/>} />
-        <Route path="/myprojects" element={<Experience/>} />
-        <Route path="/content" element={<Content/>} />
-      </Routes>
+        <Navbar />
+        <main className="main-content">
+          <Routes>
+            <Route index path="/" exact element={<Home/>} />
+            <Route path="/about" element={<About/>} />
+            <Route path="/myprojects" element={<Experience/>} />
+            <Route path="/content" element={<Content/>} />
+          </Routes>
+        </main>
       </BrowserRouter>
       {/* <Footer /> */}
     </>

@@ -29,7 +29,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 10000; /* Higher than nav bar */
   background: var(--bg-dark);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(138, 240, 162, 0.1);

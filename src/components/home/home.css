@@ -31,6 +31,11 @@
   gap: 2rem;
 }
 
+.profile-section {
+  position: relative;
+  overflow: hidden; /* Ensure the moving line stays within the container */
+}
+
 .profile-section::before {
   content: '';
   position: absolute;
@@ -38,14 +43,22 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--color-pri), var(--color-sec), var(--color-pri-light), var(--color-pri));
+  background: linear-gradient(90deg, 
+    transparent, 
+    var(--color-pri), 
+    var(--color-sec), 
+    var(--color-pri-light), 
+    transparent);
   border-radius: 25px 25px 0 0;
   animation: scanline 3s linear infinite;
+  transform-origin: left;
+  width: 100%;
 }
 
 @keyframes scanline {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% { transform: translateX(-100%) scaleX(0.5); }
+  50% { transform: translateX(0) scaleX(1); }
+  100% { transform: translateX(100%) scaleX(0.5); }
 }
 
 .profile-header {

@@ -18,13 +18,20 @@ body {
   background-blend-mode: hard-light;
   background-position: calc(-30vw) center;
   background-repeat: no-repeat;
-  height: 100vh;
-  position: relative;
   min-height: 100vh;
   font-family: "Inter", sans-serif;
   animation: move 1s linear infinite forwards;
   overflow-x: hidden;
   background-position: -300px center;
+  padding-top: 80px; /* Add padding to account for fixed header */
+}
+
+.main-content {
+  position: relative;
+  z-index: 1;
+  min-height: calc(100vh - 80px); /* Adjust based on header height */
+  padding: 2rem 0;
+  overflow-x: hidden;
 }
 
 /* Enhanced background effects */

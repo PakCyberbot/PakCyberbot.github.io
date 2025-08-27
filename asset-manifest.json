@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.aa652c1b.css",
-    "main.js": "/static/js/main.33cec10c.js",
+    "main.css": "/static/css/main.724c9f14.css",
+    "main.js": "/static/js/main.df7b1446.js",
     "static/media/Problem Solving Intermediate.png": "/static/media/Problem Solving Intermediate.7374855b2fc400f5e894.png",
     "static/media/Automate Boring Stuff using Python.png": "/static/media/Automate Boring Stuff using Python.3daadb6d2f97bf04eaf0.png",
     "static/media/HTB Cyber Apocalypse 2024.png": "/static/media/HTB Cyber Apocalypse 2024.3f918edab6b686745433.png",
@@ -23,6 +23,7 @@
     "static/media/snyk-fetchtheflag.png": "/static/media/snyk-fetchtheflag.af2c618f14d14c018737.png",
     "static/media/4_CSI Certified Investigator.png": "/static/media/4_CSI Certified Investigator.643b29ca280c04d85bdc.png",
     "static/media/SQL Programming.png": "/static/media/SQL Programming.83ee8a8951d34b13c741.png",
+    "static/media/Ready Player 50.pdf": "/static/media/Ready Player 50.d6bf8fd9d2c09d1a2673.pdf",
     "static/media/2_AppSec Practitioner.png": "/static/media/2_AppSec Practitioner.6390d0c0f044ea1d19b5.png",
     "static/media/1_Professional Cloud Security Engineer.png": "/static/media/1_Professional Cloud Security Engineer.28b00a76e1288045cccb.png",
     "static/media/Junior Cybersecurity Analyst (CISCO).png": "/static/media/Junior Cybersecurity Analyst (CISCO).f15c25c50eb255b57b71.png",
@@ -48,18 +49,19 @@
     "static/media/9_(THM) Web Fundamentals.png": "/static/media/9_(THM) Web Fundamentals.90f7c8ba3f4b9f4a3b6c.png",
     "static/media/9_(THM)  Junior Pentest.png": "/static/media/9_(THM)  Junior Pentest.9ed99dcef48859b62abc.png",
     "static/media/9_(THM) PreSecurity.png": "/static/media/9_(THM) PreSecurity.13dc4abbe7dba5b96091.png",
+    "static/media/fuzzy-httpserver.png": "/static/media/fuzzy-httpserver.36845306b96a1ad63928.png",
     "static/media/GCloud_securityEngineer_badge.png": "/static/media/GCloud_securityEngineer_badge.69f0447cc1d57a0ad303.png",
     "static/media/juniorcyberanalyst.png": "/static/media/juniorcyberanalyst.3c4935489d3261bf35ec.png",
     "static/media/yt-evidence.jpg": "/static/media/yt-evidence.cbff29de353181b3835f.jpg",
+    "static/media/oscp_plus_badge.png": "/static/media/oscp_plus_badge.c504cfce03dcd2ec4a8f.png",
     "static/media/pcb.png": "/static/media/pcb.acdad1147a96856f7fa5.png",
-    "static/media/Dash-Horizon.otf": "/static/media/Dash-Horizon.52149500184acb6b8bc0.otf",
     "static/media/thm.png": "/static/media/thm.3a777980def4abd42b54.png",
     "index.html": "/index.html",
-    "main.aa652c1b.css.map": "/static/css/main.aa652c1b.css.map",
-    "main.33cec10c.js.map": "/static/js/main.33cec10c.js.map"
+    "main.724c9f14.css.map": "/static/css/main.724c9f14.css.map",
+    "main.df7b1446.js.map": "/static/js/main.df7b1446.js.map"
   },
   "entrypoints": [
-    "static/css/main.aa652c1b.css",
-    "static/js/main.33cec10c.js"
+    "static/css/main.724c9f14.css",
+    "static/js/main.df7b1446.js"
   ]
 }

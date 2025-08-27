@@ -16,14 +16,27 @@ body {
   background: rgb(2, 2, 26);
   background-image: url('components/props/pcb.png');
   background-blend-mode: hard-light;
-  background-position: calc(-30vw) center;
+  background-attachment: fixed;
+  background-position: -300px center;
   background-repeat: no-repeat;
+  background-size: auto 100%;
   min-height: 100vh;
   font-family: "Inter", sans-serif;
-  animation: move 1s linear infinite forwards;
   overflow-x: hidden;
-  background-position: -300px center;
   padding-top: 200px; /* Add padding to account for fixed header */
+  position: relative;
+}
+
+/* Add a subtle overlay to improve text readability */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(2, 2, 26, 0.85);
+  z-index: -1;
 }
 
 .main-content {

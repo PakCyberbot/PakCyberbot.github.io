@@ -87,9 +87,17 @@ const Qualifications = ({ viewType }) => {
     }
   };
 
-  const openCertificate = (cert) => {
+  const openCertificate = (cert, e) => {
+    e.stopPropagation();
     setSelectedCert(cert);
     setPopupOpen(true);
+    // Auto-scroll to the popup for better mobile experience
+    setTimeout(() => {
+      const popup = document.querySelector('.cert-popup-content');
+      if (popup) {
+        popup.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100);
   };
 
   const closePopup = () => {
@@ -101,8 +109,7 @@ const Qualifications = ({ viewType }) => {
   const categoryDescription = getCategoryDescription(viewType);
 
   return (
-        <div className="qualifications-container">
-      {/* Header Section */}
+    <div className="qualifications-container">
       <div className="certs-header">
         <div className="header-content">
           <div className="category-info">
@@ -113,11 +120,12 @@ const Qualifications = ({ viewType }) => {
             <div className="category-details">
               <h1 className="category-title">{viewType.toUpperCase()}</h1>
               <p className="category-description">{categoryDescription}</p>
-              <div className="cert-count">
-                <FaCertificate className="count-icon" />
-                <span>{filteredCerts.length} Certificates</span>
-              </div>
             </div>
+          </div>
+          
+          <div className="cert-count">
+            <FaCertificate className="count-icon" />
+            <span>{filteredCerts.length} {filteredCerts.length === 1 ? 'Certificate' : 'Certificates'}</span>
           </div>
           
           <div className="search-section">
@@ -125,10 +133,10 @@ const Qualifications = ({ viewType }) => {
               <FaSearch className="search-icon" />
               <input
                 type="text"
+                className="search-input"
                 placeholder="Search certificates..."
                 value={searchTerm}
                 onChange={handleSearch}
-                className="search-input"
               />
               <div className="search-glow"></div>
             </div>
@@ -145,7 +153,7 @@ const Qualifications = ({ viewType }) => {
               key={index}
               onMouseEnter={() => setHoveredCert(index)}
               onMouseLeave={() => setHoveredCert(null)}
-              onClick={() => openCertificate(cert)}
+              onClick={(e) => openCertificate(cert, e)}
             >
               <div className="cert-image-container">
                 <img src={cert.img} alt={cert.name} className="cert-image" />
@@ -173,13 +181,12 @@ const Qualifications = ({ viewType }) => {
               </div>
               
               <div className="cert-actions">
-                <button className="action-btn view-btn">
-                  <FaEye />
-                  <span>View</span>
-                </button>
-                <button className="action-btn download-btn">
-                  <FaDownload />
-                  <span>Download</span>
+                <button className="action-btn view-btn" onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(cert.img, '_blank');
+                }}>
+                  <FaExternalLinkAlt />
+                  <span>Open Fullscreen</span>
                 </button>
               </div>
               
@@ -198,7 +205,7 @@ const Qualifications = ({ viewType }) => {
       {/* Certificate Popup */}
       {isPopupOpen && selectedCert && (
         <div className="cert-popup-overlay" onClick={closePopup}>
-          <div className="cert-popup" onClick={(e) => e.stopPropagation()}>
+          <div className="cert-popup-content" onClick={(e) => e.stopPropagation()}>
             <div className="popup-header">
               <h2>{selectedCert.name}</h2>
               <button className="close-btn" onClick={closePopup}>
@@ -208,7 +215,11 @@ const Qualifications = ({ viewType }) => {
             
             <div className="popup-content">
               <div className="popup-image">
-                <img src={selectedCert.img} alt={selectedCert.name} />
+                <img 
+                  src={selectedCert.img} 
+                  alt={selectedCert.name} 
+                  className="cert-popup-img"
+                />
               </div>
               
               <div className="popup-details">
@@ -233,13 +244,19 @@ const Qualifications = ({ viewType }) => {
             </div>
             
             <div className="popup-actions">
-              <button className="popup-btn primary">
+              <button 
+                className="popup-btn primary"
+                onClick={() => window.open(selectedCert.img, '_blank')}
+              >
                 <FaExternalLinkAlt />
                 <span>Open Full Size</span>
               </button>
-              <button className="popup-btn secondary">
-                <FaDownload />
-                <span>Download</span>
+              <button 
+                className="popup-btn secondary"
+                onClick={closePopup}
+              >
+                <FaTimes />
+                <span>Close</span>
               </button>
             </div>
           </div>

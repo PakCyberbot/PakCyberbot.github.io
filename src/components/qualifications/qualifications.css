@@ -26,10 +26,18 @@
   flex-direction: column;
   width: 100%;
   min-height: 100vh;
-  padding: 2rem;
+  padding: 1rem;
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(2, 2, 26, 0.98));
   position: relative;
   overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .qualifications-container {
+    padding: 0.5rem;
+  }
 }
 
 .qualifications-container::before {
@@ -75,9 +83,18 @@
 
 .header-content {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
 }
 
 .category-info {
@@ -183,7 +200,14 @@
 
 .search-container {
   position: relative;
-  width: 350px;
+  width: 100%;
+  max-width: 350px;
+}
+
+@media (max-width: 768px) {
+  .search-container {
+    max-width: 100%;
+  }
 }
 
 .search-input {
@@ -240,51 +264,43 @@
 /* Certificates Grid */
 .certs-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 2.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem 0;
   width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .certs-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0.5rem;
+  }
 }
 
 .cert-card {
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(2, 2, 26, 0.9));
-  border: 2px solid rgba(138, 240, 162, 0.2);
-  border-radius: 20px;
-  padding: 1.5rem;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  position: relative;
+  background: rgba(10, 15, 25, 0.8);
+  border-radius: 12px;
   overflow: hidden;
-  backdrop-filter: blur(15px);
-}
-
-.cert-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(138, 240, 162, 0.2);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  position: relative;
+  cursor: pointer;
+  transform: translateY(0);
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(138, 240, 162, 0.1), transparent);
-  transition: left 0.6s ease;
 }
 
-.cert-card:hover::before {
-  left: 100%;
+@media (max-width: 768px) {
+  .cert-card {
+    border-radius: 10px;
+    margin: 0.25rem;
+  }
 }
 
-.cert-card:hover {
-  border-color: var(--color-pri);
-  box-shadow: 0 0 40px rgba(138, 240, 162, 0.4);
-  transform: translateY(-8px) scale(1.02);
-}
-
-.cert-card.hovered {
-  border-color: var(--color-pri);
-  box-shadow: 0 0 30px rgba(138, 240, 162, 0.3);
-  transform: translateY(-4px);
-}
-
-/* Certificate Image Container */
 .cert-image-container {
   position: relative;
   width: 100%;
@@ -422,7 +438,7 @@
   flex: 1;
   display: flex;
   align-items: center;
-    justify-content: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 1rem;
   border: none;
@@ -469,7 +485,7 @@
   right: 0;
   bottom: 0;
   background: radial-gradient(circle at center, rgba(138, 240, 162, 0.05), transparent);
-    border-radius: 20px;
+  border-radius: 20px;
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -482,9 +498,9 @@
 /* No Results */
 .no-results {
   grid-column: 1 / -1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   padding: 4rem 2rem;
   text-align: center;
@@ -526,34 +542,49 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.95);
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 10000;
-  backdrop-filter: blur(20px);
-  animation: fadeIn 0.3s ease;
+  align-items: flex-start;
+  z-index: 1000;
+  padding: 1rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.cert-popup {
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.98), rgba(2, 2, 26, 0.98));
-  border: 2px solid var(--color-pri);
-  border-radius: 25px;
-  max-width: 90vw;
+.cert-popup-content {
+  width: 100%;
+  max-width: 90%;
   max-height: 90vh;
-  overflow: hidden;
+  margin: 2rem 0;
   position: relative;
-  animation: slideUp 0.3s ease;
+  background: rgba(10, 15, 25, 0.98);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--color-pri);
 }
 
-@keyframes slideUp {
-  from { transform: translateY(50px) scale(0.9); opacity: 0; }
-  to { transform: translateY(0) scale(1); opacity: 1; }
+@media (max-width: 768px) {
+  .cert-popup-overlay {
+    padding: 0.5rem;
+    align-items: center;
+  }
+  
+  .cert-popup-content {
+    max-width: 100%;
+    max-height: 95vh;
+    margin: 0.5rem;
+    border-radius: 8px;
+  }
+  
+  .popup-content {
+    padding: 0.5rem;
+  }
+  
+  .popup-image img {
+    max-height: 60vh;
+  }
 }
 
 .popup-header {
@@ -675,8 +706,8 @@
 
 .popup-btn {
   flex: 1;
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
   justify-content: center;
   gap: 0.75rem;
   padding: 1rem 1.5rem;

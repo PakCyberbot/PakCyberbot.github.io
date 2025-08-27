@@ -139,7 +139,8 @@ function Home() {
       year: 2024,
       description: "Awarded free OSCP certification by Offsec for securing 1st position in their report writing contest.",
       icon: <FaShieldAlt className="achievement-icon" />,
-      color: "#FF6B00"
+      color: "#FF6B00",
+      url: "https://youtu.be/8BnOxdsT7qY"
     },
     {
       title: "National CyberHackathon 2024 Finalist",
@@ -147,7 +148,8 @@ function Home() {
       year: 2024,
       description: "Secured 3rd position in the finals of National level CyberHackathon 2024.",
       icon: <FaTrophy className="achievement-icon" />,
-      color: "#FFD700"
+      color: "#FFD700",
+      url: "https://www.linkedin.com/posts/pakcyberbot_cybersecurity-hackathon-teamrevolt-activity-7275030483439153152-s3Du"  // Update with actual URL if available
     },
     {
       title: "BlackHat MEU CTF 2024 First Blood",
@@ -155,7 +157,8 @@ function Home() {
       year: 2024,
       description: "Achieved first blood in BlackHat MEU CTF 2024, demonstrating exceptional skills in competitive cybersecurity.",
       icon: <FaBug className="achievement-icon" />,
-      color: "#FF0000"
+      color: "#FF0000",
+      url: "https://www.linkedin.com/posts/pakcyberbot_blackhatmea-blackhat-ctfcompetition-activity-7236315931671461889-qqi1"
     },
     {
       title: "TryHackMe 365 Days Challenge",
@@ -163,7 +166,8 @@ function Home() {
       year: 2023,
       description: "Successfully completed the 365 days learning streak challenge on TryHackMe platform.",
       icon: <SiTryhackme className="achievement-icon" />,
-      color: "#1DB954"
+      color: "#1DB954",
+      url: "https://medium.com/system-weakness/cybersecurity-quest-my-365-days-on-tryhackme-c99f7f0cca0f"
     },
     {
       title: "CTF Challenge Creator",
@@ -171,7 +175,8 @@ function Home() {
       year: "2023-Present",
       description: "Created numerous CTF challenges for HackTheBox, TryHackMe, and various onsite events and organizations.",
       icon: <FaCode className="achievement-icon" />,
-      color: "#9FEF00"
+      color: "#9FEF00",
+      url: "https://medium.com/@pakcyberbot/my-cybersecurity-journey-2024-achievements-challenges-and-milestones-c718793f7193#8340"  // Update with actual URL if available
     },
     {
       title: "Trace Labs CTF Judge & Participant",
@@ -179,7 +184,8 @@ function Home() {
       year: "2023-Present",
       description: "Active participant and judge in multiple Trace Labs Search Party CTF events, contributing to OSINT investigations for missing persons.",
       icon: <FaSearch className="achievement-icon" />,
-      color: "#00A4EF"
+      color: "#00A4EF",
+      url: "https://www.linkedin.com/posts/pakcyberbot_i-usually-participate-in-trace-labs-as-activity-7229046076530429952-AOLK"
     }
   ];
 
@@ -303,27 +309,36 @@ function Home() {
           
           <div className="achievements-grid">
             {achievements.map((achievement, index) => (
-              <motion.div 
+              <motion.a 
                 key={index}
-                className="achievement-card"
+                href={achievement.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="achievement-card-link"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
                 whileHover={{ y: -5, boxShadow: `0 10px 20px rgba(0,0,0,0.3)` }}
               >
-                <div className="achievement-header" style={{ backgroundColor: `${achievement.color}20`, borderLeft: `4px solid ${achievement.color}` }}>
-                  <div className="achievement-icon-wrapper" style={{ backgroundColor: achievement.color }}>
-                    {achievement.icon}
+                <div className="achievement-card">
+                  <div className="achievement-header" style={{ backgroundColor: `${achievement.color}20`, borderLeft: `4px solid ${achievement.color}` }}>
+                    <div className="achievement-icon-wrapper" style={{ backgroundColor: achievement.color }}>
+                      {achievement.icon}
+                    </div>
+                    <div className="achievement-title">
+                      <h3>{achievement.title}</h3>
+                      <div className="achievement-issuer">{achievement.issuer} • {achievement.year}</div>
+                    </div>
+                    <FaExternalLinkAlt className="external-link-icon" style={{ color: achievement.color }} />
                   </div>
-                  <div className="achievement-title">
-                    <h3>{achievement.title}</h3>
-                    <div className="achievement-issuer">{achievement.issuer} • {achievement.year}</div>
+                  <div className="achievement-body">
+                    <p>{achievement.description}</p>
+                    <span className="read-more" style={{ color: achievement.color }}>
+                      Check More <FaArrowRight className="read-more-arrow" />
+                    </span>
                   </div>
                 </div>
-                <div className="achievement-body">
-                  <p>{achievement.description}</p>
-                </div>
-              </motion.div>
+              </motion.a>
             ))}
           </div>
         </motion.div>

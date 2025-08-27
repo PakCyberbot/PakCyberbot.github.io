@@ -87,6 +87,12 @@ const percentage = 66;
 
       <h1 className="heading1" >My Digital Badges</h1>
       <div className="badge-container">
+      <a href="https://credentials.offsec.com/7d159261-fceb-4503-8531-eeef31b68969#acc.TdbPX9Ry">
+          <div className="coin oscp">
+            <div className="tails" ></div>
+            <div className="heads" ></div>
+          </div>
+        </a>
         <a href="https://www.credly.com/badges/22d82bbf-0a03-4761-a6ea-88088ca98388/public_url">
           <div className="coin googleit">
             <div className="tails" ></div>
@@ -124,7 +130,7 @@ const percentage = 66;
           </div>
         </a>
       </div>
-      <h1 className="heading1" >My Skills</h1>
+      {/* <h1 className="heading1" >My Skills</h1>
 
       
 
@@ -203,7 +209,7 @@ const percentage = 66;
           />
         </div>
       )})}
-      </div>
+      </div> */}
 
       <h1 className="heading1" >Certifications</h1>
 

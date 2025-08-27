@@ -60,6 +60,12 @@
 
 
 
+.coin.oscp{
+  background-image: url('../props/oscp_plus_badge.png');
+}
+.oscp .heads{
+  background-image: url('../props/oscp_plus_badge.png');
+}
 
 .coin.googleit{
   background-image: url('../props/googleIT_badge.png');

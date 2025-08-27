@@ -1,6 +1,8 @@
 import React from 'react';
 import "./projects.css";
 import { FiGithub, FiExternalLink } from "react-icons/fi";
+import img1 from '../props/yt-evidence.jpg';
+import img2 from '../props/fuzzy-httpserver.png';  
 
 // Project data - you can easily add more projects here
 const projectsData = [
@@ -9,29 +11,19 @@ const projectsData = [
     title: "YT Evidence Collector",
     description: "A powerful tool for gathering evidence from YouTube, featuring video downloads, Wayback Machine snapshots, and automatic documentation generation. Supports bulk downloads and generates an HTML webpage for easy navigation of collected content.",
     tags: ["Python", "YouTube API", "Web Scraping", "HTML"],
-    image: "https://pakcyberbot.com/static/media/yt-evidence.cbff29de353181b3835f.jpg",
+    image: img1,
     github: "https://github.com/PakCyberbot/YouTube-Evidence-Collector",
     demo: "#"
   },
-  {
-    id: 2,
-    title: "AI-Powered Threat Detector",
-    description: "An advanced security tool that uses machine learning to detect and mitigate potential cyber threats in real-time. Features include network traffic analysis, anomaly detection, and automated incident response.",
-    tags: ["Python", "TensorFlow", "Cybersecurity", "Flask"],
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-    github: "#",
-    demo: "#"
-  },
-  // Template for adding new projects:
-  // {
-  //   id: 3, // Increment this number
-  //   title: "Project Name",
-  //   description: "Detailed description of the project and its features.",
-  //   tags: ["Technology 1", "Technology 2", "Technology 3"],
-  //   image: "path/to/image.png",
-  //   github: "https://github.com/yourusername/project",
-  //   demo: "https://project-demo.com" // Optional
-  // },
+  { 
+    "title": "fuzzy-httpserver",
+  "description": "A lightweight, zero-dependency Python 3 HTTP file server that implements fuzzy and prefix-based filename matching, automatic fallback directory listing, colorized CLI output, POST data support, integrity checks via MD5, and interface awareness—ideal for red teaming, CTFs, and quick file sharing during engagements.",
+  "tags": ["Python 3", "HTTP server", "Fuzzy matching", "CTF/red team tools", "Zero dependencies"],
+  "image": img2,
+  "github": "https://github.com/PakCyberbot/fuzzy-httpserver",
+  "demo": "" 
+},
+
 ];
 
 const ProjectCard = ({ project }) => {

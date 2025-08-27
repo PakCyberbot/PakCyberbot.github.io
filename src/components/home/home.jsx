@@ -1,21 +1,12 @@
 import './home.css';
 import img from '../props/hacker2.png';
 import React, { useState, useEffect } from 'react';
-import { FaGithub, FaLinkedin, FaTwitter, FaHackerrank, FaMicrosoft, FaGoogle, FaShieldAlt, FaTerminal, FaServer, FaLock, FaCode, FaSearch, FaUserSecret, FaFingerprint, FaExternalLinkAlt, FaArrowRight, FaBug, FaNetworkWired, FaClock, FaTrophy } from 'react-icons/fa';
-import { SiTryhackme, SiHackthebox, SiHackernoon } from 'react-icons/si';
+import { FaGithub, FaLinkedin, FaTwitter, FaHackerrank, FaMicrosoft, FaGoogle, FaShieldAlt, FaTerminal, FaServer, FaLock, FaCode, FaSearch, FaUserSecret, FaFingerprint, FaExternalLinkAlt, FaArrowRight, FaBug, FaNetworkWired, FaClock, FaTrophy, FaInstagram, FaFacebook, FaYoutube } from 'react-icons/fa';
+import { SiTryhackme, SiHackthebox, SiHackernoon, SiMedium } from 'react-icons/si';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 
 const socialLinks = [
-  { 
-    name: 'GitHub', 
-    icon: <FaGithub />, 
-    url: 'https://github.com/PakCyberbot',
-    username: '@PakCyberbot',
-    color: '#333',
-    hoverColor: '#6e5494',
-    category: 'dev'
-  },
   { 
     name: 'LinkedIn', 
     icon: <FaLinkedin />, 
@@ -23,8 +14,36 @@ const socialLinks = [
     username: 'pakcyberbot',
     color: '#0077b5',
     hoverColor: '#00a0dc',
-    category: 'professional'
+    category: 'social'
   },
+  { 
+    name: 'YouTube', 
+    icon: <FaYoutube />, 
+    url: 'https://youtube.com/@pakcyberbot',
+    username: '@pakcyberbot',
+    color: '#FF0000',
+    hoverColor: '#FF4D4D',
+    category: 'social'
+  },
+  { 
+    name: 'Medium', 
+    icon: <SiMedium />, 
+    url: 'https://medium.com/@pakcyberbot',
+    username: '@pakcyberbot',
+    color: '#000000',
+    hoverColor: '#404040',
+    category: 'blog'
+  },
+  { 
+    name: 'GitHub', 
+    icon: <FaGithub />, 
+    url: 'https://github.com/PakCyberbot',
+    username: '@PakCyberbot',
+    color: '#333',
+    hoverColor: '#6e5494',
+    category: 'coding'
+  },
+
   { 
     name: 'HackTheBox', 
     icon: <SiHackthebox />, 
@@ -87,6 +106,24 @@ const socialLinks = [
     color: '#1da1f2',
     hoverColor: '#1a91da',
     category: 'social'
+  },
+  { 
+    name: 'Instagram', 
+    icon: <FaInstagram />, 
+    url: 'https://instagram.com/pakcyberbot',
+    username: '@pakcyberbot',
+    color: '#E1306C',
+    hoverColor: '#FF5C8D',
+    category: 'social'
+  },
+  { 
+    name: 'Facebook', 
+    icon: <FaFacebook />, 
+    url: 'https://facebook.com/pakcyberbot',
+    username: 'PakCyberbot',
+    color: '#1877F2',
+    hoverColor: '#3B82F6',
+    category: 'social'
   }
 ];
 
@@ -97,62 +134,62 @@ function Home() {
 
   const achievements = [
     {
-      title: "Google IT Support Professional",
-      issuer: "Google",
-      year: 2023,
-      description: "Completed comprehensive IT support training program covering troubleshooting, customer service, networking, operating systems, system administration, and security.",
-      icon: <FaGoogle className="achievement-icon" />,
-      color: "#4285F4"
+      title: "OSCP Certification (Awarded by Offsec)",
+      issuer: "Offensive Security",
+      year: 2024,
+      description: "Awarded free OSCP certification by Offsec for securing 1st position in their report writing contest.",
+      icon: <FaShieldAlt className="achievement-icon" />,
+      color: "#FF6B00"
     },
     {
-      title: "Microsoft Security Operations Analyst",
-      issuer: "Microsoft",
-      year: 2023,
-      description: "Certified in identifying, investigating, and responding to security threats using Microsoft Sentinel and Microsoft 365 Defender.",
-      icon: <FaMicrosoft className="achievement-icon" />,
-      color: "#00A4EF"
+      title: "National CyberHackathon 2024 Finalist",
+      issuer: "National Level",
+      year: 2024,
+      description: "Secured 3rd position in the finals of National level CyberHackathon 2024.",
+      icon: <FaTrophy className="achievement-icon" />,
+      color: "#FFD700"
     },
     {
-      title: "Hack The Box Top 5%",
-      issuer: "Hack The Box",
-      year: 2023,
-      description: "Ranked in top 5% of all Hack The Box users, demonstrating advanced penetration testing and cybersecurity skills.",
-      icon: <SiHackthebox className="achievement-icon" />,
-      color: "#9FEF00"
+      title: "BlackHat MEU CTF 2024 First Blood",
+      issuer: "BlackHat Middle East",
+      year: 2024,
+      description: "Achieved first blood in BlackHat MEU CTF 2024, demonstrating exceptional skills in competitive cybersecurity.",
+      icon: <FaBug className="achievement-icon" />,
+      color: "#FF0000"
     },
     {
-      title: "TryHackMe Top 1%",
+      title: "TryHackMe 365 Days Challenge",
       issuer: "TryHackMe",
       year: 2023,
-      description: "Achieved top 1% ranking on TryHackMe platform, completing numerous cybersecurity challenges and learning paths.",
+      description: "Successfully completed the 365 days learning streak challenge on TryHackMe platform.",
       icon: <SiTryhackme className="achievement-icon" />,
       color: "#1DB954"
     },
     {
-      title: "Certified Ethical Hacker (CEH) Practical",
-      issuer: "EC-Council",
-      year: 2023,
-      description: "Demonstrated practical skills in ethical hacking through rigorous performance-based examination.",
-      icon: <FaUserSecret className="achievement-icon" />,
-      color: "#FF4B4B"
+      title: "CTF Challenge Creator",
+      issuer: "Multiple Platforms",
+      year: "2023-Present",
+      description: "Created numerous CTF challenges for HackTheBox, TryHackMe, and various onsite events and organizations.",
+      icon: <FaCode className="achievement-icon" />,
+      color: "#9FEF00"
     },
     {
-      title: "Google Cybersecurity Professional",
-      issuer: "Google",
-      year: 2023,
-      description: "Completed comprehensive cybersecurity training program covering security operations, network security, and incident response.",
-      icon: <FaGoogle className="achievement-icon" />,
-      color: "#34A853"
+      title: "Trace Labs CTF Judge & Participant",
+      issuer: "Trace Labs",
+      year: "2023-Present",
+      description: "Active participant and judge in multiple Trace Labs Search Party CTF events, contributing to OSINT investigations for missing persons.",
+      icon: <FaSearch className="achievement-icon" />,
+      color: "#00A4EF"
     }
   ];
 
   const skills = [
-    { name: 'Penetration Testing', icon: FaBug, level: 95, color: 'var(--color-pri)' },
-    { name: 'Network Security', icon: FaNetworkWired, level: 90, color: 'var(--color-sec)' },
-    { name: 'Web Security', icon: FaShieldAlt, level: 88, color: 'var(--color-pri-light)' },
-    { name: 'Forensics', icon: FaSearch, level: 85, color: 'var(--color-sec-light)' },
-    { name: 'Cryptography', icon: FaLock, level: 82, color: 'var(--color-pri)' },
-    { name: 'Malware Analysis', icon: FaCode, level: 80, color: 'var(--color-sec)' }
+    { name: 'Red Teaming', icon: FaBug, level: 85, color: 'var(--color-pri)' },
+    { name: 'DFIR', icon: FaNetworkWired, level: 70, color: 'var(--color-sec)' },
+    { name: 'OSINT', icon: FaSearch, level: 85, color: 'var(--color-pri)' },
+    { name: 'DevOps', icon: FaShieldAlt, level: 50, color: 'var(--color-sec)' },
+    { name: 'Challenge Creation', icon: FaLock, level: 70, color: 'var(--color-pri)' },
+    { name: 'Programming', icon: FaCode, level: 75, color: 'var(--color-sec)' }
   ];
 
   const filteredSocials = activeCategory === 'all' 
@@ -161,11 +198,11 @@ function Home() {
 
   const categories = [
     { id: 'all', name: 'All Platforms' },
+    { id: 'social', name: 'Social' },
     { id: 'ctf', name: 'CTF Platforms' },
+    { id: 'blog', name: 'Blog' },
     { id: 'coding', name: 'Coding' },
     { id: 'certifications', name: 'Certifications' },
-    { id: 'professional', name: 'Professional' },
-    { id: 'social', name: 'Social' },
   ];
 
   return (
@@ -185,7 +222,7 @@ function Home() {
             </div>
             <div className="system-status">
               <span className="status-dot online"></span>
-              <span className="status-text">SECURE</span>
+              <span className="status-text">ONLINE</span>
             </div>
           </div>
 
@@ -224,7 +261,7 @@ function Home() {
           </div>
           
           <div className="about-content">
-            <p>I am a Self-Taught CyberSecurity Researcher, CTF Player, Junior Pentester, and a Programmer. Currently learning and honing my skills in Purple Teaming, Bug Bounty, and OSINT to become a well-rounded security professional.</p>
+            <p>I am an OSCP, Google Cloud Security Engineer, Google IT Professional, and eJPT-certified specialist with strong programming skills across multiple languages. With extensive experience in cybersecurity, I have designed CTF challenges for HackTheBox and contributed to various security projects. Additionally, My team secured 2nd runner-up in a national-level CTF hackathon in 2024, showcasing my expertise in offensive security and problem-solving.</p>
           </div>
 
           <div className="skills-grid">
@@ -351,7 +388,7 @@ function Home() {
           <div className="social-footer">
             <p>Let's connect and collaborate on exciting projects!</p>
             <motion.a 
-              href="#contact" 
+              href="mailto:pakcyberbot@proton.me" 
               className="contact-button"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

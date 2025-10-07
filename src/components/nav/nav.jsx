@@ -25,6 +25,11 @@ const externalLinks = [
     icon: <MdOutlineComputer />, 
     label: 'LinkedIn' 
   },
+  {
+    url: 'https://pakcyberbot.com/OSCP-Notes-and-Environment/', 
+    icon: <GiBookCover />, 
+    label: 'OSCP Notes'
+  }
 ];
 
 function Navbar() {

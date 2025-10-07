@@ -22,7 +22,10 @@ jobs:
 
       - name: Build React app
         run: CI=false npm run build
-        
+      
+      - name: Add CNAME file
+        run: echo "pakcyberbot.com" > build/CNAME
+      
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:

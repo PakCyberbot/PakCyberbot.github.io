@@ -3,31 +3,29 @@ name: Deploy React App to GitHub Pages
 on:
   push:
     branches:
-      - main
-
-permissions:
-  contents: write
+      - main # Or your default branch
 
 jobs:
-  build-deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: 📥 Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: ⚙️ Set up Git user for deployment
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Or your preferred Node.js version
 
-    - name: ⚙️ Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
+      - name: Install dependencies
+        run: npm install
 
-    - name: 📦 Install dependencies (including gh-pages)
-      run: npm install
+      - name: Build React app
+        run: npm run build
 
-    - name: 🚀 Deploy using npm script
-      run: CI=false npm run deploy
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.TOKEN_REPO }}
+          publish_dir: ./build
+          publish_branch: gh-pages

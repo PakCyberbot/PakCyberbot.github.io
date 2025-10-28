@@ -403,7 +403,7 @@ function Home() {
           <div className="social-footer">
             <p>Let's connect and collaborate on exciting projects!</p>
             <motion.a 
-              href="mailto:pakcyberbot@proton.me" 
+              href="mailto:contact@pakcyberbot.com" 
               className="contact-button"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

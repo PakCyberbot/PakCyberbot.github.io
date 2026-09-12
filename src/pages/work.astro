@@ -103,7 +103,7 @@ const platformMeta: Record<string, { icon: string; label: string }> = {
   .grid-3 > div > :global(*) { width: 100%; }
 
   .chal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.9rem; }
-  .chal { display: flex; align-items: flex-start; gap: 0.85rem; padding: 1.1rem; color: var(--text); transition: transform 0.2s var(--ease), border-color 0.2s var(--ease); }
+  .chal { display: flex; align-items: flex-start; gap: 0.85rem; padding: 1.1rem; color: var(--text); transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease); }
   .chal:hover { transform: translateY(-3px); border-color: var(--accent-line); color: var(--text); }
   .chal-icon { display: grid; place-items: center; width: 42px; height: 42px; flex-shrink: 0; border-radius: var(--radius); background: var(--bg-elev); border: 1px solid var(--border); color: var(--accent); }
   .chal-icon [data-icon] { width: 22px; height: 22px; }

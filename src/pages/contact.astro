@@ -59,7 +59,7 @@ const links = [...socials, ...platforms];
 
   .links-title { color: var(--text-mute); font-size: 0.9rem; margin-bottom: 0.9rem; }
   .links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
-  .clink { display: flex; align-items: center; gap: 0.7rem; padding: 0.85rem 1rem; color: var(--text); transition: transform 0.2s var(--ease), border-color 0.2s var(--ease); }
+  .clink { display: flex; align-items: center; gap: 0.7rem; padding: 0.85rem 1rem; color: var(--text); transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease); }
   .clink:hover { transform: translateY(-2px); border-color: var(--accent-line); color: var(--text); }
   .clink > [data-icon]:first-child { width: 22px; height: 22px; color: var(--accent); flex-shrink: 0; }
   .clink span { display: flex; flex-direction: column; min-width: 0; }

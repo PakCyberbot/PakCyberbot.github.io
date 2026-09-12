@@ -122,7 +122,7 @@ const articleLd = {
   .toc li a.active { color: var(--accent); border-left-color: var(--accent); }
 
   .prevnext { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 3rem; }
-  .pn { display: flex; flex-direction: column; gap: 0.35rem; padding: 1.1rem 1.25rem; color: var(--text); transition: transform 0.2s var(--ease), border-color 0.2s var(--ease); }
+  .pn { display: flex; flex-direction: column; gap: 0.35rem; padding: 1.1rem 1.25rem; color: var(--text); transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease); }
   .pn:hover { transform: translateY(-3px); border-color: var(--accent-line); color: var(--text); }
   .pn.align-right { text-align: right; }
   .pn-label { display: inline-flex; align-items: center; gap: 0.35rem; color: var(--text-mute); font-size: 0.74rem; }
@@ -174,7 +174,7 @@ const articleLd = {
     font-family: var(--font-mono); font-size: 0.7rem;
     padding: 0.3rem 0.55rem; border-radius: var(--radius);
     background: var(--panel); border: 1px solid var(--border); color: var(--text-dim);
-    cursor: pointer; opacity: 0; transition: opacity 0.2s var(--ease), color 0.2s var(--ease);
+    cursor: pointer; opacity: 0; transition: opacity var(--dur) var(--ease), color var(--dur) var(--ease);
   }
   .prose pre:hover .copy-btn, .copy-btn:focus-visible { opacity: 1; }
   .copy-btn:hover { color: var(--accent); border-color: var(--accent-line); }

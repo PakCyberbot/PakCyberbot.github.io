@@ -134,7 +134,7 @@ body::after {
 img, picture, svg, canvas { display: block; max-width: 100%; }
 img { height: auto; }
 
-a { color: var(--accent); text-decoration: none; transition: color 0.2s var(--ease); }
+a { color: var(--accent); text-decoration: none; transition: color var(--dur) var(--ease); }
 a:hover { color: var(--accent-dim); }
 
 h1, h2, h3, h4 { line-height: var(--leading-heading); font-weight: 700; letter-spacing: -0.01em; }
@@ -208,8 +208,8 @@ h1, h2 { letter-spacing: var(--tracking-tight); }
   background: var(--panel);
   color: var(--text);
   cursor: pointer;
-  transition: transform 0.2s var(--ease), border-color 0.2s var(--ease),
-    background 0.2s var(--ease), color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease),
+    background var(--dur) var(--ease), color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
 .btn:hover { transform: translateY(-1px); border-color: var(--accent-line); color: var(--text); }
 .btn-primary {
@@ -255,8 +255,8 @@ h1, h2 { letter-spacing: var(--tracking-tight); }
 /* ===========================================================================
    Scroll-reveal (progressive enhancement; visible if JS/observer absent)
    =========================================================================== */
-[data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
-[data-reveal].is-visible { opacity: 1; transform: none; }
+[data-reveal] { opacity: 0; transition: opacity 220ms ease-out; }
+[data-reveal].is-visible { opacity: 1; }
 
 /* ===========================================================================
    Reduced motion

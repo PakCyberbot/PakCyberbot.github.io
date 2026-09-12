@@ -120,7 +120,7 @@ const mediumCount = posts.filter((p) => p.source === 'medium').length;
     font-family: var(--font-mono); font-size: 0.78rem;
     padding: 0.35rem 0.75rem; border-radius: var(--radius-pill);
     border: 1px solid var(--border); background: var(--bg-elev); color: var(--text-dim);
-    cursor: pointer; transition: all 0.2s var(--ease);
+    cursor: pointer; transition: all var(--dur) var(--ease);
   }
   .pill:hover { color: var(--text); border-color: var(--accent-line); }
   .pill:active { transform: scale(0.97); }
@@ -134,7 +134,7 @@ const mediumCount = posts.filter((p) => p.source === 'medium').length;
   .result-count { color: var(--text-mute); font-size: 0.78rem; margin: 0.75rem 0 1rem; }
 
   .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.1rem; }
-  .post-card { position: relative; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s var(--ease), border-color 0.2s var(--ease); }
+  .post-card { position: relative; overflow: hidden; display: flex; flex-direction: column; transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease); }
   .post-card:hover { transform: translateY(-4px); border-color: var(--accent-line); }
   .post-hit { position: absolute; inset: 0; z-index: 3; }
   .post-thumb { aspect-ratio: 40 / 21; overflow: hidden; border-bottom: 1px solid var(--border); background: var(--bg-elev); }

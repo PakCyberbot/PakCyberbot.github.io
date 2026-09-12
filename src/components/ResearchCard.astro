@@ -47,10 +47,10 @@ const icon = s.includes('linkedin')
 </a>
 
 <style>
-  .research { overflow: hidden; display: flex; flex-direction: column; color: var(--text); transition: transform 0.25s var(--ease), border-color 0.25s var(--ease); }
+  .research { overflow: hidden; display: flex; flex-direction: column; color: var(--text); transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease); }
   .research:hover { transform: translateY(-4px); border-color: var(--accent-line); color: var(--text); }
   .research-media { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-bottom: 1px solid var(--border); background: var(--bg-elev); }
-  .research-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s var(--ease); }
+  .research-media img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur) var(--ease); }
   .research:hover .research-media img { transform: scale(1.04); }
   .research-fallback {
     display: grid; place-items: center; height: 100%;

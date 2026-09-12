@@ -98,8 +98,8 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-sans);
-  font-size: 16px;
-  line-height: 1.65;
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
@@ -137,7 +137,8 @@ img { height: auto; }
 a { color: var(--accent); text-decoration: none; transition: color 0.2s var(--ease); }
 a:hover { color: var(--accent-dim); }
 
-h1, h2, h3, h4 { line-height: 1.15; font-weight: 700; letter-spacing: -0.01em; }
+h1, h2, h3, h4 { line-height: var(--leading-heading); font-weight: 700; letter-spacing: -0.01em; }
+h1, h2 { letter-spacing: var(--tracking-tight); }
 
 ::selection { background: var(--accent); color: var(--accent-contrast); }
 
@@ -160,15 +161,20 @@ h1, h2, h3, h4 { line-height: 1.15; font-weight: 700; letter-spacing: -0.01em; }
   align-items: center;
   gap: 0.5rem;
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
 }
 .eyebrow::before { content: '//'; color: var(--accent-2); opacity: 0.8; }
 
-.section-title { font-size: clamp(1.6rem, 3.5vw, 2.4rem); margin-top: 0.5rem; }
-.section-lead { color: var(--text-dim); margin-top: 0.6rem; max-width: 60ch; }
+.section-title {
+  font-size: clamp(var(--text-xl), 1rem + 2.2vw, var(--text-2xl));
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-tight);
+  margin-top: var(--space-2);
+}
+.section-lead { color: var(--text-dim); margin-top: var(--space-2); max-width: 60ch; }
 
 .mono { font-family: var(--font-mono); }
 .text-dim { color: var(--text-dim); }
@@ -194,7 +200,7 @@ h1, h2, h3, h4 { line-height: 1.15; font-weight: 700; letter-spacing: -0.01em; }
   align-items: center;
   gap: 0.5rem;
   font-family: var(--font-mono);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   padding: 0.7rem 1.15rem;
   border-radius: var(--radius);
@@ -219,7 +225,7 @@ h1, h2, h3, h4 { line-height: 1.15; font-weight: 700; letter-spacing: -0.01em; }
   align-items: center;
   gap: 0.35rem;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: var(--text-xs);
   letter-spacing: 0.03em;
   padding: 0.28rem 0.6rem;
   border-radius: var(--radius-pill);

@@ -235,7 +235,7 @@ const sections = [
   /* Hero */
   .hero { padding-top: clamp(2.5rem, 6vw, 4.5rem); padding-bottom: 1rem; }
   .hero-grid { display: grid; grid-template-columns: 1.35fr 0.9fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
-  .hero-name { font-size: clamp(2.1rem, 5.5vw, 3.4rem); line-height: 1.08; margin-top: 0.7rem; letter-spacing: -0.02em; }
+  .hero-name { font-size: var(--text-hero); line-height: 1.08; margin-top: var(--space-3); letter-spacing: var(--tracking-tight); }
   .hero-handle { display: block; font-family: var(--font-mono); font-weight: 500; font-size: 0.42em; color: var(--accent-2); margin-top: 0.5rem; letter-spacing: 0; }
   .hero-role { font-size: 1.05rem; color: var(--accent); margin-top: 1.1rem; min-height: 1.6em; }
   .caret { color: var(--accent); animation: blink 1.1s steps(1) infinite; }

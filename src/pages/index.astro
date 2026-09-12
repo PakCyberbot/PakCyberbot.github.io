@@ -302,7 +302,7 @@ const sections = [
 
   /* Dialog */
   .exp-dialog { border: none; padding: 0; background: transparent; max-width: min(680px, 92vw); width: 100%; margin: auto; color: var(--text); }
-  .exp-dialog::backdrop { background: rgba(2, 4, 3, 0.72); backdrop-filter: blur(3px); }
+  .exp-dialog::backdrop { background: var(--scrim); backdrop-filter: blur(3px); }
   .exp-modal { background: linear-gradient(180deg, var(--panel), var(--panel-2)); border: 1px solid var(--border); border-radius: var(--radius); max-height: 86vh; display: flex; flex-direction: column; box-shadow: var(--shadow-lg); }
   .exp-modal-head { display: flex; align-items: center; gap: 0.7rem; padding: 1.1rem 1.25rem; border-bottom: 1px solid var(--border); }
   .exp-modal-head h3 { font-size: 1.15rem; flex: 1; }
@@ -356,7 +356,7 @@ const sections = [
   .exp-prose a:hover { color: var(--accent); }
   .exp-prose strong { color: var(--text); }
   .exp-prose :not(pre) > code { font-family: var(--font-mono); font-size: 0.85em; background: var(--bg-elev); border: 1px solid var(--border-soft); padding: 0.1em 0.4em; border-radius: 6px; color: var(--accent); }
-  .exp-prose pre { font-family: var(--font-mono); font-size: 0.82rem; padding: 1rem; border-radius: 10px; border: 1px solid var(--border); overflow-x: auto; background: #0d1117 !important; }
+  .exp-prose pre { font-family: var(--font-mono); font-size: 0.82rem; padding: 1rem; border-radius: 10px; border: 1px solid var(--border); overflow-x: auto; background: var(--code-bg) !important; }
   .exp-prose img { border-radius: 10px; border: 1px solid var(--border); }
   .exp-prose .markdown-alert { padding: 0.8rem 1rem; border-radius: 9px; border: 1px solid var(--border); border-left-width: 3px; background: var(--bg-elev); }
   .exp-prose .markdown-alert-title { display: flex; align-items: center; gap: 0.4rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: capitalize; }

@@ -25,24 +25,60 @@
   --accent-bright: #45c074;   /* emphasis / hover only */
   --accent-2: #5c8f74;        /* desaturated sage for secondary text */
   --accent-3: #4fae7d;        /* links in prose */
+  --accent-contrast: #06210f; /* text on accent fills */
   --danger: #d9576f;
   --warn: #c9964a;
+  --info: #9c8bd6;            /* violet — callouts / "important" */
+  --code-bg: #0b0f14;        /* code-block background */
 
   --accent-glow: rgba(47, 156, 90, 0.09);
   --accent-line: rgba(47, 156, 90, 0.26);
+  --accent-fill: linear-gradient(180deg, #1c7a44, #164f2f); /* primary button */
+  --on-accent-fill: #ecf7f0;
+  --scrim: rgba(3, 5, 4, 0.72); /* modal/overlay backdrop */
 
   /* Type */
   --font-sans: 'Inter Variable', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
+  /* Type scale (12 / 14 / 16 / 20 / 24 / 32) */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-hero: clamp(2.1rem, 5.5vw, 3.4rem);
+  --leading-body: 1.5;
+  --leading-heading: 1.15;
+  --tracking-tight: -0.02em;
+
+  /* Spacing scale (4px base) */
+  --space-1: 0.25rem;  /* 4  */
+  --space-2: 0.5rem;   /* 8  */
+  --space-3: 0.75rem;  /* 12 */
+  --space-4: 1rem;     /* 16 */
+  --space-5: 1.5rem;   /* 24 */
+  --space-6: 2rem;     /* 32 */
+  --space-8: 3rem;     /* 48 */
+  --space-10: 4rem;    /* 64 */
+
   /* Layout */
   --maxw: 1120px;
-  --radius: 10px;
-  --radius-sm: 7px;
-  --shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.6);
+  --gutter: var(--space-5);
 
+  /* Radius — one value everywhere (+ pill exception) */
+  --radius: 10px;
+  --radius-pill: 999px;
+
+  /* Elevation — two levels: 1 = border only, 2 = border + soft shadow */
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+
+  /* Motion */
+  --dur: 160ms;
+  --dur-fast: 120ms;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
   color-scheme: dark;
 }
 
@@ -103,7 +139,7 @@ a:hover { color: var(--accent-dim); }
 
 h1, h2, h3, h4 { line-height: 1.15; font-weight: 700; letter-spacing: -0.01em; }
 
-::selection { background: var(--accent); color: #06210f; }
+::selection { background: var(--accent); color: var(--accent-contrast); }
 
 /* Focus visibility for keyboard users. */
 :focus-visible {
@@ -144,13 +180,13 @@ h1, h2, h3, h4 { line-height: 1.15; font-weight: 700; letter-spacing: -0.01em; }
   top: -3rem;
   z-index: 200;
   background: var(--accent);
-  color: #06210f;
+  color: var(--accent-contrast);
   padding: 0.55rem 0.9rem;
-  border-radius: 8px;
+  border-radius: var(--radius);
   font-weight: 600;
-  transition: top 0.2s var(--ease);
+  transition: top var(--dur) var(--ease);
 }
-.skip-link:focus { top: 1rem; color: #06210f; }
+.skip-link:focus { top: 1rem; color: var(--accent-contrast); }
 
 /* Buttons */
 .btn {
@@ -171,11 +207,11 @@ h1, h2, h3, h4 { line-height: 1.15; font-weight: 700; letter-spacing: -0.01em; }
 }
 .btn:hover { transform: translateY(-1px); border-color: var(--accent-line); color: var(--text); }
 .btn-primary {
-  background: linear-gradient(180deg, #1c7a44, #164f2f);
-  color: #ecf7f0;
+  background: var(--accent-fill);
+  color: var(--on-accent-fill);
   border: 1px solid var(--accent-line);
 }
-.btn-primary:hover { color: #fff; border-color: var(--accent); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45); }
+.btn-primary:hover { color: #fff; border-color: var(--accent); box-shadow: var(--shadow); }
 
 /* Chips / tags */
 .chip {

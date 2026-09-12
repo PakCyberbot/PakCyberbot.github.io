@@ -93,9 +93,11 @@ const mediumCount = posts.filter((p) => p.source === 'medium').length;
         ))}
       </div>
 
-      <div class="no-posts" id="no-posts" hidden>
+      <div class="no-posts card" id="no-posts" hidden>
         <Icon name="lucide:search" />
-        <p>No posts match your filters.</p>
+        <p class="np-title">No posts match your filters</p>
+        <p class="np-sub">Try a different search term, source or tag.</p>
+        <button class="btn" type="button" id="clear-filters">Clear filters</button>
       </div>
     </div>
   </section>
@@ -155,8 +157,11 @@ const mediumCount = posts.filter((p) => p.source === 'medium').length;
   .post-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.9rem; position: relative; z-index: 4; }
   .post-tags .chip { font-size: 0.68rem; padding: 0.2rem 0.5rem; }
 
-  .no-posts { text-align: center; padding: 3rem 1rem; color: var(--text-mute); }
-  .no-posts [data-icon] { width: 32px; height: 32px; margin: 0 auto 0.6rem; }
+  .no-posts { text-align: center; padding: 3rem 1.5rem; color: var(--text-mute); display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+  .no-posts [data-icon] { width: 30px; height: 30px; color: var(--accent); opacity: 0.7; margin-bottom: 0.4rem; }
+  .no-posts .np-title { color: var(--text); font-weight: 600; }
+  .no-posts .np-sub { font-size: var(--text-sm); }
+  .no-posts .btn { margin-top: 0.9rem; }
 
   .hidden { display: none !important; }
 </style>
@@ -197,6 +202,18 @@ const mediumCount = posts.filter((p) => p.source === 'medium').length;
   catBtns.forEach((b) => b.addEventListener('click', () => { activate(catBtns, b); state.cat = b.dataset.cat!; apply(); }));
   tagSelect?.addEventListener('change', () => { state.tag = tagSelect.value; apply(); });
   search?.addEventListener('input', () => { state.q = search.value.trim().toLowerCase(); apply(); });
+
+  document.getElementById('clear-filters')?.addEventListener('click', () => {
+    state.source = 'all'; state.cat = 'all'; state.tag = 'all'; state.q = '';
+    if (search) search.value = '';
+    if (tagSelect) tagSelect.value = 'all';
+    const allSource = [...sourceBtns].find((b) => b.dataset.source === 'all');
+    const allCat = [...catBtns].find((b) => b.dataset.cat === 'all');
+    if (allSource) activate(sourceBtns, allSource);
+    if (allCat) activate(catBtns, allCat);
+    apply();
+    search?.focus();
+  });
 
   apply();
 </script>

@@ -1,0 +1,407 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site, roles, socials, platforms } from '../data/site';
+import profile from '../assets/profile-new.png';
+import logo from '../assets/logo.png';
+
+const achievements = await getCollection('achievements');
+const certs = (await getCollection('certifications')).sort((a, b) =>
+  a.data.featured === b.data.featured ? b.data.year - a.data.year : a.data.featured ? -1 : 1
+);
+
+// Highlights = featured achievements (certifications have their own section now).
+const highlights = achievements
+  .filter((a) => a.data.featured)
+  .sort((a, b) => a.data.rank - b.data.rank)
+  .slice(0, 5)
+  .map((a) => ({
+    title: a.data.title,
+    meta: [a.data.placement, a.data.issuer, String(a.data.year)].filter(Boolean).join(' · '),
+    icon: a.data.icon,
+    url: a.data.url ?? '/achievements',
+  }));
+
+// "What I do" — each expertise area, with its Markdown body rendered for a popup.
+const expertiseEntries = (await getCollection('expertise')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const expertise = await Promise.all(
+  expertiseEntries.map(async (e) => ({
+    id: e.id,
+    data: e.data,
+    Content: (await render(e)).Content,
+  }))
+);
+
+const rolesJson = JSON.stringify(roles);
+
+const sections = [
+  { href: '/work', icon: 'lucide:briefcase', title: 'Work', desc: 'Projects, authored CTF challenges & labs, and research.' },
+  { href: '/achievements', icon: 'lucide:trophy', title: 'Achievements', desc: 'CTF placements, bug bounty recognition and CVEs.' },
+  { href: '/blog', icon: 'lucide:book-open', title: 'Blog', desc: 'Write-ups, OSCP notes and articles — mine and on Medium.' },
+];
+---
+
+<BaseLayout>
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy" data-reveal>
+        <span class="eyebrow">security researcher</span>
+        <h1 class="hero-name">Faraz Ahmed <span class="hero-handle">{site.handle}</span></h1>
+        <p class="hero-role mono"><span id="typed-role">{roles[0]}</span><span class="caret" aria-hidden="true">▋</span></p>
+        <p class="hero-pitch">{site.pitch}</p>
+        <div class="hero-cta">
+          <a href="/achievements" class="btn btn-primary">View achievements <Icon name="lucide:arrow-right" /></a>
+          <a href="/work" class="btn">See my work</a>
+        </div>
+        <div class="hero-social" aria-label="Profiles">
+          {socials.map((s) => (
+            <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} title={s.label}>
+              <Icon name={s.icon} />
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <aside class="hero-id" data-reveal data-reveal-delay="120">
+        <div class="portrait-wrap">
+          <Image src={profile} alt="Faraz Ahmed (PakCyberbot)" class="portrait" widths={[280, 420, 560]} sizes="(max-width: 880px) 240px, 320px" loading="eager" fetchpriority="high" />
+          <Image src={logo} alt="" aria-hidden="true" class="id-logo" widths={[56, 112]} sizes="56px" loading="eager" />
+        </div>
+        <dl class="id-meta mono">
+          <div class="id-row"><dt>role</dt><dd>{site.currentRole}</dd></div>
+          <div class="id-row"><dt>focus</dt><dd>Red Team · Bug Bounty</dd></div>
+          <div class="id-row"><dt>certs</dt><dd>OSCP · eJPTv2 · GCP</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ===================== CERTIFICATIONS ===================== -->
+  <section class="section" aria-labelledby="certs-title">
+    <div class="container">
+      <span class="eyebrow">verified credentials</span>
+      <h2 class="section-title" id="certs-title">Certifications</h2>
+      <p class="section-lead">Industry certifications, each with a public verification link. Course-completion certificates are archived separately.</p>
+
+      <div class="certs-grid">
+        {certs.map((c, i) => (
+          <article class="cert card" data-reveal data-reveal-delay={i * 70}>
+            <div class="cert-badge">
+              {c.data.logo
+                ? <img src={c.data.logo} alt={`${c.data.abbr} badge`} loading="lazy" decoding="async" width="76" height="76" />
+                : <Icon name="lucide:award" />}
+            </div>
+            <div class="cert-info">
+              <h3 class="cert-name">{c.data.name}</h3>
+              <p class="cert-meta mono">{c.data.issuer} · {c.data.year}</p>
+              <p class="cert-desc">{c.data.description}</p>
+              {c.data.credentialUrl && (
+                <a class="cert-verify mono" href={c.data.credentialUrl} target="_blank" rel="noopener noreferrer">
+                  <Icon name="lucide:shield-check" /> Verify credential
+                </a>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="all-certs card">
+        <div>
+          <h3>Full certificate archive</h3>
+          <p class="text-dim">Every course-completion and training certificate is stored in the repository.</p>
+        </div>
+        <a class="btn btn-primary" href={site.certificatesUrl} target="_blank" rel="noopener noreferrer">
+          <Icon name="lucide:folder-git-2" /> View all certificates
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HIGHLIGHTS ===================== -->
+  <section class="section" aria-labelledby="hl-title">
+    <div class="container">
+      <span class="eyebrow">top signal</span>
+      <h2 class="section-title" id="hl-title">Highlights</h2>
+      <p class="section-lead">A quick pass over what matters most. The full record is on the Achievements page.</p>
+
+      <div class="hl-grid">
+        {highlights.map((h, i) => (
+          <a class="hl-card card" href={h.url} target={h.url.startsWith('http') ? '_blank' : undefined} rel={h.url.startsWith('http') ? 'noopener noreferrer' : undefined} data-reveal data-reveal-delay={i * 70}>
+            <span class="hl-icon"><Icon name={`lucide:${h.icon}`} /></span>
+            <span class="hl-body">
+              <b>{h.title}</b>
+              <span class="hl-meta mono">{h.meta}</span>
+            </span>
+            <Icon name="lucide:arrow-up-right" class="hl-arrow" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WHAT I DO (verification popups) ===================== -->
+  <section class="section" aria-labelledby="exp-title">
+    <div class="container">
+      <span class="eyebrow">capabilities</span>
+      <h2 class="section-title" id="exp-title">What I do</h2>
+      <p class="section-lead">Click any area to read exactly what I do and verify it through the proof links.</p>
+
+      <div class="exp-grid">
+        {expertise.map((e, i) => (
+          <button class="exp-card card" type="button" data-exp={e.id} aria-haspopup="dialog" data-reveal data-reveal-delay={i * 60}>
+            <span class="exp-icon"><Icon name={`lucide:${e.data.icon}`} /></span>
+            <span class="exp-title">{e.data.title}</span>
+            <span class="exp-summary">{e.data.summary}</span>
+            <span class="exp-cta mono"><Icon name="lucide:shield-check" /> view &amp; verify</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {expertise.map((e) => {
+    const Body = e.Content;
+    return (
+      <dialog id={`exp-${e.id}`} class="exp-dialog" aria-label={e.data.title}>
+        <article class="exp-modal">
+          <header class="exp-modal-head">
+            <span class="exp-modal-icon"><Icon name={`lucide:${e.data.icon}`} /></span>
+            <h3>{e.data.title}</h3>
+            <button class="exp-close" type="button" aria-label="Close"><Icon name="lucide:x" /></button>
+          </header>
+          <div class="exp-prose"><Body /></div>
+        </article>
+      </dialog>
+    );
+  })}
+
+  <!-- ===================== CONNECT (socials + platforms) ===================== -->
+  <section class="section" aria-labelledby="connect-title">
+    <div class="container">
+      <span class="eyebrow">connect</span>
+      <h2 class="section-title" id="connect-title">Find me online</h2>
+
+      <div class="connect-group" data-reveal>
+        <h3 class="cg-label mono">// social</h3>
+        <div class="link-row">
+          {socials.map((s) => (
+            <a class="link-chip card" href={s.href} target="_blank" rel="noopener noreferrer">
+              <Icon name={s.icon} />
+              <span class="lc-text"><b>{s.label}</b><span class="lc-handle mono">{s.handle}</span></span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div class="connect-group" data-reveal data-reveal-delay="80">
+        <h3 class="cg-label mono">// platforms &amp; labs</h3>
+        <div class="link-row">
+          {platforms.map((p) => (
+            <a class="link-chip card" href={p.href} target="_blank" rel="noopener noreferrer">
+              <Icon name={p.icon} />
+              <span class="lc-text"><b>{p.label}</b><span class="lc-handle mono">{p.handle}</span></span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION LINKS ===================== -->
+  <section class="section" aria-labelledby="explore-title">
+    <div class="container">
+      <span class="eyebrow">explore</span>
+      <h2 class="section-title" id="explore-title">Dig deeper</h2>
+      <div class="explore-grid">
+        {sections.map((s, i) => (
+          <a class="explore-card card" href={s.href} data-reveal data-reveal-delay={i * 80}>
+            <span class="explore-icon"><Icon name={s.icon} /></span>
+            <h3>{s.title}</h3>
+            <p>{s.desc}</p>
+            <span class="explore-go mono">open <Icon name="lucide:arrow-right" /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .hero { padding-top: clamp(2.5rem, 6vw, 4.5rem); padding-bottom: 1rem; }
+  .hero-grid { display: grid; grid-template-columns: 1.35fr 0.9fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+  .hero-name { font-size: clamp(2.1rem, 5.5vw, 3.4rem); line-height: 1.08; margin-top: 0.7rem; letter-spacing: -0.02em; }
+  .hero-handle { display: block; font-family: var(--font-mono); font-weight: 500; font-size: 0.42em; color: var(--accent-2); margin-top: 0.5rem; letter-spacing: 0; }
+  .hero-role { font-size: 1.05rem; color: var(--accent); margin-top: 1.1rem; min-height: 1.6em; }
+  .caret { color: var(--accent); animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .hero-pitch { color: var(--text-dim); margin-top: 1rem; max-width: 52ch; font-size: 1.02rem; }
+  .hero-cta { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 1.6rem; }
+  .hero-cta [data-icon] { width: 17px; height: 17px; }
+  .hero-social { display: flex; gap: 0.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
+  .hero-social a {
+    display: grid; place-items: center; width: 38px; height: 38px;
+    border: 1px solid var(--border); border-radius: 9px; color: var(--text-dim); background: var(--panel);
+    transition: color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.2s var(--ease);
+  }
+  .hero-social a:hover { color: var(--accent); border-color: var(--accent-line); transform: translateY(-2px); }
+  .hero-social [data-icon] { width: 18px; height: 18px; }
+
+  .hero-id { justify-self: end; width: 100%; max-width: 360px; }
+  .portrait-wrap { position: relative; width: 100%; aspect-ratio: 1; }
+  .portrait { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; border: 1px solid var(--border); }
+  .id-logo { position: absolute; right: -8px; bottom: -8px; width: 52px; height: auto; padding: 6px; border-radius: 10px; background: var(--bg-elev); border: 1px solid var(--border); }
+  .id-meta { margin-top: 1.4rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.84rem; }
+  .id-row { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px dashed var(--border-soft); padding-bottom: 0.5rem; margin: 0; }
+  .id-row dt { color: var(--text-mute); } .id-row dd { color: var(--text); margin: 0; text-align: right; }
+
+  /* Certifications */
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+  .cert { display: flex; gap: 1.1rem; padding: 1.35rem; align-items: flex-start; transition: transform 0.2s var(--ease), border-color 0.2s var(--ease); }
+  .cert:hover { transform: translateY(-3px); border-color: var(--accent-line); }
+  .cert-badge { flex-shrink: 0; width: 76px; height: 76px; display: grid; place-items: center; }
+  .cert-badge img { width: 100%; height: 100%; object-fit: contain; }
+  .cert-badge [data-icon] { width: 40px; height: 40px; color: var(--accent); }
+  .cert-info { min-width: 0; }
+  .cert-name { font-size: 1.05rem; line-height: 1.25; }
+  .cert-meta { color: var(--text-mute); font-size: 0.76rem; margin-top: 0.3rem; }
+  .cert-desc { color: var(--text-dim); font-size: 0.86rem; margin-top: 0.55rem; }
+  .cert-verify { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; margin-top: 0.85rem; color: var(--accent); }
+  .cert-verify [data-icon] { width: 15px; height: 15px; }
+  .all-certs { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
+  .all-certs h3 { font-size: 1.1rem; }
+  .all-certs p { font-size: 0.88rem; margin-top: 0.3rem; max-width: 55ch; }
+  .all-certs [data-icon] { width: 18px; height: 18px; }
+
+  /* Highlights */
+  .hl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.9rem; margin-top: 1.5rem; }
+  .hl-card { display: flex; align-items: center; gap: 0.9rem; padding: 1rem 1.1rem; color: var(--text); transition: transform 0.2s var(--ease), border-color 0.2s var(--ease); }
+  .hl-card:hover { transform: translateY(-3px); border-color: var(--accent-line); color: var(--text); }
+  .hl-icon { display: grid; place-items: center; width: 42px; height: 42px; flex-shrink: 0; border-radius: 10px; background: var(--bg-elev); border: 1px solid var(--border); color: var(--accent); }
+  .hl-icon [data-icon] { width: 20px; height: 20px; }
+  .hl-body { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+  .hl-body b { font-size: 0.95rem; line-height: 1.3; }
+  .hl-meta { font-size: 0.74rem; color: var(--text-mute); }
+  .hl-arrow { width: 18px; height: 18px; color: var(--text-mute); margin-left: auto; flex-shrink: 0; }
+
+  /* What I do */
+  .exp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+  .exp-card { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; padding: 1.4rem; text-align: left; cursor: pointer; color: var(--text); font: inherit; transition: transform 0.2s var(--ease), border-color 0.2s var(--ease); }
+  .exp-card:hover { transform: translateY(-4px); border-color: var(--accent-line); }
+  .exp-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 11px; background: var(--bg-elev); border: 1px solid var(--border); color: var(--accent); margin-bottom: 0.5rem; }
+  .exp-icon [data-icon] { width: 22px; height: 22px; }
+  .exp-title { font-size: 1.05rem; font-weight: 700; }
+  .exp-summary { color: var(--text-dim); font-size: 0.86rem; flex: 1; }
+  .exp-cta { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--accent); font-size: 0.76rem; margin-top: 0.7rem; }
+  .exp-cta [data-icon] { width: 14px; height: 14px; }
+
+  /* Dialog */
+  .exp-dialog { border: none; padding: 0; background: transparent; max-width: min(680px, 92vw); width: 100%; margin: auto; color: var(--text); }
+  .exp-dialog::backdrop { background: rgba(2, 4, 3, 0.72); backdrop-filter: blur(3px); }
+  .exp-modal { background: linear-gradient(180deg, var(--panel), var(--panel-2)); border: 1px solid var(--border); border-radius: var(--radius); max-height: 86vh; display: flex; flex-direction: column; box-shadow: var(--shadow-lg); }
+  .exp-modal-head { display: flex; align-items: center; gap: 0.7rem; padding: 1.1rem 1.25rem; border-bottom: 1px solid var(--border); }
+  .exp-modal-head h3 { font-size: 1.15rem; flex: 1; }
+  .exp-modal-icon { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 10px; background: var(--bg-elev); border: 1px solid var(--border); color: var(--accent); }
+  .exp-modal-icon [data-icon] { width: 19px; height: 19px; }
+  .exp-close { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-elev); color: var(--text-dim); cursor: pointer; }
+  .exp-close:hover { color: var(--accent); border-color: var(--accent-line); }
+  .exp-close [data-icon] { width: 18px; height: 18px; }
+  .exp-prose { padding: 1.25rem 1.35rem 1.5rem; overflow-y: auto; }
+
+  /* Connect */
+  .connect-group { margin-top: 1.5rem; }
+  .cg-label { color: var(--text-mute); font-size: 0.78rem; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+  .link-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 0.7rem; }
+  .link-chip { display: flex; align-items: center; gap: 0.7rem; padding: 0.75rem 0.9rem; color: var(--text); transition: transform 0.2s var(--ease), border-color 0.2s var(--ease); }
+  .link-chip:hover { transform: translateY(-2px); border-color: var(--accent-line); color: var(--text); }
+  .link-chip [data-icon] { width: 22px; height: 22px; color: var(--accent); flex-shrink: 0; }
+  .lc-text { display: flex; flex-direction: column; min-width: 0; }
+  .lc-text b { font-size: 0.88rem; }
+  .lc-handle { font-size: 0.72rem; color: var(--text-mute); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  /* Explore */
+  .explore-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+  .explore-card { padding: 1.5rem; color: var(--text); transition: transform 0.2s var(--ease), border-color 0.2s var(--ease); }
+  .explore-card:hover { transform: translateY(-4px); border-color: var(--accent-line); color: var(--text); }
+  .explore-icon { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 11px; background: var(--bg-elev); border: 1px solid var(--border); color: var(--accent); margin-bottom: 0.9rem; }
+  .explore-icon [data-icon] { width: 22px; height: 22px; }
+  .explore-card h3 { font-size: 1.15rem; }
+  .explore-card p { color: var(--text-dim); font-size: 0.9rem; margin-top: 0.4rem; }
+  .explore-go { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--accent); font-size: 0.82rem; margin-top: 1rem; }
+  .explore-go [data-icon] { width: 16px; height: 16px; transition: transform 0.2s var(--ease); }
+  .explore-card:hover .explore-go [data-icon] { transform: translateX(4px); }
+
+  @media (max-width: 880px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-id { order: -1; justify-self: center; margin-inline: auto; max-width: 260px; }
+  }
+</style>
+
+<!-- Prose styling for the verification popups (rendered Markdown) -->
+<style is:global>
+  .exp-prose > * + * { margin-top: 0.9rem; }
+  .exp-prose h2 { font-size: 1.1rem; margin-top: 1.3rem; color: var(--text); }
+  .exp-prose h2:first-child { margin-top: 0; }
+  .exp-prose h3 { font-size: 1rem; margin-top: 1.1rem; }
+  .exp-prose p, .exp-prose li { color: var(--text-dim); font-size: 0.92rem; line-height: 1.7; }
+  .exp-prose ul, .exp-prose ol { padding-left: 1.3rem; }
+  .exp-prose li { margin-top: 0.3rem; }
+  .exp-prose li::marker { color: var(--accent); }
+  .exp-prose a { color: var(--accent-3); text-decoration: underline; text-underline-offset: 3px; }
+  .exp-prose a:hover { color: var(--accent); }
+  .exp-prose strong { color: var(--text); }
+  .exp-prose :not(pre) > code { font-family: var(--font-mono); font-size: 0.85em; background: var(--bg-elev); border: 1px solid var(--border-soft); padding: 0.1em 0.4em; border-radius: 6px; color: var(--accent); }
+  .exp-prose pre { font-family: var(--font-mono); font-size: 0.82rem; padding: 1rem; border-radius: 10px; border: 1px solid var(--border); overflow-x: auto; background: #0d1117 !important; }
+  .exp-prose img { border-radius: 10px; border: 1px solid var(--border); }
+  .exp-prose .markdown-alert { padding: 0.8rem 1rem; border-radius: 9px; border: 1px solid var(--border); border-left-width: 3px; background: var(--bg-elev); }
+  .exp-prose .markdown-alert-title { display: flex; align-items: center; gap: 0.4rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: capitalize; }
+  .exp-prose .markdown-alert-title svg { width: 16px; height: 16px; fill: currentColor; }
+  .exp-prose .markdown-alert-note { border-left-color: var(--accent-3); }
+  .exp-prose .markdown-alert-note .markdown-alert-title { color: var(--accent-3); }
+  .exp-prose .markdown-alert-tip { border-left-color: var(--accent); }
+  .exp-prose .markdown-alert-tip .markdown-alert-title { color: var(--accent); }
+  .exp-prose .markdown-alert-warning { border-left-color: var(--warn); }
+  .exp-prose .markdown-alert-warning .markdown-alert-title { color: var(--warn); }
+  .exp-prose .markdown-alert-caution, .exp-prose .markdown-alert-important { border-left-color: var(--danger); }
+  .exp-prose .markdown-alert-caution .markdown-alert-title, .exp-prose .markdown-alert-important .markdown-alert-title { color: var(--danger); }
+</style>
+
+<script define:vars={{ rolesJson }}>
+  // Hero typing effect
+  const roles = JSON.parse(rolesJson);
+  const el = document.getElementById('typed-role');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (el && !reduce && roles.length) {
+    let ri = 0, ci = 0, deleting = false;
+    el.textContent = '';
+    const tick = () => {
+      const word = roles[ri];
+      if (!deleting) {
+        el.textContent = word.slice(0, ++ci);
+        if (ci === word.length) { deleting = true; return setTimeout(tick, 1700); }
+      } else {
+        el.textContent = word.slice(0, --ci);
+        if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; }
+      }
+      setTimeout(tick, deleting ? 45 : 85);
+    };
+    setTimeout(tick, 600);
+  }
+
+  // "What I do" verification popups
+  document.querySelectorAll('[data-exp]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const dlg = document.getElementById('exp-' + btn.dataset.exp);
+      if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
+    });
+  });
+  document.querySelectorAll('.exp-dialog').forEach((dlg) => {
+    dlg.querySelector('.exp-close')?.addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  });
+</script>

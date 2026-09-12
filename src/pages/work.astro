@@ -1,0 +1,116 @@
+---
+import { getCollection } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ResearchCard from '../components/ResearchCard.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) =>
+  a.data.featured === b.data.featured ? 0 : a.data.featured ? -1 : 1
+);
+const challenges = await getCollection('challenges');
+const research = await getCollection('research');
+
+const platformMeta: Record<string, { icon: string; label: string }> = {
+  hackthebox: { icon: 'simple-icons:hackthebox', label: 'HackTheBox' },
+  tryhackme: { icon: 'simple-icons:tryhackme', label: 'TryHackMe' },
+  other: { icon: 'lucide:flag', label: 'CTF' },
+};
+---
+
+<BaseLayout title="Work" description="Projects, authored CTF challenges and labs, and research by Faraz Ahmed (PakCyberbot).">
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">portfolio</span>
+      <h1 class="section-title">Work</h1>
+      <p class="section-lead">Tools I build, challenges I author, and research I publish.</p>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section block" aria-labelledby="proj-title" id="projects">
+    <div class="container">
+      <div class="block-head">
+        <h2 class="block-title" id="proj-title"><Icon name="lucide:folder-git-2" /> Projects</h2>
+        <a class="block-link mono" href="https://github.com/PakCyberbot?tab=repositories" target="_blank" rel="noopener noreferrer">all repos <Icon name="lucide:arrow-up-right" /></a>
+      </div>
+      <div class="grid-3">
+        {projects.map((p, i) => (
+          <div data-reveal data-reveal-delay={i * 70}><ProjectCard {...p.data} /></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CHALLENGES & LABS -->
+  <section class="section block" aria-labelledby="chal-title" id="challenges">
+    <div class="container">
+      <div class="block-head">
+        <h2 class="block-title" id="chal-title"><Icon name="lucide:flag" /> Challenges &amp; Labs</h2>
+        <span class="block-sub text-dim">Authored for HackTheBox &amp; TryHackMe</span>
+      </div>
+      <div class="chal-grid">
+        {challenges.map((c, i) => {
+          const m = platformMeta[c.data.platform] ?? platformMeta.other;
+          return (
+            <a class="chal card" href={c.data.url} target="_blank" rel="noopener noreferrer" data-reveal data-reveal-delay={(i % 4) * 60}>
+              <span class="chal-icon"><Icon name={m.icon} /></span>
+              <span class="chal-body">
+                <span class="chal-title">{c.data.title}</span>
+                <span class="chal-meta mono">
+                  {m.label}{c.data.kind ? ` · ${c.data.kind}` : ''}{c.data.difficulty ? ` · ${c.data.difficulty}` : ''}
+                </span>
+                {c.data.description && <span class="chal-desc">{c.data.description}</span>}
+              </span>
+              <Icon name="lucide:arrow-up-right" class="chal-go" />
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  {research.length > 0 && (
+    <section class="section block" aria-labelledby="res-title" id="research">
+      <div class="container">
+        <div class="block-head">
+          <h2 class="block-title" id="res-title"><Icon name="lucide:radar" /> Research &amp; Talks</h2>
+          <span class="block-sub text-dim">Posts, write-ups & appearances</span>
+        </div>
+        <div class="grid-3">
+          {research.map((r, i) => (
+            <div data-reveal data-reveal-delay={i * 70}><ResearchCard {...r.data} /></div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  .block { padding-block: clamp(1.5rem, 4vw, 2.5rem); }
+  .block-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.4rem; padding-bottom: 0.9rem; border-bottom: 1px solid var(--border-soft); }
+  .block-title { display: inline-flex; align-items: center; gap: 0.6rem; font-size: 1.4rem; }
+  .block-title [data-icon] { width: 22px; height: 22px; color: var(--accent); }
+  .block-link { display: inline-flex; align-items: center; gap: 0.35rem; color: var(--text-dim); font-size: 0.82rem; }
+  .block-link:hover { color: var(--accent); }
+  .block-link [data-icon] { width: 15px; height: 15px; }
+  .block-sub { font-size: 0.85rem; }
+
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.1rem; }
+  .grid-3 > div { display: flex; }
+  .grid-3 > div > :global(*) { width: 100%; }
+
+  .chal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.9rem; }
+  .chal { display: flex; align-items: flex-start; gap: 0.85rem; padding: 1.1rem; color: var(--text); transition: transform 0.2s var(--ease), border-color 0.2s var(--ease); }
+  .chal:hover { transform: translateY(-3px); border-color: var(--accent-line); color: var(--text); }
+  .chal-icon { display: grid; place-items: center; width: 42px; height: 42px; flex-shrink: 0; border-radius: 10px; background: var(--bg-elev); border: 1px solid var(--border); color: var(--accent); }
+  .chal-icon [data-icon] { width: 22px; height: 22px; }
+  .chal-body { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; }
+  .chal-title { font-weight: 600; font-size: 0.98rem; }
+  .chal-meta { font-size: 0.72rem; color: var(--text-mute); }
+  .chal-desc { font-size: 0.83rem; color: var(--text-dim); margin-top: 0.25rem; }
+  .chal-go { width: 17px; height: 17px; color: var(--text-mute); margin-left: auto; flex-shrink: 0; }
+  .chal:hover .chal-go { color: var(--accent); }
+</style>

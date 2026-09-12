@@ -1,0 +1,47 @@
+---
+import { getCollection, render } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+import { readingTime } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('writeups', ({ data }) =>
+    import.meta.env.PROD ? data.draft !== true : true
+  )).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+  return posts.map((post, i) => ({
+    params: { slug: post.id },
+    props: {
+      post,
+      prev: posts[i + 1] ? { slug: posts[i + 1].id, title: posts[i + 1].data.title } : null,
+      next: posts[i - 1] ? { slug: posts[i - 1].id, title: posts[i - 1].data.title } : null,
+    },
+  }));
+}
+
+const { post, prev, next } = Astro.props;
+const { Content, headings } = await render(post);
+const rt = readingTime(post.body ?? '');
+const ogImage = post.data.cover?.src;
+---
+
+<PostLayout
+  title={post.data.title}
+  date={post.data.date}
+  category={post.data.category}
+  tags={post.data.tags}
+  summary={post.data.summary}
+  readingTime={rt}
+  headings={headings}
+  ogImage={ogImage}
+  prev={prev}
+  next={next}
+>
+  {post.data.cover && (
+    <img src={post.data.cover.src} alt="" class="post-cover" width={post.data.cover.width} height={post.data.cover.height} />
+  )}
+  <Content />
+</PostLayout>
+
+<style>
+  .post-cover { width: 100%; border-radius: 14px; border: 1px solid var(--border); margin-bottom: 1.5rem; }
+</style>

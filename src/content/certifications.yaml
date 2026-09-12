@@ -1,0 +1,45 @@
+# =============================================================================
+# Significant certifications only (shown as badge cards in the Certifications
+# section on the Achievements page). Minor / course-completion certificates are
+# NOT listed here — the full set lives in the repo's /certificates directory,
+# linked from the "View all certificates" button.
+#
+# logo:          drop a PNG into public/badges/ and reference its path here.
+# credentialUrl: public verification link for the badge.
+# =============================================================================
+
+- id: oscp
+  name: Offensive Security Certified Professional
+  abbr: OSCP
+  issuer: Offensive Security (OffSec)
+  year: 2024
+  logo: /badges/oscp.png
+  credentialUrl: https://credentials.offsec.com/7d159261-fceb-4503-8531-eeef31b68969
+  description: >-
+    Hands-on penetration-testing certification with a 24-hour practical exam.
+    Awarded to me by OffSec after winning their report-writing contest.
+  featured: true
+
+- id: gcp-security-engineer
+  name: Professional Cloud Security Engineer
+  abbr: GCP PCSE
+  issuer: Google Cloud
+  year: 2024
+  logo: /badges/gcp-security.png
+  credentialUrl: https://www.credly.com/badges/80a15dbc-ab70-4dc3-abd6-f812bb0f25ff/public_url
+  description: >-
+    Google Cloud's professional certification for designing and operating secure
+    workloads and infrastructure on Google Cloud Platform.
+  featured: true
+
+- id: ejptv2
+  name: eLearnSecurity Junior Penetration Tester v2
+  abbr: eJPTv2
+  issuer: INE Security
+  year: 2023
+  logo: /badges/ejptv2.png
+  credentialUrl: https://api.ca.badgr.io/public/collections/4104c95894fb4505ad1500cd05648601
+  description: >-
+    Fully hands-on penetration-testing certification covering assessment
+    methodology, host & network auditing, and exploitation.
+  featured: false

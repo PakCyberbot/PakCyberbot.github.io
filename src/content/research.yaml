@@ -1,0 +1,36 @@
+# =============================================================================
+# WORK · Research, talks & notable posts — rendered as rich preview cards.
+# source:  free label shown on the card (LinkedIn, YouTube, Medium, Talk, ...)
+# image:   OPTIONAL. Drop a PNG/JPG in public/work/ and set its path here to
+#          show a preview thumbnail; omit it for a clean generated preview.
+# =============================================================================
+
+- id: blackhat-mea-first-blood
+  title: First Blood at BlackHat MEA CTF 2024
+  source: LinkedIn
+  date: 2024
+  url: https://www.linkedin.com/posts/pakcyberbot_blackhatmea-blackhat-ctfcompetition-activity-7236315931671461889-qqi1
+  description: >-
+    Write-up of scoring a first blood at the BlackHat Middle East & Africa 2024
+    CTF against an international field.
+  # image: /work/blackhat-mea.png
+
+- id: cyberhackathon-2024
+  title: National CyberHackathon 2024 — Finals recap
+  source: LinkedIn
+  date: 2024
+  url: https://www.linkedin.com/posts/pakcyberbot_cybersecurity-hackathon-teamrevolt-activity-7275030483439153152-s3Du
+  description: >-
+    How Team Revolt reached the finals of the national CyberHackathon and placed
+    3rd overall.
+  # image: /work/cyberhackathon.png
+
+- id: journey-2024
+  title: My Cybersecurity Journey 2024 — Achievements & Milestones
+  source: Medium
+  date: 2024
+  url: https://medium.com/@pakcyberbot/my-cybersecurity-journey-2024-achievements-challenges-and-milestones-c718793f7193
+  description: >-
+    A full recap of the year — certifications, CTF results, challenge authoring
+    and lessons learned.
+  # image: /work/journey-2024.png

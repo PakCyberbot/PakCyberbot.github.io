@@ -1,0 +1,79 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  title: string;
+  source: string;
+  url: string;
+  image?: string;
+  date?: number | string;
+  description?: string;
+}
+const { title, source, url, image, date, description } = Astro.props;
+
+// Pick an icon by source label.
+const s = source.toLowerCase();
+const icon = s.includes('linkedin')
+  ? 'simple-icons:linkedin'
+  : s.includes('youtube')
+    ? 'simple-icons:youtube'
+    : s.includes('medium')
+      ? 'simple-icons:medium'
+      : s.includes('talk') || s.includes('conf')
+        ? 'lucide:mic'
+        : 'lucide:globe';
+---
+
+<a class="research card" href={url} target="_blank" rel="noopener noreferrer">
+  <div class="research-media">
+    {image ? (
+      <img src={image} alt="" loading="lazy" decoding="async" />
+    ) : (
+      <div class="research-fallback" aria-hidden="true">
+        <Icon name={icon} />
+      </div>
+    )}
+    <span class="research-source"><Icon name={icon} /> {source}</span>
+  </div>
+  <div class="research-body">
+    <h3>{title}</h3>
+    {description && <p>{description}</p>}
+    <span class="research-go mono">
+      {date && <span class="research-date">{date}</span>}
+      <span class="grow"></span>
+      view <Icon name="lucide:arrow-up-right" />
+    </span>
+  </div>
+</a>
+
+<style>
+  .research { overflow: hidden; display: flex; flex-direction: column; color: var(--text); transition: transform 0.25s var(--ease), border-color 0.25s var(--ease); }
+  .research:hover { transform: translateY(-4px); border-color: var(--accent-line); color: var(--text); }
+  .research-media { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-bottom: 1px solid var(--border); background: var(--bg-elev); }
+  .research-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s var(--ease); }
+  .research:hover .research-media img { transform: scale(1.04); }
+  .research-fallback {
+    display: grid; place-items: center; height: 100%;
+    background:
+      radial-gradient(circle at 30% 25%, var(--accent-glow), transparent 60%),
+      repeating-linear-gradient(135deg, transparent 0 11px, rgba(255,255,255,0.015) 11px 12px);
+  }
+  .research-fallback [data-icon] { width: 46px; height: 46px; color: var(--accent); opacity: 0.5; }
+  .research-source {
+    position: absolute; top: 0.7rem; left: 0.7rem;
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    font-family: var(--font-mono); font-size: 0.72rem;
+    padding: 0.3rem 0.55rem; border-radius: 7px;
+    background: color-mix(in srgb, var(--bg) 72%, transparent);
+    border: 1px solid var(--border); color: var(--text-dim);
+    backdrop-filter: blur(4px);
+  }
+  .research-source [data-icon] { width: 14px; height: 14px; }
+  .research-body { padding: 1.1rem 1.2rem 1.2rem; display: flex; flex-direction: column; flex: 1; }
+  .research-body h3 { font-size: 1.02rem; line-height: 1.3; }
+  .research-body p { color: var(--text-dim); font-size: 0.87rem; margin-top: 0.45rem; flex: 1; }
+  .research-go { display: flex; align-items: center; gap: 0.4rem; color: var(--accent); font-size: 0.76rem; margin-top: 0.9rem; }
+  .research-go .grow { flex: 1; }
+  .research-date { color: var(--text-mute); }
+  .research-go [data-icon] { width: 15px; height: 15px; }
+</style>

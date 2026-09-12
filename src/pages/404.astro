@@ -1,0 +1,43 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 — Not found" description="Page not found.">
+  <section class="section notfound">
+    <div class="container">
+      <div class="nf-term card">
+        <div class="nf-bar"><span></span><span></span><span></span></div>
+        <div class="nf-body mono">
+          <p><span class="p">visitor@web</span>:<span class="pa">~</span>$ cat {Astro.url.pathname}</p>
+          <p class="err">cat: {Astro.url.pathname}: No such file or directory</p>
+          <p class="code">404</p>
+          <p class="msg">This route was not found. It may have moved, or never existed.</p>
+          <p><span class="p">visitor@web</span>:<span class="pa">~</span>$ <span class="blink">_</span></p>
+        </div>
+        <div class="nf-cta">
+          <a class="btn btn-primary" href="/"><Icon name="lucide:arrow-left" /> Back home</a>
+          <a class="btn" href="/blog">Browse the blog</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound { min-height: 60vh; display: grid; place-items: center; }
+  .nf-term { max-width: 560px; width: 100%; overflow: hidden; }
+  .nf-bar { display: flex; gap: 0.45rem; padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); background: var(--bg-elev); }
+  .nf-bar span { width: 11px; height: 11px; border-radius: 50%; background: var(--border); }
+  .nf-bar span:first-child { background: #ff5f56; }
+  .nf-body { padding: 1.4rem; line-height: 1.9; font-size: 0.92rem; }
+  .nf-body p { margin: 0; }
+  .p { color: var(--accent); } .pa { color: var(--accent-3); }
+  .err { color: var(--danger); }
+  .code { font-size: 3rem; font-weight: 700; color: var(--text); margin: 0.5rem 0 !important; }
+  .msg { color: var(--text-dim); }
+  .blink { animation: blink 1.1s steps(1) infinite; color: var(--accent); }
+  @keyframes blink { 50% { opacity: 0; } }
+  .nf-cta { display: flex; gap: 0.7rem; padding: 0 1.4rem 1.4rem; flex-wrap: wrap; }
+  .nf-cta [data-icon] { width: 16px; height: 16px; }
+</style>

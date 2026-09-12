@@ -1,0 +1,27 @@
+# =============================================================================
+# WORK · Projects.  image = a file in public/work/ (just drop a PNG/JPG there
+# and reference its path). github/demo are optional links.
+# =============================================================================
+
+- id: yt-evidence-collector
+  title: YT Evidence Collector
+  description: >-
+    A tool for gathering evidence from YouTube — video downloads, Wayback
+    Machine snapshots, and automatic documentation. Supports bulk downloads and
+    generates a browsable HTML report of the collected content.
+  tags: [Python, YouTube API, OSINT, Web Scraping]
+  image: /work/yt-evidence.jpg
+  github: https://github.com/PakCyberbot/YouTube-Evidence-Collector
+  featured: true
+
+- id: fuzzy-httpserver
+  title: fuzzy-httpserver
+  description: >-
+    A lightweight, zero-dependency Python 3 HTTP file server with fuzzy and
+    prefix-based filename matching, automatic directory-listing fallback,
+    colorized CLI output, POST support and MD5 integrity checks — built for red
+    teaming, CTFs and quick file transfers during engagements.
+  tags: [Python 3, HTTP Server, Red Team, CTF, Zero Deps]
+  image: /work/fuzzy-httpserver.png
+  github: https://github.com/PakCyberbot/fuzzy-httpserver
+  featured: true

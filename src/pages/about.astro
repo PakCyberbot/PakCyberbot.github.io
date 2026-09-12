@@ -1,0 +1,122 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site, skills, platforms } from '../data/site';
+import profile from '../assets/profile-new.png';
+
+const focus = [
+  { icon: 'lucide:crosshair', title: 'Red Teaming', body: 'Adversary simulation, exploitation and post-exploitation across networks and cloud.' },
+  { icon: 'lucide:bug', title: 'Bug Bounty', body: 'Hunting real-world vulnerabilities in web and cloud applications.' },
+  { icon: 'lucide:search', title: 'OSINT', body: 'Open-source investigations, including Trace Labs missing-persons search parties.' },
+  { icon: 'lucide:flag', title: 'CTF & Challenge Design', body: 'Playing and authoring CTF challenges for HackTheBox, TryHackMe and events.' },
+];
+---
+
+<BaseLayout title="About" description="About Faraz Ahmed (PakCyberbot) — OSCP-certified security researcher focused on red teaming, bug bounty, OSINT and CTFs.">
+  <section class="section">
+    <div class="container about-hero">
+      <div class="about-portrait">
+        <Image src={profile} alt="Faraz Ahmed (PakCyberbot)" widths={[240, 360]} sizes="(max-width: 640px) 160px, 240px" loading="eager" />
+      </div>
+      <div>
+        <span class="eyebrow">whoami</span>
+        <h1 class="section-title">Faraz Ahmed <span class="mono handle">/ {site.handle}</span></h1>
+        <p class="about-bio">
+          I am an OSCP-certified security researcher working across offensive security — red teaming,
+          bug bounty and OSINT. I hold the Google Professional Cloud Security Engineer and eJPTv2
+          certifications and program comfortably in several languages. I design CTF challenges for
+          HackTheBox and TryHackMe, and my team reached the finals of the National CyberHackathon 2024.
+          I care about clear reporting as much as the exploit itself — the reason OffSec awarded me a
+          free OSCP after their report-writing contest.
+        </p>
+        <div class="about-cta">
+          <a class="btn btn-primary" href="/achievements">See achievements <Icon name="lucide:arrow-right" /></a>
+          <a class="btn" href="/contact">Contact <Icon name="lucide:mail" /></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="focus-title">
+    <div class="container">
+      <span class="eyebrow">focus areas</span>
+      <h2 class="section-title" id="focus-title">Where I spend my time</h2>
+      <div class="focus-grid">
+        {focus.map((f, i) => (
+          <div class="focus-card card" data-reveal data-reveal-delay={i * 70}>
+            <span class="focus-icon"><Icon name={f.icon} /></span>
+            <h3>{f.title}</h3>
+            <p>{f.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="skills-title">
+    <div class="container">
+      <span class="eyebrow">skills</span>
+      <h2 class="section-title" id="skills-title">Skill profile</h2>
+      <div class="sk-grid">
+        {skills.map((s, i) => (
+          <div class="sk-item" data-reveal data-reveal-delay={i * 50}>
+            <div class="sk-head"><Icon name={s.icon} /><span>{s.name}</span><b class="mono">{s.level}%</b></div>
+            <div class="sk-bar"><span style={`--lvl:${s.level}%`}></span></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="plat-title">
+    <div class="container">
+      <span class="eyebrow">profiles</span>
+      <h2 class="section-title" id="plat-title">Find me on</h2>
+      <div class="plat-grid">
+        {platforms.map((p, i) => (
+          <a class="plat card" href={p.href} target="_blank" rel="noopener noreferrer" data-reveal data-reveal-delay={(i % 4) * 60}>
+            <Icon name={p.icon} />
+            <span class="plat-name">{p.label}</span>
+            <span class="plat-handle mono">{p.handle}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-hero { display: grid; grid-template-columns: 200px 1fr; gap: 2rem; align-items: center; }
+  .about-portrait :global(img) { width: 100%; border-radius: 10px; border: 1px solid var(--border); }
+  .handle { color: var(--accent-2); font-weight: 500; font-size: 0.6em; }
+  .about-bio { color: var(--text-dim); margin-top: 1rem; max-width: 65ch; }
+  .about-cta { display: flex; gap: 0.7rem; margin-top: 1.5rem; flex-wrap: wrap; }
+  .about-cta [data-icon] { width: 17px; height: 17px; }
+
+  .focus-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+  .focus-card { padding: 1.4rem; }
+  .focus-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--accent-glow); color: var(--accent); margin-bottom: 0.8rem; }
+  .focus-icon [data-icon] { width: 22px; height: 22px; }
+  .focus-card h3 { font-size: 1.05rem; }
+  .focus-card p { color: var(--text-dim); font-size: 0.87rem; margin-top: 0.4rem; }
+
+  .sk-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem 1.6rem; margin-top: 1.5rem; }
+  .sk-head { display: flex; align-items: center; gap: 0.55rem; font-size: 0.9rem; margin-bottom: 0.45rem; }
+  .sk-head [data-icon] { width: 18px; height: 18px; color: var(--accent); }
+  .sk-head b { margin-left: auto; color: var(--text-dim); font-size: 0.8rem; }
+  .sk-bar { height: 7px; border-radius: 999px; background: var(--bg-elev); border: 1px solid var(--border-soft); overflow: hidden; }
+  .sk-bar span { display: block; height: 100%; width: var(--lvl); background: var(--accent-dim); border-radius: 999px; }
+
+  .plat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.9rem; margin-top: 1.5rem; }
+  .plat { display: flex; flex-direction: column; gap: 0.3rem; padding: 1.1rem; color: var(--text); transition: transform 0.2s var(--ease), border-color 0.2s var(--ease); }
+  .plat:hover { transform: translateY(-3px); border-color: var(--accent-line); color: var(--text); }
+  .plat [data-icon] { width: 24px; height: 24px; color: var(--accent); }
+  .plat-name { font-weight: 600; margin-top: 0.3rem; }
+  .plat-handle { font-size: 0.76rem; color: var(--text-mute); }
+
+  @media (max-width: 640px) {
+    .about-hero { grid-template-columns: 1fr; text-align: left; }
+    .about-portrait { width: 150px; }
+  }
+</style>

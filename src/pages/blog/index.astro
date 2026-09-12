@@ -1,0 +1,201 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllPosts } from '../../lib/posts';
+
+const posts = await getAllPosts();
+
+const hasDate = (d: Date) => d.getFullYear() > 2000;
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+const sourceLabel = (s: string, category: string) =>
+  s === 'medium' ? 'Medium' : s === 'others' ? category : category;
+
+const categories = Array.from(new Set(posts.map((p) => p.category))).sort();
+const tags = Array.from(new Set(posts.flatMap((p) => p.tags))).sort((a, b) =>
+  a.toLowerCase().localeCompare(b.toLowerCase())
+);
+const mediumCount = posts.filter((p) => p.source === 'medium').length;
+---
+
+<BaseLayout title="Blog" description="Write-ups, OSCP notes and security articles by Faraz Ahmed (PakCyberbot) — original posts and Medium articles.">
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">~/blog</span>
+      <h1 class="section-title">Blog &amp; Write-ups</h1>
+      <p class="section-lead">
+        OSCP notes, CTF write-ups and articles — rendered here from Markdown, plus my Medium articles.
+        {mediumCount === 0 && <span class="feed-note"> (Medium feed unavailable at build time; local posts shown.)</span>}
+      </p>
+
+      <!-- Controls -->
+      <div class="blog-controls">
+        <div class="search-box">
+          <Icon name="lucide:search" />
+          <input type="search" id="blog-search" placeholder="Search posts…" aria-label="Search posts" autocomplete="off" />
+        </div>
+        <div class="filter-row" role="group" aria-label="Filter by source">
+          <span class="filter-label mono">source</span>
+          <button class="pill active" data-source="all">All</button>
+          <button class="pill" data-source="local">Local</button>
+          <button class="pill" data-source="others">Others</button>
+          <button class="pill" data-source="medium">Medium</button>
+        </div>
+        <div class="filter-row" role="group" aria-label="Filter by category">
+          <span class="filter-label mono">category</span>
+          <button class="pill active" data-cat="all">All</button>
+          {categories.map((c) => <button class="pill" data-cat={c}>{c}</button>)}
+        </div>
+        {tags.length > 0 && (
+          <div class="filter-row">
+            <span class="filter-label mono">tag</span>
+            <select id="tag-select" aria-label="Filter by tag">
+              <option value="all">All tags</option>
+              {tags.map((t) => <option value={t}>{t}</option>)}
+            </select>
+          </div>
+        )}
+      </div>
+
+      <p class="result-count mono" id="result-count"></p>
+
+      <!-- Posts -->
+      <div class="posts-grid" id="posts-grid">
+        {posts.map((p, i) => (
+          <article
+            class="post-card card"
+            data-source={p.source}
+            data-cat={p.category}
+            data-tags={p.tags.join('|').toLowerCase()}
+            data-search={`${p.title} ${p.summary} ${p.tags.join(' ')}`.toLowerCase()}
+            data-reveal data-reveal-delay={(i % 6) * 50}
+          >
+            <a class="post-hit" href={p.href} target={p.source === 'local' ? undefined : '_blank'} rel={p.source === 'local' ? undefined : 'noopener noreferrer'} aria-label={p.title}></a>
+            {p.thumbnail ? (
+              <div class="post-thumb"><img src={p.thumbnail} alt="" loading="lazy" decoding="async" width="400" height="210" /></div>
+            ) : (
+              <div class="post-thumb placeholder" aria-hidden="true"><Icon name="lucide:terminal" /></div>
+            )}
+            <div class="post-body">
+              <div class="post-meta mono">
+                <span class:list={['src-tag', p.source]}>{sourceLabel(p.source, p.category)}</span>
+                {hasDate(p.date) && <span class="post-date">{fmt(p.date)}</span>}
+                {p.readingTime && <span class="post-rt"><Icon name="lucide:clock" /> {p.readingTime}m</span>}
+                {p.source === 'others' && <span class="post-ext"><Icon name="lucide:external-link" /></span>}
+              </div>
+              <h3 class="post-title">{p.title}</h3>
+              <p class="post-summary">{p.summary}</p>
+              <div class="post-tags">
+                {p.tags.slice(0, 4).map((t) => <span class="chip">{t}</span>)}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="no-posts" id="no-posts" hidden>
+        <Icon name="lucide:search" />
+        <p>No posts match your filters.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .feed-note { color: var(--text-mute); font-style: italic; }
+
+  .blog-controls { display: flex; flex-direction: column; gap: 0.8rem; margin: 1.5rem 0 0.5rem; }
+  .search-box {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.7rem 1rem; border: 1px solid var(--border); border-radius: 12px;
+    background: var(--panel); max-width: 460px;
+  }
+  .search-box [data-icon] { width: 18px; height: 18px; color: var(--text-mute); }
+  .search-box input { flex: 1; background: none; border: none; color: var(--text); font-size: 0.95rem; outline: none; }
+  .search-box:focus-within { border-color: var(--accent-line); }
+
+  .filter-row { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
+  .filter-label { color: var(--text-mute); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; margin-right: 0.3rem; min-width: 62px; }
+  .pill {
+    font-family: var(--font-mono); font-size: 0.78rem;
+    padding: 0.35rem 0.75rem; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--bg-elev); color: var(--text-dim);
+    cursor: pointer; transition: all 0.2s var(--ease);
+  }
+  .pill:hover { color: var(--text); }
+  .pill.active { color: #06210f; background: var(--accent); border-color: transparent; }
+  #tag-select {
+    font-family: var(--font-mono); font-size: 0.8rem;
+    padding: 0.4rem 0.7rem; border-radius: 8px;
+    background: var(--bg-elev); border: 1px solid var(--border); color: var(--text);
+  }
+
+  .result-count { color: var(--text-mute); font-size: 0.78rem; margin: 0.75rem 0 1rem; }
+
+  .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.1rem; }
+  .post-card { position: relative; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s var(--ease), border-color 0.2s var(--ease); }
+  .post-card:hover { transform: translateY(-4px); border-color: var(--accent-line); }
+  .post-hit { position: absolute; inset: 0; z-index: 3; }
+  .post-thumb { aspect-ratio: 40 / 21; overflow: hidden; border-bottom: 1px solid var(--border); background: var(--bg-elev); }
+  .post-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .post-thumb.placeholder { display: grid; place-items: center; background: radial-gradient(circle at 50% 40%, var(--accent-glow), transparent 70%); }
+  .post-thumb.placeholder [data-icon] { width: 40px; height: 40px; color: var(--accent); opacity: 0.6; }
+  .post-body { padding: 1.1rem 1.2rem 1.3rem; display: flex; flex-direction: column; flex: 1; }
+  .post-meta { display: flex; align-items: center; gap: 0.6rem; font-size: 0.72rem; color: var(--text-mute); flex-wrap: wrap; }
+  .src-tag { padding: 0.15rem 0.5rem; border-radius: 6px; background: var(--accent-glow); color: var(--accent); }
+  .src-tag.medium { background: rgba(74, 168, 255, 0.12); color: var(--accent-3); }
+  .src-tag.others { background: rgba(201, 150, 74, 0.14); color: var(--warn); }
+  .post-ext { display: inline-flex; color: var(--text-mute); }
+  .post-ext [data-icon] { width: 13px; height: 13px; }
+  .post-rt { display: inline-flex; align-items: center; gap: 0.25rem; margin-left: auto; }
+  .post-rt [data-icon] { width: 12px; height: 12px; }
+  .post-title { font-size: 1.08rem; line-height: 1.3; margin-top: 0.55rem; }
+  .post-summary { color: var(--text-dim); font-size: 0.87rem; margin-top: 0.5rem; flex: 1; }
+  .post-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.9rem; position: relative; z-index: 4; }
+  .post-tags .chip { font-size: 0.68rem; padding: 0.2rem 0.5rem; }
+
+  .no-posts { text-align: center; padding: 3rem 1rem; color: var(--text-mute); }
+  .no-posts [data-icon] { width: 32px; height: 32px; margin: 0 auto 0.6rem; }
+
+  .hidden { display: none !important; }
+</style>
+
+<script>
+  const grid = document.getElementById('posts-grid')!;
+  const cards = Array.from(grid.querySelectorAll<HTMLElement>('.post-card'));
+  const search = document.getElementById('blog-search') as HTMLInputElement;
+  const tagSelect = document.getElementById('tag-select') as HTMLSelectElement | null;
+  const countEl = document.getElementById('result-count')!;
+  const noPosts = document.getElementById('no-posts')!;
+  const sourceBtns = document.querySelectorAll<HTMLButtonElement>('[data-source]');
+  const catBtns = document.querySelectorAll<HTMLButtonElement>('[data-cat]');
+
+  const state = { source: 'all', cat: 'all', tag: 'all', q: '' };
+
+  function apply() {
+    let shown = 0;
+    cards.forEach((c) => {
+      const okSource = state.source === 'all' || c.dataset.source === state.source;
+      const okCat = state.cat === 'all' || c.dataset.cat === state.cat;
+      const okTag = state.tag === 'all' || (c.dataset.tags || '').split('|').includes(state.tag.toLowerCase());
+      const okQ = !state.q || (c.dataset.search || '').includes(state.q);
+      const show = okSource && okCat && okTag && okQ;
+      c.classList.toggle('hidden', !show);
+      if (show) shown++;
+    });
+    countEl.textContent = `${shown} post${shown === 1 ? '' : 's'}`;
+    noPosts.hidden = shown !== 0;
+  }
+
+  function activate(list: NodeListOf<HTMLButtonElement>, btn: HTMLButtonElement) {
+    list.forEach((b) => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  sourceBtns.forEach((b) => b.addEventListener('click', () => { activate(sourceBtns, b); state.source = b.dataset.source!; apply(); }));
+  catBtns.forEach((b) => b.addEventListener('click', () => { activate(catBtns, b); state.cat = b.dataset.cat!; apply(); }));
+  tagSelect?.addEventListener('change', () => { state.tag = tagSelect.value; apply(); });
+  search?.addEventListener('input', () => { state.q = search.value.trim().toLowerCase(); apply(); });
+
+  apply();
+</script>

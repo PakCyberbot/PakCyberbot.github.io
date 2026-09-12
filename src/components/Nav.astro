@@ -1,0 +1,132 @@
+---
+import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
+import { nav, site } from '../data/site';
+import logo from '../assets/logo.png';
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand" aria-label={`${site.name} — home`}>
+      <Image src={logo} alt="" aria-hidden="true" class="brand-logo" height={30} widths={[30, 60]} sizes="30px" loading="eager" />
+      <span class="brand-text">
+        <span class="brand-name">pakcyberbot</span>
+        <span class="brand-cursor" aria-hidden="true">_</span>
+      </span>
+    </a>
+
+    <nav class="primary-nav" aria-label="Primary">
+      <ul>
+        {nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class:list={['nav-link', { active: isActive(item.href) }]}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <button
+      class="nav-toggle"
+      aria-label="Toggle navigation"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+    >
+      <Icon name="lucide:menu" class="icon-open" />
+      <Icon name="lucide:x" class="icon-close" />
+    </button>
+  </div>
+
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden>
+    <ul>
+      {nav.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class:list={['nav-link', { active: isActive(item.href) }]}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .brand { display: inline-flex; align-items: center; gap: 0.6rem; color: var(--text); }
+  .brand:hover { color: var(--text); }
+  .brand-logo { height: 30px; width: auto; }
+  .brand-text { font-family: var(--font-mono); font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
+  .brand-cursor { color: var(--accent); animation: blink 1.2s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .primary-nav ul { display: flex; gap: 0.35rem; list-style: none; padding: 0; }
+  .nav-link {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+    color: var(--text-dim);
+    padding: 0.5rem 0.7rem;
+    border-radius: 8px;
+    transition: color 0.2s var(--ease), background 0.2s var(--ease);
+  }
+  .nav-link:hover { color: var(--text); background: var(--panel); }
+  .nav-link.active { color: var(--accent); }
+
+  .nav-toggle {
+    display: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    color: var(--text);
+    padding: 0.45rem;
+    cursor: pointer;
+  }
+  .nav-toggle [data-icon] { width: 22px; height: 22px; }
+  .nav-toggle .icon-close { display: none; }
+  .nav-toggle[aria-expanded='true'] .icon-open { display: none; }
+  .nav-toggle[aria-expanded='true'] .icon-close { display: block; }
+
+  .mobile-nav { border-bottom: 1px solid var(--border-soft); background: var(--bg-elev); }
+  .mobile-nav ul { list-style: none; padding: 0.5rem 1.25rem 1rem; margin: 0; }
+  .mobile-nav .nav-link { display: block; font-size: 1rem; padding: 0.75rem 0.5rem; }
+
+  @media (max-width: 760px) {
+    .primary-nav { display: none; }
+    .nav-toggle { display: inline-flex; }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const menu = document.getElementById('mobile-nav');
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    if (menu) menu.hidden = open;
+  });
+</script>

@@ -1,0 +1,131 @@
+---
+import { getCollection } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const achievements = (await getCollection('achievements')).sort(
+  (a, b) => a.data.rank - b.data.rank
+);
+
+const tabs = [
+  { id: 'all', label: 'All' },
+  { id: 'ctf', label: 'CTFs' },
+  { id: 'bugbounty', label: 'Bug Bounty & CVEs' },
+  { id: 'community', label: 'Community' },
+];
+
+const catOf = (c: string) => (c === 'cve' ? 'bugbounty' : c);
+const bugbountyItems = achievements.filter((a) => catOf(a.data.category) === 'bugbounty');
+---
+
+<BaseLayout title="Achievements & Recognition" description="CTF placements, bug bounty recognition, CVEs and significant certifications earned by Faraz Ahmed (PakCyberbot).">
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">the record</span>
+      <h1 class="section-title">Achievements &amp; Recognition</h1>
+      <p class="section-lead">CTF competitions, bug bounty recognition and CVEs, and community contributions. Filter by category below.</p>
+
+      <div class="tabs" role="tablist" aria-label="Achievement categories">
+        {tabs.map((t, i) => (
+          <button class:list={['tab', { active: i === 0 }]} role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-tab={t.id}>
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      <div class="ach-grid" id="ach-grid">
+        {achievements.map((a, i) => (
+          <article class="ach-card card" data-cat={catOf(a.data.category)} data-reveal data-reveal-delay={(i % 6) * 50}>
+            <div class="ach-top">
+              <span class="ach-icon"><Icon name={`lucide:${a.data.icon}`} /></span>
+              <span class="ach-cat chip">{a.data.category.toUpperCase()}</span>
+              <span class="ach-year mono">{a.data.year}</span>
+            </div>
+            <h3 class="ach-title">{a.data.title}</h3>
+            {(a.data.placement || a.data.team) && (
+              <p class="ach-sub mono">
+                {a.data.placement}{a.data.placement && a.data.team ? ' · ' : ''}{a.data.team}
+              </p>
+            )}
+            {a.data.description && <p class="ach-desc">{a.data.description}</p>}
+            {a.data.url && (
+              <a class="ach-link mono" href={a.data.url} target="_blank" rel="noopener noreferrer">
+                evidence <Icon name="lucide:external-link" />
+              </a>
+            )}
+          </article>
+        ))}
+      </div>
+
+      {bugbountyItems.length === 0 && (
+        <div class="empty-state" id="empty-bugbounty" hidden>
+          <Icon name="lucide:bug" />
+          <p>Bug bounty recognitions, Hall of Fame entries and CVEs will be listed here as they are disclosed.</p>
+        </div>
+      )}
+
+      <p class="certs-pointer text-dim">
+        Looking for my certifications? They're on the <a href="/">home page</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.75rem 0 1.5rem; }
+  .tab {
+    font-family: var(--font-mono); font-size: 0.82rem;
+    padding: 0.5rem 0.9rem; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--panel); color: var(--text-dim);
+    cursor: pointer; transition: color 0.2s var(--ease), border-color 0.2s var(--ease), background 0.2s var(--ease);
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--text); background: var(--panel-2); border-color: var(--accent-line); }
+
+  .ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
+  .ach-card { padding: 1.25rem; display: flex; flex-direction: column; }
+  .ach-top { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.7rem; }
+  .ach-icon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: var(--bg-elev); border: 1px solid var(--border); color: var(--accent); flex-shrink: 0; }
+  .ach-icon [data-icon] { width: 20px; height: 20px; }
+  .ach-cat { font-size: 0.66rem; letter-spacing: 0.08em; }
+  .ach-year { margin-left: auto; color: var(--text-mute); font-size: 0.8rem; }
+  .ach-title { font-size: 1.05rem; line-height: 1.3; }
+  .ach-sub { color: var(--accent); font-size: 0.8rem; margin-top: 0.35rem; }
+  .ach-desc { color: var(--text-dim); font-size: 0.88rem; margin-top: 0.55rem; flex: 1; }
+  .ach-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; margin-top: 0.9rem; color: var(--accent); }
+  .ach-link [data-icon] { width: 14px; height: 14px; }
+
+  .empty-state { text-align: center; padding: 3rem 1rem; color: var(--text-mute); }
+  .empty-state [data-icon] { width: 34px; height: 34px; margin: 0 auto 0.75rem; color: var(--accent); }
+  .empty-state p { max-width: 42ch; margin: 0 auto; }
+
+  .certs-pointer { margin-top: 2rem; font-size: 0.9rem; }
+  .certs-pointer a { color: var(--accent); }
+
+  .hidden { display: none !important; }
+</style>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.tab');
+  const cards = document.querySelectorAll<HTMLElement>('#ach-grid > [data-cat]');
+  const emptyBB = document.getElementById('empty-bugbounty');
+
+  const apply = (id: string) => {
+    let shown = 0;
+    cards.forEach((c) => {
+      const show = id === 'all' ? true : c.dataset.cat === id;
+      c.classList.toggle('hidden', !show);
+      if (show) shown++;
+    });
+    if (emptyBB) emptyBB.hidden = !(id === 'bugbounty' && shown === 0);
+  };
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((t) => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      apply(tab.dataset.tab || 'all');
+    });
+  });
+</script>

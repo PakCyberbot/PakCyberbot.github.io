@@ -1,0 +1,169 @@
+# =============================================================================
+# Achievements & Recognition — single source of truth.
+# category: ctf | bugbounty | cve | community
+# featured: true  -> also shown in the Home page highlights strip
+# rank: lower numbers sort first within a category (and among featured items)
+# To add an entry, copy a block and edit the fields. icon = a lucide icon name.
+# =============================================================================
+
+- id: oscp-report-contest
+  title: OSCP awarded by OffSec (report-writing contest winner)
+  category: community
+  issuer: Offensive Security
+  year: 2024
+  placement: 1st place
+  description: >-
+    Won 1st place in OffSec's report-writing contest and was awarded a free OSCP
+    certification and exam voucher in recognition of the submission.
+  url: https://youtu.be/8BnOxdsT7qY
+  icon: award
+  featured: true
+  rank: 1
+
+- id: blackhat-mea-ctf-2024
+  title: BlackHat MEA CTF 2024 — First Blood
+  category: ctf
+  event: BlackHat Middle East & Africa CTF
+  placement: First Blood
+  year: 2024
+  description: >-
+    Scored a first blood at the BlackHat MEA 2024 CTF, being the first team to
+    solve a challenge in a large international competition.
+  url: https://www.linkedin.com/posts/pakcyberbot_blackhatmea-blackhat-ctfcompetition-activity-7236315931671461889-qqi1
+  icon: flag
+  featured: true
+  rank: 2
+
+- id: national-cyberhackathon-2024
+  title: National CyberHackathon 2024 — Finalist (3rd)
+  category: ctf
+  event: National CyberHackathon 2024
+  placement: 3rd place (finals)
+  team: Team Revolt
+  year: 2024
+  description: >-
+    Reached the finals of the national-level CyberHackathon 2024 and secured 3rd
+    position (2nd runner-up) with Team Revolt.
+  url: https://www.linkedin.com/posts/pakcyberbot_cybersecurity-hackathon-teamrevolt-activity-7275030483439153152-s3Du
+  icon: trophy
+  featured: true
+  rank: 3
+
+- id: ctf-challenge-creator
+  title: CTF Challenge Creator
+  category: community
+  issuer: HackTheBox, TryHackMe & onsite events
+  year: 2023-Present
+  description: >-
+    Author of CTF challenges deployed on HackTheBox and TryHackMe, and for
+    various onsite events and organizations.
+  url: https://medium.com/@pakcyberbot/my-cybersecurity-journey-2024-achievements-challenges-and-milestones-c718793f7193
+  icon: code
+  featured: true
+  rank: 4
+
+- id: tracelabs-judge
+  title: Trace Labs Search Party CTF — Judge & Participant
+  category: community
+  issuer: Trace Labs
+  year: 2023-Present
+  description: >-
+    Active participant and judge across multiple Trace Labs Search Party OSINT
+    CTF events, contributing to open-source investigations for missing persons.
+  url: https://www.linkedin.com/posts/pakcyberbot_senior-coach-tracelabs-activity-7469254545387216898-t_yr
+  icon: search
+  rank: 5
+
+- id: thm-365
+  title: TryHackMe 365-Day Streak
+  category: community
+  issuer: TryHackMe
+  year: 2023
+  description: >-
+    Completed a full 365-day learning streak on TryHackMe, documented in a
+    write-up on the journey.
+  url: https://medium.com/system-weakness/cybersecurity-quest-my-365-days-on-tryhackme-c99f7f0cca0f
+  icon: calendar
+  rank: 6
+
+- id: youtube-1k
+  title: 1,000+ YouTube Subscribers
+  category: community
+  issuer: YouTube
+  year: 2025
+  description: >-
+    Crossed 1,000 subscribers on my YouTube channel sharing cybersecurity
+    content, tutorials and write-ups.
+  url: https://www.youtube.com/@pakcyberbot
+  icon: youtube
+  rank: 7
+
+- id: htb-cyber-apocalypse-2024
+  title: HTB Cyber Apocalypse 2024
+  category: ctf
+  event: HackTheBox Cyber Apocalypse 2024
+  year: 2024
+  description: Competed in HackTheBox's global Cyber Apocalypse 2024 CTF.
+  icon: flag
+  rank: 8
+
+- id: reply-cybersec-challenge
+  title: Reply Cyber Security Challenge
+  category: ctf
+  event: Reply Cyber Security Challenge
+  year: 2024
+  description: Participated in the international Reply Cyber Security Challenge.
+  icon: flag
+  rank: 9
+
+- id: huntress-ctf
+  title: Huntress CTF
+  category: ctf
+  event: Huntress CTF
+  year: 2024
+  description: Competed in the Huntress community CTF.
+  icon: flag
+  rank: 10
+
+- id: snyk-fetch-the-flag
+  title: Snyk Fetch the Flag
+  category: ctf
+  event: Snyk Fetch the Flag CTF
+  year: 2024
+  description: Competed in Snyk's Fetch the Flag CTF.
+  icon: flag
+  rank: 11
+
+# Note: the specific challenges I authored (MisCloud, Fishy HTTP, Private
+# Investigator, Stegoint) are listed on the Work page (challenges.yaml).
+
+# ---------------------------- Bug bounty & CVEs ------------------------------
+
+- id: cve-2026-21640
+  title: CVE-2026-21640
+  category: cve
+  issuer: MITRE / NVD
+  year: 2026
+  description: >-
+    Discovered and responsibly disclosed a security vulnerability, assigned
+    CVE-2026-21640 and published on the NVD under my name.
+  url: https://www.linkedin.com/posts/pakcyberbot_cve-vulnerability-nvd-activity-7419658768990429184-YW56
+  icon: bug
+  featured: true
+  rank: 1
+
+- id: meta-facebook-business
+  title: Security Bug in Meta (Facebook Business)
+  category: bugbounty
+  issuer: Meta
+  year: 2025
+  description: >-
+    Reported a security vulnerability affecting Meta's Facebook Business,
+    acknowledged by Meta's security team.
+  url: https://www.linkedin.com/posts/pakcyberbot_alhamdulillah-im-excited-to-share-that-activity-7455120930101518336-8kBF
+  icon: shield-check
+  featured: true
+  rank: 2
+
+# Add new bug bounty Hall-of-Fame entries and CVEs here (category: bugbounty | cve).
+# -----------------------------------------------------------------------------

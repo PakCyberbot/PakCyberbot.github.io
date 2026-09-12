@@ -1,0 +1,49 @@
+# =============================================================================
+# WORK · Challenges & labs I authored / contributed.
+# platform: hackthebox | tryhackme | other   (drives the icon)
+# kind:     free label — Challenge, Sherlock, Room, Lab, ...
+# =============================================================================
+- id: pydome
+  title: PyDome
+  platform: hackthebox
+  kind: Challenge
+  difficulty: Medium
+  url: https://app.hackthebox.com/challenges/PyDome
+  description: A misc challenge on HackTheBox.
+
+- id: gameloader
+  title: GameLoader
+  platform: hackthebox
+  kind: Challenge
+  difficulty: Medium
+  url: https://app.hackthebox.com/challenges/GameLoader
+  description: A forensics challenge on HackTheBox.
+
+- id: miscloud
+  title: MisCloud
+  platform: hackthebox
+  kind: Sherlock
+  difficulty: Medium
+  url: https://app.hackthebox.com/sherlocks/MisCloud
+  description: Cloud incident-investigation Sherlock on HackTheBox.
+
+- id: fishy-http
+  title: Fishy HTTP
+  platform: hackthebox
+  kind: Challenge
+  url: https://app.hackthebox.com/challenges/Fishy%20HTTP
+  description: A network/forensics challenge on HackTheBox.
+
+- id: private-investigator
+  title: Private Investigator
+  platform: tryhackme
+  kind: Room
+  url: https://tryhackme.com/jr/privateinvestigator
+  description: OSINT investigation room on TryHackMe.
+
+- id: stegoint
+  title: Stegoint
+  platform: tryhackme
+  kind: Room
+  url: https://tryhackme.com/jr/stegoint
+  description: Steganography room on TryHackMe.

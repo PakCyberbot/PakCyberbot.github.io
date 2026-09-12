@@ -1,0 +1,244 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from './BaseLayout.astro';
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  title: string;
+  date: Date;
+  category: string;
+  tags: string[];
+  summary: string;
+  readingTime: number;
+  headings: MarkdownHeading[];
+  ogImage?: string;
+  prev?: { slug: string; title: string } | null;
+  next?: { slug: string; title: string } | null;
+}
+
+const { title, date, category, tags, summary, readingTime, headings, ogImage, prev, next } =
+  Astro.props;
+
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+const fmtDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const iso = date.toISOString();
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  datePublished: iso,
+  keywords: tags.join(', '),
+  articleSection: category,
+  author: { '@type': 'Person', name: 'Faraz Ahmed', url: 'https://pakcyberbot.com' },
+};
+---
+
+<BaseLayout title={title} description={summary} type="article" image={ogImage ?? '/og-default.png'} article={{ publishedTime: iso, tags }}>
+  <article class="post section">
+    <div class="container post-head">
+      <a class="back-link mono" href="/blog"><Icon name="lucide:arrow-left" /> all posts</a>
+      <div class="post-meta mono">
+        <span class="cat-tag">{category}</span>
+        <span><Icon name="lucide:calendar" /> <time datetime={iso}>{fmtDate}</time></span>
+        <span><Icon name="lucide:clock" /> {readingTime} min read</span>
+      </div>
+      <h1 class="post-h1">{title}</h1>
+      <p class="post-summary">{summary}</p>
+      <div class="post-tags">
+        {tags.map((t) => <span class="chip"><Icon name="lucide:hash" />{t}</span>)}
+      </div>
+    </div>
+
+    <div class="container post-layout">
+      {toc.length > 1 && (
+        <aside class="toc" aria-label="Table of contents">
+          <p class="toc-title mono"><Icon name="lucide:list" /> On this page</p>
+          <nav>
+            <ul>
+              {toc.map((h) => (
+                <li class:list={[`depth-${h.depth}`]}>
+                  <a href={`#${h.slug}`}>{h.text}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </aside>
+      )}
+
+      <div class="prose" id="post-content">
+        <slot />
+      </div>
+    </div>
+
+    <div class="container">
+      <nav class="prevnext" aria-label="More posts">
+        {prev ? (
+          <a class="pn card" href={`/blog/${prev.slug}`}>
+            <span class="pn-label mono"><Icon name="lucide:arrow-left" /> Previous</span>
+            <span class="pn-title">{prev.title}</span>
+          </a>
+        ) : <span></span>}
+        {next ? (
+          <a class="pn card align-right" href={`/blog/${next.slug}`}>
+            <span class="pn-label mono">Next <Icon name="lucide:arrow-right" /></span>
+            <span class="pn-title">{next.title}</span>
+          </a>
+        ) : <span></span>}
+      </nav>
+    </div>
+  </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify(articleLd)} is:inline />
+</BaseLayout>
+
+<style>
+  .post-head { max-width: 820px; }
+  .back-link { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--text-dim); font-size: 0.82rem; }
+  .back-link [data-icon] { width: 15px; height: 15px; }
+  .post-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.9rem; margin: 1.2rem 0 0.9rem; color: var(--text-mute); font-size: 0.8rem; }
+  .post-meta span { display: inline-flex; align-items: center; gap: 0.35rem; }
+  .post-meta [data-icon] { width: 14px; height: 14px; }
+  .cat-tag { padding: 0.2rem 0.6rem; border-radius: 6px; background: var(--accent-glow); color: var(--accent) !important; }
+  .post-h1 { font-size: clamp(1.7rem, 4vw, 2.6rem); line-height: 1.15; }
+  .post-summary { color: var(--text-dim); font-size: 1.05rem; margin-top: 0.9rem; }
+  .post-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.2rem; }
+  .post-tags .chip [data-icon] { width: 12px; height: 12px; opacity: 0.6; }
+
+  .post-layout { display: grid; grid-template-columns: 1fr; gap: 2.5rem; margin-top: 2.5rem; }
+  @media (min-width: 1000px) {
+    .post-layout { grid-template-columns: minmax(0, 1fr) 230px; }
+    .toc { order: 2; }
+    .prose { order: 1; }
+  }
+
+  .toc { position: sticky; top: 84px; align-self: start; font-size: 0.85rem; }
+  .toc-title { display: flex; align-items: center; gap: 0.4rem; color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.72rem; margin-bottom: 0.7rem; }
+  .toc-title [data-icon] { width: 14px; height: 14px; }
+  .toc ul { list-style: none; padding: 0; margin: 0; border-left: 1px solid var(--border); }
+  .toc li a { display: block; padding: 0.3rem 0 0.3rem 0.9rem; margin-left: -1px; color: var(--text-dim); border-left: 2px solid transparent; }
+  .toc li.depth-3 a { padding-left: 1.7rem; font-size: 0.8rem; }
+  .toc li a:hover { color: var(--accent); }
+  .toc li a.active { color: var(--accent); border-left-color: var(--accent); }
+
+  .prevnext { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 3rem; }
+  .pn { display: flex; flex-direction: column; gap: 0.35rem; padding: 1.1rem 1.25rem; color: var(--text); transition: transform 0.2s var(--ease), border-color 0.2s var(--ease); }
+  .pn:hover { transform: translateY(-3px); border-color: var(--accent-line); color: var(--text); }
+  .pn.align-right { text-align: right; }
+  .pn-label { display: inline-flex; align-items: center; gap: 0.35rem; color: var(--text-mute); font-size: 0.74rem; }
+  .pn.align-right .pn-label { justify-content: flex-end; }
+  .pn-label [data-icon] { width: 14px; height: 14px; }
+  .pn-title { font-size: 0.92rem; font-weight: 600; }
+  @media (max-width: 620px) { .prevnext { grid-template-columns: 1fr; } .pn.align-right { text-align: left; } .pn.align-right .pn-label { justify-content: flex-start; } }
+</style>
+
+<!-- Prose typography + markdown callouts + code blocks -->
+<style is:global>
+  .prose { max-width: 760px; font-size: 1.02rem; line-height: 1.75; color: var(--text); }
+  .prose > * + * { margin-top: 1.1rem; }
+  .prose h2, .prose h3, .prose h4 { scroll-margin-top: 84px; line-height: 1.25; }
+  .prose h2 { font-size: 1.55rem; margin-top: 2.5rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-soft); }
+  .prose h3 { font-size: 1.25rem; margin-top: 1.9rem; }
+  .prose h4 { font-size: 1.05rem; margin-top: 1.5rem; }
+  .prose p, .prose li { color: var(--text); }
+  .prose a { color: var(--accent-3); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, var(--accent-3) 40%, transparent); }
+  .prose a:hover { text-decoration-color: var(--accent-3); }
+  .prose ul, .prose ol { padding-left: 1.4rem; }
+  .prose li { margin-top: 0.4rem; }
+  .prose img { border-radius: 12px; border: 1px solid var(--border); margin-block: 1.5rem; }
+  .prose blockquote { border-left: 3px solid var(--accent-line); padding: 0.3rem 0 0.3rem 1.1rem; color: var(--text-dim); font-style: italic; }
+  .prose hr { border: none; border-top: 1px solid var(--border); margin-block: 2rem; }
+  .prose strong { color: var(--text); font-weight: 700; }
+
+  /* Inline code */
+  .prose :not(pre) > code {
+    font-family: var(--font-mono); font-size: 0.86em;
+    background: var(--bg-elev); border: 1px solid var(--border-soft);
+    padding: 0.12em 0.4em; border-radius: 6px; color: var(--accent);
+  }
+
+  /* Code blocks (Shiki) */
+  .prose pre {
+    position: relative;
+    font-family: var(--font-mono); font-size: 0.86rem; line-height: 1.6;
+    padding: 1.1rem 1.15rem; border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow-x: auto; margin-block: 1.5rem;
+    background: #0d1117 !important;
+  }
+  .prose pre code { font-family: inherit; background: none; padding: 0; border: 0; }
+
+  .copy-btn {
+    position: absolute; top: 0.6rem; right: 0.6rem;
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    font-family: var(--font-mono); font-size: 0.7rem;
+    padding: 0.3rem 0.55rem; border-radius: 7px;
+    background: var(--panel); border: 1px solid var(--border); color: var(--text-dim);
+    cursor: pointer; opacity: 0; transition: opacity 0.2s var(--ease), color 0.2s var(--ease);
+  }
+  .prose pre:hover .copy-btn, .copy-btn:focus-visible { opacity: 1; }
+  .copy-btn:hover { color: var(--accent); border-color: var(--accent-line); }
+  .copy-btn.copied { color: var(--accent); }
+  .copy-btn svg { width: 13px; height: 13px; }
+
+  /* GitHub-style callouts (remark-github-blockquote-alert) */
+  .markdown-alert {
+    padding: 0.9rem 1.1rem; border-radius: 10px; border: 1px solid var(--border);
+    border-left-width: 4px; background: var(--bg-elev); margin-block: 1.5rem;
+  }
+  .markdown-alert > :first-child { margin-top: 0; }
+  .markdown-alert-title { display: flex; align-items: center; gap: 0.45rem; font-weight: 700; margin-bottom: 0.4rem; text-transform: capitalize; }
+  .markdown-alert-title svg { width: 17px; height: 17px; fill: currentColor; }
+  .markdown-alert-note { border-left-color: var(--accent-3); }
+  .markdown-alert-note .markdown-alert-title { color: var(--accent-3); }
+  .markdown-alert-tip { border-left-color: var(--accent); }
+  .markdown-alert-tip .markdown-alert-title { color: var(--accent); }
+  .markdown-alert-important { border-left-color: #b392f0; }
+  .markdown-alert-important .markdown-alert-title { color: #b392f0; }
+  .markdown-alert-warning { border-left-color: var(--warn); }
+  .markdown-alert-warning .markdown-alert-title { color: var(--warn); }
+  .markdown-alert-caution { border-left-color: var(--danger); }
+  .markdown-alert-caution .markdown-alert-title { color: var(--danger); }
+</style>
+
+<script>
+  // Copy-code buttons
+  const COPY_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+  document.querySelectorAll<HTMLPreElement>('.prose pre').forEach((pre) => {
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.type = 'button';
+    btn.innerHTML = `${COPY_SVG}<span>copy</span>`;
+    btn.setAttribute('aria-label', 'Copy code');
+    btn.addEventListener('click', async () => {
+      const code = pre.querySelector('code')?.innerText ?? pre.innerText;
+      try {
+        await navigator.clipboard.writeText(code);
+        btn.classList.add('copied');
+        btn.querySelector('span')!.textContent = 'copied';
+        setTimeout(() => { btn.classList.remove('copied'); btn.querySelector('span')!.textContent = 'copy'; }, 1600);
+      } catch {}
+    });
+    pre.appendChild(btn);
+  });
+
+  // Active TOC highlight
+  const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc a'));
+  const headings = tocLinks
+    .map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+    .filter((el): el is HTMLElement => !!el);
+  if (headings.length && 'IntersectionObserver' in window) {
+    const spy = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const id = e.target.id;
+            tocLinks.forEach((a) => a.classList.toggle('active', decodeURIComponent(a.hash.slice(1)) === id));
+          }
+        });
+      },
+      { rootMargin: '-10% 0px -75% 0px' }
+    );
+    headings.forEach((h) => spy.observe(h));
+  }
+</script>

@@ -1,0 +1,24 @@
+# =============================================================================
+# BLOG · "Others" — my external write-up collections / knowledge bases.
+# These show in the blog index under the "Others" source (between my local posts
+# and Medium). Add any external write-up site or collection here.
+#   image: OPTIONAL cover in public/work/ (falls back to a generated preview).
+# =============================================================================
+
+- id: oscp-notes
+  title: OSCP Notes & Environment
+  url: https://pakcyberbot.com/OSCP-Notes-and-Environment/
+  category: OSCP Notes
+  summary: >-
+    My complete OSCP preparation notes and lab environment setup — methodology,
+    tooling, privilege escalation and reporting, maintained as a living site.
+  tags: [OSCP, notes, methodology]
+
+- id: ctf-writeups
+  title: CTF Writeups
+  url: https://pakcyberbot.com/CTF-Writeups/
+  category: CTF Writeups
+  summary: >-
+    A collection of my capture-the-flag write-ups across web, forensics, OSINT
+    and more, from events and platforms I have played.
+  tags: [CTF, writeups]

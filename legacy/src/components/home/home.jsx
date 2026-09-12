@@ -47,7 +47,7 @@ const socialLinks = [
   { 
     name: 'HackTheBox', 
     icon: <SiHackthebox />, 
-    url: 'https://app.hackthebox.com/profile/1098862',
+    url: 'https://app.hackthebox.com/public/users/1098862',
     username: 'PakCyberbot',
     color: '#9fef00',
     hoverColor: '#b8ff33',
@@ -234,7 +234,7 @@ function Home() {
 
           <div className='logo'>
             <div className='hover-show'>
-              <a href='https://app.hackthebox.com/profile/1098862' className='circle' target='_blank' rel="noopener noreferrer"></a>
+              <a href='https://app.hackthebox.com/public/users/1098862' className='circle' target='_blank' rel="noopener noreferrer"></a>
               <a href='https://tryhackme.com/p/PakCyberbot' className='circle' target='_blank' rel="noopener noreferrer"></a>
               <a href='https://www.cloudskillsboost.google/public_profiles/4b4fb9c0-10b4-4d04-919e-4df9129364f8' className='circle' target='_blank' rel="noopener noreferrer"></a>
               <a href='https://learn.microsoft.com/en-us/users/pakcyberbot/' className='circle' target='_blank' rel="noopener noreferrer"></a>

@@ -1,0 +1,78 @@
+---
+import { Icon } from 'astro-icon/components';
+import { site, socials, nav } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="fb-name">pakcyberbot<span aria-hidden="true">_</span></a>
+      <p class="fb-tag">{site.role} · red team · bug bounty · CTF</p>
+      <p class="fb-status"><span class="dot" aria-hidden="true"></span> Available for opportunities</p>
+    </div>
+
+    <nav class="footer-nav" aria-label="Footer">
+      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+
+    <div class="footer-social">
+      {socials.map((s) => (
+        <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} title={s.label}>
+          <Icon name={s.icon} />
+        </a>
+      ))}
+    </div>
+  </div>
+  <div class="container footer-base">
+    <span class="mono">&copy; {year} {site.name}</span>
+    <span class="mono">built with Astro · <a href="/rss.xml">RSS</a></span>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--border-soft);
+    margin-top: 4rem;
+    background: linear-gradient(180deg, transparent, var(--bg-elev));
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr auto;
+    gap: 2rem;
+    padding-block: 2.5rem 1.5rem;
+    align-items: start;
+  }
+  .fb-name { font-family: var(--font-mono); font-weight: 700; font-size: 1.05rem; color: var(--text); }
+  .fb-name span { color: var(--accent); }
+  .fb-tag { color: var(--text-mute); font-size: 0.86rem; margin-top: 0.35rem; }
+  .fb-status { color: var(--text-dim); font-size: 0.82rem; margin-top: 0.7rem; display: flex; align-items: center; gap: 0.5rem; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+
+  .footer-nav { display: flex; flex-direction: column; gap: 0.5rem; }
+  .footer-nav a { color: var(--text-dim); font-size: 0.9rem; }
+  .footer-nav a:hover { color: var(--accent); }
+
+  .footer-social { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .footer-social a {
+    display: grid; place-items: center;
+    width: 40px; height: 40px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text-dim);
+    background: var(--panel);
+    transition: transform 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
+  }
+  .footer-social a:hover { color: var(--accent); border-color: var(--accent-line); transform: translateY(-2px); }
+  .footer-social [data-icon] { width: 20px; height: 20px; }
+
+  .footer-base {
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+    padding-block: 1.2rem 2rem;
+    border-top: 1px solid var(--border-soft);
+    color: var(--text-mute); font-size: 0.78rem;
+  }
+  @media (max-width: 720px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
+</style>

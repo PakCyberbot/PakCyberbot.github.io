@@ -1,9 +1,21 @@
-name: Deploy React App to GitHub Pages
+name: Deploy Astro site to GitHub Pages
 
 on:
   push:
     branches:
-      - main # Or your default branch
+      - main
+  workflow_dispatch:
+
+# Rebuild daily so newly published Medium articles appear (feed is fetched at build time).
+  schedule:
+    - cron: '0 6 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
@@ -15,20 +27,18 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Or your preferred Node.js version
+          node-version: '20'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build React app
-        run: CI=false npm run build
-      
-      - name: Add CNAME file
-        run: echo "pakcyberbot.com" > build/CNAME
-      
+      - name: Build site
+        run: npm run build
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.TOKEN_REPO }}
-          publish_dir: ./build
+          publish_dir: ./dist
           publish_branch: gh-pages

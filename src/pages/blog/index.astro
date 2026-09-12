@@ -107,7 +107,7 @@ const mediumCount = posts.filter((p) => p.source === 'medium').length;
   .blog-controls { display: flex; flex-direction: column; gap: 0.8rem; margin: 1.5rem 0 0.5rem; }
   .search-box {
     display: flex; align-items: center; gap: 0.6rem;
-    padding: 0.7rem 1rem; border: 1px solid var(--border); border-radius: 12px;
+    padding: 0.7rem 1rem; border: 1px solid var(--border); border-radius: var(--radius);
     background: var(--panel); max-width: 460px;
   }
   .search-box [data-icon] { width: 18px; height: 18px; color: var(--text-mute); }
@@ -118,15 +118,15 @@ const mediumCount = posts.filter((p) => p.source === 'medium').length;
   .filter-label { color: var(--text-mute); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; margin-right: 0.3rem; min-width: 62px; }
   .pill {
     font-family: var(--font-mono); font-size: 0.78rem;
-    padding: 0.35rem 0.75rem; border-radius: 999px;
+    padding: 0.35rem 0.75rem; border-radius: var(--radius-pill);
     border: 1px solid var(--border); background: var(--bg-elev); color: var(--text-dim);
     cursor: pointer; transition: all 0.2s var(--ease);
   }
   .pill:hover { color: var(--text); }
-  .pill.active { color: #06210f; background: var(--accent); border-color: transparent; }
+  .pill.active { color: var(--accent-contrast); background: var(--accent); border-color: transparent; }
   #tag-select {
     font-family: var(--font-mono); font-size: 0.8rem;
-    padding: 0.4rem 0.7rem; border-radius: 8px;
+    padding: 0.4rem 0.7rem; border-radius: var(--radius);
     background: var(--bg-elev); border: 1px solid var(--border); color: var(--text);
   }
 
@@ -142,7 +142,7 @@ const mediumCount = posts.filter((p) => p.source === 'medium').length;
   .post-thumb.placeholder [data-icon] { width: 40px; height: 40px; color: var(--accent); opacity: 0.6; }
   .post-body { padding: 1.1rem 1.2rem 1.3rem; display: flex; flex-direction: column; flex: 1; }
   .post-meta { display: flex; align-items: center; gap: 0.6rem; font-size: 0.72rem; color: var(--text-mute); flex-wrap: wrap; }
-  .src-tag { padding: 0.15rem 0.5rem; border-radius: 6px; background: var(--accent-glow); color: var(--accent); }
+  .src-tag { padding: 0.15rem 0.5rem; border-radius: var(--radius); background: var(--accent-glow); color: var(--accent); }
   .src-tag.medium { background: rgba(74, 168, 255, 0.12); color: var(--accent-3); }
   .src-tag.others { background: rgba(201, 150, 74, 0.14); color: var(--warn); }
   .post-ext { display: inline-flex; color: var(--text-mute); }

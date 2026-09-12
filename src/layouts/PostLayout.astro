@@ -99,7 +99,7 @@ const articleLd = {
   .post-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.9rem; margin: 1.2rem 0 0.9rem; color: var(--text-mute); font-size: 0.8rem; }
   .post-meta span { display: inline-flex; align-items: center; gap: 0.35rem; }
   .post-meta [data-icon] { width: 14px; height: 14px; }
-  .cat-tag { padding: 0.2rem 0.6rem; border-radius: 6px; background: var(--accent-glow); color: var(--accent) !important; }
+  .cat-tag { padding: 0.2rem 0.6rem; border-radius: var(--radius); background: var(--accent-glow); color: var(--accent) !important; }
   .post-h1 { font-size: clamp(1.7rem, 4vw, 2.6rem); line-height: 1.15; }
   .post-summary { color: var(--text-dim); font-size: 1.05rem; margin-top: 0.9rem; }
   .post-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.2rem; }
@@ -145,7 +145,7 @@ const articleLd = {
   .prose a:hover { text-decoration-color: var(--accent-3); }
   .prose ul, .prose ol { padding-left: 1.4rem; }
   .prose li { margin-top: 0.4rem; }
-  .prose img { border-radius: 12px; border: 1px solid var(--border); margin-block: 1.5rem; }
+  .prose img { border-radius: var(--radius); border: 1px solid var(--border); margin-block: 1.5rem; }
   .prose blockquote { border-left: 3px solid var(--accent-line); padding: 0.3rem 0 0.3rem 1.1rem; color: var(--text-dim); font-style: italic; }
   .prose hr { border: none; border-top: 1px solid var(--border); margin-block: 2rem; }
   .prose strong { color: var(--text); font-weight: 700; }
@@ -154,14 +154,14 @@ const articleLd = {
   .prose :not(pre) > code {
     font-family: var(--font-mono); font-size: 0.86em;
     background: var(--bg-elev); border: 1px solid var(--border-soft);
-    padding: 0.12em 0.4em; border-radius: 6px; color: var(--accent);
+    padding: 0.12em 0.4em; border-radius: var(--radius); color: var(--accent);
   }
 
   /* Code blocks (Shiki) */
   .prose pre {
     position: relative;
     font-family: var(--font-mono); font-size: 0.86rem; line-height: 1.6;
-    padding: 1.1rem 1.15rem; border-radius: 12px;
+    padding: 1.1rem 1.15rem; border-radius: var(--radius);
     border: 1px solid var(--border);
     overflow-x: auto; margin-block: 1.5rem;
     background: var(--code-bg) !important;
@@ -172,7 +172,7 @@ const articleLd = {
     position: absolute; top: 0.6rem; right: 0.6rem;
     display: inline-flex; align-items: center; gap: 0.3rem;
     font-family: var(--font-mono); font-size: 0.7rem;
-    padding: 0.3rem 0.55rem; border-radius: 7px;
+    padding: 0.3rem 0.55rem; border-radius: var(--radius);
     background: var(--panel); border: 1px solid var(--border); color: var(--text-dim);
     cursor: pointer; opacity: 0; transition: opacity 0.2s var(--ease), color 0.2s var(--ease);
   }
@@ -183,7 +183,7 @@ const articleLd = {
 
   /* GitHub-style callouts (remark-github-blockquote-alert) */
   .markdown-alert {
-    padding: 0.9rem 1.1rem; border-radius: 10px; border: 1px solid var(--border);
+    padding: 0.9rem 1.1rem; border-radius: var(--radius); border: 1px solid var(--border);
     border-left-width: 4px; background: var(--bg-elev); margin-block: 1.5rem;
   }
   .markdown-alert > :first-child { margin-top: 0; }

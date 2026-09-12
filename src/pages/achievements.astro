@@ -75,7 +75,7 @@ const bugbountyItems = achievements.filter((a) => catOf(a.data.category) === 'bu
   .tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.75rem 0 1.5rem; }
   .tab {
     font-family: var(--font-mono); font-size: 0.82rem;
-    padding: 0.5rem 0.9rem; border-radius: 999px;
+    padding: 0.5rem 0.9rem; border-radius: var(--radius-pill);
     border: 1px solid var(--border); background: var(--panel); color: var(--text-dim);
     cursor: pointer; transition: color 0.2s var(--ease), border-color 0.2s var(--ease), background 0.2s var(--ease);
   }
@@ -85,7 +85,7 @@ const bugbountyItems = achievements.filter((a) => catOf(a.data.category) === 'bu
   .ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
   .ach-card { padding: 1.25rem; display: flex; flex-direction: column; }
   .ach-top { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.7rem; }
-  .ach-icon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: var(--bg-elev); border: 1px solid var(--border); color: var(--accent); flex-shrink: 0; }
+  .ach-icon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--radius); background: var(--bg-elev); border: 1px solid var(--border); color: var(--accent); flex-shrink: 0; }
   .ach-icon [data-icon] { width: 20px; height: 20px; }
   .ach-cat { font-size: 0.66rem; letter-spacing: 0.08em; }
   .ach-year { margin-left: auto; color: var(--text-mute); font-size: 0.8rem; }

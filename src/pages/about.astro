@@ -88,7 +88,7 @@ const focus = [
 
 <style>
   .about-hero { display: grid; grid-template-columns: 200px 1fr; gap: 2rem; align-items: center; }
-  .about-portrait :global(img) { width: 100%; border-radius: 10px; border: 1px solid var(--border); }
+  .about-portrait :global(img) { width: 100%; border-radius: var(--radius); border: 1px solid var(--border); }
   .handle { color: var(--accent-2); font-weight: 500; font-size: 0.6em; }
   .about-bio { color: var(--text-dim); margin-top: 1rem; max-width: 65ch; }
   .about-cta { display: flex; gap: 0.7rem; margin-top: 1.5rem; flex-wrap: wrap; }
@@ -96,7 +96,7 @@ const focus = [
 
   .focus-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
   .focus-card { padding: 1.4rem; }
-  .focus-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--accent-glow); color: var(--accent); margin-bottom: 0.8rem; }
+  .focus-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--radius); background: var(--accent-glow); color: var(--accent); margin-bottom: 0.8rem; }
   .focus-icon [data-icon] { width: 22px; height: 22px; }
   .focus-card h3 { font-size: 1.05rem; }
   .focus-card p { color: var(--text-dim); font-size: 0.87rem; margin-top: 0.4rem; }
@@ -105,8 +105,8 @@ const focus = [
   .sk-head { display: flex; align-items: center; gap: 0.55rem; font-size: 0.9rem; margin-bottom: 0.45rem; }
   .sk-head [data-icon] { width: 18px; height: 18px; color: var(--accent); }
   .sk-head b { margin-left: auto; color: var(--text-dim); font-size: 0.8rem; }
-  .sk-bar { height: 7px; border-radius: 999px; background: var(--bg-elev); border: 1px solid var(--border-soft); overflow: hidden; }
-  .sk-bar span { display: block; height: 100%; width: var(--lvl); background: var(--accent-dim); border-radius: 999px; }
+  .sk-bar { height: 7px; border-radius: var(--radius-pill); background: var(--bg-elev); border: 1px solid var(--border-soft); overflow: hidden; }
+  .sk-bar span { display: block; height: 100%; width: var(--lvl); background: var(--accent-dim); border-radius: var(--radius-pill); }
 
   .plat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.9rem; margin-top: 1.5rem; }
   .plat { display: flex; flex-direction: column; gap: 0.3rem; padding: 1.1rem; color: var(--text); transition: transform 0.2s var(--ease), border-color 0.2s var(--ease); }

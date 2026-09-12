@@ -58,7 +58,7 @@ const { title, description, tags, image, github, demo } = Astro.props;
   .project-links a {
     display: inline-flex; align-items: center; gap: 0.4rem;
     font-family: var(--font-mono); font-size: 0.8rem;
-    padding: 0.45rem 0.75rem; border-radius: 8px;
+    padding: 0.45rem 0.75rem; border-radius: var(--radius);
     background: var(--panel); border: 1px solid var(--border); color: var(--text);
   }
   .project-links a:hover { border-color: var(--accent-line); color: var(--accent); }

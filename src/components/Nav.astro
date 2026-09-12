@@ -91,7 +91,7 @@ const isActive = (href: string) =>
     font-size: 0.86rem;
     color: var(--text-dim);
     padding: 0.5rem 0.7rem;
-    border-radius: 8px;
+    border-radius: var(--radius);
     transition: color 0.2s var(--ease), background 0.2s var(--ease);
   }
   .nav-link:hover { color: var(--text); background: var(--panel); }
@@ -101,7 +101,7 @@ const isActive = (href: string) =>
     display: none;
     background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 9px;
+    border-radius: var(--radius);
     color: var(--text);
     padding: 0.45rem;
     cursor: pointer;

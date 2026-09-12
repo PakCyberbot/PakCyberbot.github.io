@@ -79,7 +79,8 @@ const bugbountyItems = achievements.filter((a) => catOf(a.data.category) === 'bu
     border: 1px solid var(--border); background: var(--panel); color: var(--text-dim);
     cursor: pointer; transition: color 0.2s var(--ease), border-color 0.2s var(--ease), background 0.2s var(--ease);
   }
-  .tab:hover { color: var(--text); }
+  .tab:hover { color: var(--text); border-color: var(--accent-line); }
+  .tab:active { transform: scale(0.97); }
   .tab.active { color: var(--text); background: var(--panel-2); border-color: var(--accent-line); }
 
   .ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }

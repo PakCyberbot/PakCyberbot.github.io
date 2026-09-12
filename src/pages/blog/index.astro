@@ -112,7 +112,7 @@ const mediumCount = posts.filter((p) => p.source === 'medium').length;
   }
   .search-box [data-icon] { width: 18px; height: 18px; color: var(--text-mute); }
   .search-box input { flex: 1; background: none; border: none; color: var(--text); font-size: 0.95rem; outline: none; }
-  .search-box:focus-within { border-color: var(--accent-line); }
+  .search-box:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
 
   .filter-row { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
   .filter-label { color: var(--text-mute); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; margin-right: 0.3rem; min-width: 62px; }
@@ -122,7 +122,8 @@ const mediumCount = posts.filter((p) => p.source === 'medium').length;
     border: 1px solid var(--border); background: var(--bg-elev); color: var(--text-dim);
     cursor: pointer; transition: all 0.2s var(--ease);
   }
-  .pill:hover { color: var(--text); }
+  .pill:hover { color: var(--text); border-color: var(--accent-line); }
+  .pill:active { transform: scale(0.97); }
   .pill.active { color: var(--accent-contrast); background: var(--accent); border-color: transparent; }
   #tag-select {
     font-family: var(--font-mono); font-size: 0.8rem;

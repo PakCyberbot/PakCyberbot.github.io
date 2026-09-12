@@ -218,6 +218,10 @@ h1, h2 { letter-spacing: var(--tracking-tight); }
   border: 1px solid var(--accent-line);
 }
 .btn-primary:hover { color: #fff; border-color: var(--accent); box-shadow: var(--shadow); }
+.btn:active { transform: translateY(0) scale(0.99); }
+.btn:disabled, .btn[aria-disabled='true'] {
+  opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none;
+}
 
 /* Chips / tags */
 .chip {

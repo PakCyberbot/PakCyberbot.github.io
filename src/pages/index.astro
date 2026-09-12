@@ -250,6 +250,7 @@ const sections = [
     transition: color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.2s var(--ease);
   }
   .hero-social a:hover { color: var(--accent); border-color: var(--accent-line); transform: translateY(-2px); }
+  .hero-social a:active { transform: translateY(0); }
   .hero-social [data-icon] { width: 18px; height: 18px; }
 
   .hero-id { justify-self: end; width: 100%; max-width: 360px; }
@@ -282,6 +283,7 @@ const sections = [
   .hl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.9rem; margin-top: 1.5rem; }
   .hl-card { display: flex; align-items: center; gap: 0.9rem; padding: 1rem 1.1rem; color: var(--text); transition: transform 0.2s var(--ease), border-color 0.2s var(--ease); }
   .hl-card:hover { transform: translateY(-3px); border-color: var(--accent-line); color: var(--text); }
+  .hl-card:active { transform: translateY(0); }
   .hl-icon { display: grid; place-items: center; width: 42px; height: 42px; flex-shrink: 0; border-radius: var(--radius); background: var(--bg-elev); border: 1px solid var(--border); color: var(--accent); }
   .hl-icon [data-icon] { width: 20px; height: 20px; }
   .hl-body { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
@@ -293,6 +295,7 @@ const sections = [
   .exp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
   .exp-card { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; padding: 1.4rem; text-align: left; cursor: pointer; color: var(--text); font: inherit; transition: transform 0.2s var(--ease), border-color 0.2s var(--ease); }
   .exp-card:hover { transform: translateY(-4px); border-color: var(--accent-line); }
+  .exp-card:active { transform: translateY(0); }
   .exp-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--radius); background: var(--bg-elev); border: 1px solid var(--border); color: var(--accent); margin-bottom: 0.5rem; }
   .exp-icon [data-icon] { width: 22px; height: 22px; }
   .exp-title { font-size: 1.05rem; font-weight: 700; }
@@ -319,6 +322,7 @@ const sections = [
   .link-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 0.7rem; }
   .link-chip { display: flex; align-items: center; gap: 0.7rem; padding: 0.75rem 0.9rem; color: var(--text); transition: transform 0.2s var(--ease), border-color 0.2s var(--ease); }
   .link-chip:hover { transform: translateY(-2px); border-color: var(--accent-line); color: var(--text); }
+  .link-chip:active { transform: translateY(0); }
   .link-chip [data-icon] { width: 22px; height: 22px; color: var(--accent); flex-shrink: 0; }
   .lc-text { display: flex; flex-direction: column; min-width: 0; }
   .lc-text b { font-size: 0.88rem; }
@@ -328,6 +332,7 @@ const sections = [
   .explore-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
   .explore-card { padding: 1.5rem; color: var(--text); transition: transform 0.2s var(--ease), border-color 0.2s var(--ease); }
   .explore-card:hover { transform: translateY(-4px); border-color: var(--accent-line); color: var(--text); }
+  .explore-card:active { transform: translateY(0); }
   .explore-icon { display: grid; place-items: center; width: 46px; height: 46px; border-radius: var(--radius); background: var(--bg-elev); border: 1px solid var(--border); color: var(--accent); margin-bottom: 0.9rem; }
   .explore-icon [data-icon] { width: 22px; height: 22px; }
   .explore-card h3 { font-size: 1.15rem; }

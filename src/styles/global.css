@@ -152,9 +152,9 @@ h1, h2 { letter-spacing: var(--tracking-tight); }
 /* ===========================================================================
    Layout helpers
    =========================================================================== */
-.container { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: 1.25rem; }
+.container { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter); }
 
-.section { padding-block: clamp(3rem, 7vw, 5.5rem); }
+.section { padding-block: clamp(var(--space-8), 7vw, 5.5rem); }
 
 .eyebrow {
   display: inline-flex;

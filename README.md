@@ -97,28 +97,47 @@ Adding a **new category** needs nothing extra — type it in `category` and the
 blog index picks it up as a filter automatically. See the two sample posts in
 `src/content/writeups/` for a full reference.
 
-### An achievement (CTF / bug bounty / CVE / community)
+The Achievements page has four data-driven sections: **CTF Competitions**,
+**CVEs**, **Bug Bounty — Hall of Fame**, and **Community**.
 
-Edit `src/content/achievements.yaml` and add a block:
+**A CTF or community achievement** — edit `src/content/achievements.yaml`:
 
 ```yaml
 - id: unique-id
   title: Event or recognition
-  category: ctf            # ctf | bugbounty | cve | community
+  category: ctf            # ctf | community
   event: BlackHat MEA CTF  # optional
   placement: 1st place     # optional
   team: Team Revolt        # optional
   year: 2026
   description: One or two sentences.
-  url: https://link-to-proof
+  url: https://link-to-proof   # optional; CTFs without a url appear in the list without a link
   icon: trophy             # a lucide icon name
-  featured: true           # also show in Home highlights
+  featured: true           # CTFs: featured -> a card that opens a detail popup; others -> the list. Also shows in Home highlights.
   rank: 1                  # lower sorts first
 ```
 
-Bug bounty Hall-of-Fame entries and CVEs use `category: bugbounty` or
-`category: cve` and appear in the **Bug Bounty & CVEs** tab. Commented examples
-are at the bottom of the file.
+**A CVE** — edit `src/content/cves.yaml`. Each entry is a card that opens a popup:
+
+```yaml
+- id: cve-2026-xxxxx
+  cve: CVE-2026-XXXXX
+  year: 2026
+  summary: Short description shown in the popup.
+  url: https://link-to-disclosure   # optional
+```
+
+**A Bug Bounty Hall-of-Fame entry** — edit `src/content/halloffame.yaml`. Leave
+`url` as `""` until you have the link; it shows "link soon" until then:
+
+```yaml
+- id: acme
+  program: Acme Corp
+  year: 2026
+  summary: Recognized for reporting <short description>.
+  url: ""                       # add your acknowledgment/profile link here
+  icon: lucide:shield-check     # or simple-icons:<brand>
+```
 
 ### A certification (shown on the Achievements page)
 

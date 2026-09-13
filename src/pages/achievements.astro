@@ -3,130 +3,312 @@ import { getCollection } from 'astro:content';
 import { Icon } from 'astro-icon/components';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const achievements = (await getCollection('achievements')).sort(
-  (a, b) => a.data.rank - b.data.rank
-);
+const achievements = await getCollection('achievements');
+const byRank = (a: any, b: any) => a.data.rank - b.data.rank;
 
-const tabs = [
-  { id: 'all', label: 'All' },
-  { id: 'ctf', label: 'CTFs' },
-  { id: 'bugbounty', label: 'Bug Bounty & CVEs' },
-  { id: 'community', label: 'Community' },
-];
+const ctfFeatured = achievements.filter((a) => a.data.category === 'ctf' && a.data.featured).sort(byRank);
+const ctfOther = achievements.filter((a) => a.data.category === 'ctf' && !a.data.featured).sort(byRank);
+const community = achievements.filter((a) => a.data.category === 'community').sort(byRank);
 
-const catOf = (c: string) => (c === 'cve' ? 'bugbounty' : c);
-const bugbountyItems = achievements.filter((a) => catOf(a.data.category) === 'bugbounty');
+const cves = (await getCollection('cves')).sort((a, b) => b.data.year - a.data.year);
+const hof = await getCollection('halloffame');
+
+// Items that open a detail popup (featured CTFs + CVEs).
+const meta = (parts: (string | number | undefined)[]) => parts.filter(Boolean).join(' · ');
 ---
 
-<BaseLayout title="Achievements & Recognition" description="CTF placements, bug bounty recognition, CVEs and significant certifications earned by Faraz Ahmed (PakCyberbot).">
-  <section class="section">
+<BaseLayout title="Achievements & Recognition" description="CTF placements, disclosed CVEs, bug bounty Hall of Fame and community contributions by Faraz Ahmed (PakCyberbot).">
+  <section class="section pb-tight">
     <div class="container">
       <span class="eyebrow">the record</span>
       <h1 class="section-title">Achievements &amp; Recognition</h1>
-      <p class="section-lead">CTF competitions, bug bounty recognition and CVEs, and community contributions. Filter by category below.</p>
+      <p class="section-lead">CTF competitions, disclosed CVEs, bug bounty recognition and community contributions.</p>
+    </div>
+  </section>
 
-      <div class="tabs" role="tablist" aria-label="Achievement categories">
-        {tabs.map((t, i) => (
-          <button class:list={['tab', { active: i === 0 }]} role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-tab={t.id}>
-            {t.label}
-          </button>
-        ))}
+  <!-- ===================== CTF COMPETITIONS ===================== -->
+  <section class="section blk" aria-labelledby="ctf-title">
+    <div class="container">
+      <div class="blk-head">
+        <h2 class="blk-title" id="ctf-title"><Icon name="lucide:flag" /> CTF Competitions</h2>
+        <a class="blk-link mono" href="https://ctftime.org/user/138629" target="_blank" rel="noopener noreferrer">CTFtime <Icon name="lucide:arrow-up-right" /></a>
       </div>
 
-      <div class="ach-grid" id="ach-grid">
-        {achievements.map((a, i) => (
-          <article class="ach-card card" data-cat={catOf(a.data.category)} data-reveal data-reveal-delay={(i % 6) * 50}>
-            <div class="ach-top">
-              <span class="ach-icon"><Icon name={`lucide:${a.data.icon}`} /></span>
-              <span class="ach-cat chip">{a.data.category.toUpperCase()}</span>
-              <span class="ach-year mono">{a.data.year}</span>
-            </div>
-            <h3 class="ach-title">{a.data.title}</h3>
-            {(a.data.placement || a.data.team) && (
-              <p class="ach-sub mono">
-                {a.data.placement}{a.data.placement && a.data.team ? ' · ' : ''}{a.data.team}
-              </p>
-            )}
-            {a.data.description && <p class="ach-desc">{a.data.description}</p>}
-            {a.data.url && (
-              <a class="ach-link mono" href={a.data.url} target="_blank" rel="noopener noreferrer">
-                evidence <Icon name="lucide:external-link" />
-              </a>
-            )}
-          </article>
-        ))}
-      </div>
-
-      {bugbountyItems.length === 0 && (
-        <div class="empty-state" id="empty-bugbounty" hidden>
-          <Icon name="lucide:bug" />
-          <p>Bug bounty recognitions, Hall of Fame entries and CVEs will be listed here as they are disclosed.</p>
+      {ctfFeatured.length > 0 && (
+        <div class="ctf-featured">
+          {ctfFeatured.map((a) => (
+            <button class="ctf-card card" type="button" data-popup={a.id} aria-haspopup="dialog" data-reveal>
+              <span class="ctf-icon"><Icon name={`lucide:${a.data.icon}`} /></span>
+              <span class="ctf-cardbody">
+                <b>{a.data.title}</b>
+                <span class="ctf-meta mono">{meta([a.data.placement, a.data.team, a.data.year])}</span>
+              </span>
+              <span class="ctf-open mono">details <Icon name="lucide:chevron-right" /></span>
+            </button>
+          ))}
         </div>
       )}
 
-      <p class="certs-pointer text-dim">
-        Looking for my certifications? They're on the <a href="/">home page</a>.
-      </p>
+      {ctfOther.length > 0 && (
+        <ul class="row-list" aria-label="Other CTFs played">
+          {ctfOther.map((a) => (
+            <li class="row-item">
+              <a
+                class="row-hit"
+                href={a.data.url ?? undefined}
+                target={a.data.url ? '_blank' : undefined}
+                rel={a.data.url ? 'noopener noreferrer' : undefined}
+                aria-disabled={a.data.url ? undefined : 'true'}
+              >
+                <span class="row-main">
+                  <span class="row-title">{a.data.title}</span>
+                  {a.data.description && <span class="row-desc">{a.data.description}</span>}
+                </span>
+                <span class="row-side mono">{a.data.year}</span>
+                {a.data.url && <Icon name="lucide:arrow-up-right" class="row-go" />}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   </section>
+
+  <!-- ===================== CVEs ===================== -->
+  <section class="section blk" aria-labelledby="cve-title">
+    <div class="container">
+      <div class="blk-head">
+        <h2 class="blk-title" id="cve-title"><Icon name="lucide:bug" /> CVEs</h2>
+        <span class="blk-sub text-dim">Click to view details</span>
+      </div>
+      {cves.length > 0 ? (
+        <div class="cve-grid">
+          {cves.map((c) => (
+            <button class="cve-card card" type="button" data-popup={c.id} aria-haspopup="dialog" data-reveal>
+              <span class="cve-icon"><Icon name="lucide:bug" /></span>
+              <span class="cve-num mono">{c.data.cve}</span>
+              <span class="cve-year mono">{c.data.year}</span>
+              <span class="cve-open mono">open <Icon name="lucide:chevron-right" /></span>
+            </button>
+          ))}
+        </div>
+      ) : (
+        <p class="text-dim">No CVEs published yet.</p>
+      )}
+    </div>
+  </section>
+
+  <!-- ===================== BUG BOUNTY HALL OF FAME ===================== -->
+  <section class="section blk" aria-labelledby="hof-title">
+    <div class="container">
+      <div class="blk-head">
+        <h2 class="blk-title" id="hof-title"><Icon name="lucide:award" /> Bug Bounty — Hall of Fame</h2>
+        <span class="blk-sub text-dim">Programs that recognized my reports</span>
+      </div>
+      <ul class="hof-list">
+        {hof.map((h) => (
+          <li class="hof-item card" data-reveal>
+            <span class="hof-icon"><Icon name={h.data.icon} /></span>
+            <span class="hof-body">
+              <span class="hof-head">
+                <b class="hof-program">{h.data.program}</b>
+                {h.data.year && <span class="hof-year mono">{h.data.year}</span>}
+              </span>
+              <span class="hof-desc">{h.data.summary}</span>
+            </span>
+            {h.data.url
+              ? <a class="hof-link mono" href={h.data.url} target="_blank" rel="noopener noreferrer">profile <Icon name="lucide:arrow-up-right" /></a>
+              : <span class="hof-link mono muted">link soon</span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== COMMUNITY ===================== -->
+  {community.length > 0 && (
+    <section class="section blk" aria-labelledby="comm-title">
+      <div class="container">
+        <div class="blk-head">
+          <h2 class="blk-title" id="comm-title"><Icon name="lucide:users" /> Community &amp; Recognition</h2>
+        </div>
+        <div class="comm-grid">
+          {community.map((a) => (
+            <article class="comm-card card" data-reveal>
+              <div class="comm-top">
+                <span class="comm-icon"><Icon name={`lucide:${a.data.icon}`} /></span>
+                <span class="comm-year mono">{a.data.year}</span>
+              </div>
+              <h3 class="comm-title">{a.data.title}</h3>
+              {a.data.description && <p class="comm-desc">{a.data.description}</p>}
+              {a.data.url && (
+                <a class="comm-link mono" href={a.data.url} target="_blank" rel="noopener noreferrer">evidence <Icon name="lucide:external-link" /></a>
+              )}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <div class="container">
+    <p class="certs-pointer text-dim">
+      Looking for my certifications? They're on the <a href="/">home page</a>.
+    </p>
+  </div>
+
+  <!-- ===================== POPUP DIALOGS ===================== -->
+  {ctfFeatured.map((a) => (
+    <dialog id={`pop-${a.id}`} class="pop-dialog" aria-label={a.data.title}>
+      <article class="pop-modal">
+        <header class="pop-head">
+          <span class="pop-icon"><Icon name={`lucide:${a.data.icon}`} /></span>
+          <h3>{a.data.title}</h3>
+          <button class="pop-close" type="button" aria-label="Close"><Icon name="lucide:x" /></button>
+        </header>
+        <div class="pop-body">
+          <p class="pop-meta mono">{meta([a.data.event, a.data.placement, a.data.team, a.data.year])}</p>
+          {a.data.description && <p>{a.data.description}</p>}
+          {a.data.url && (
+            <a class="pop-link" href={a.data.url} target="_blank" rel="noopener noreferrer"><Icon name="lucide:external-link" /> View evidence</a>
+          )}
+        </div>
+      </article>
+    </dialog>
+  ))}
+
+  {cves.map((c) => (
+    <dialog id={`pop-${c.id}`} class="pop-dialog" aria-label={c.data.cve}>
+      <article class="pop-modal">
+        <header class="pop-head">
+          <span class="pop-icon"><Icon name="lucide:bug" /></span>
+          <h3 class="mono">{c.data.cve}</h3>
+          <button class="pop-close" type="button" aria-label="Close"><Icon name="lucide:x" /></button>
+        </header>
+        <div class="pop-body">
+          <p class="pop-meta mono">Disclosed · {c.data.year}</p>
+          <p>{c.data.summary}</p>
+          {c.data.url && (
+            <a class="pop-link" href={c.data.url} target="_blank" rel="noopener noreferrer"><Icon name="lucide:external-link" /> View disclosure</a>
+          )}
+        </div>
+      </article>
+    </dialog>
+  ))}
 </BaseLayout>
 
 <style>
-  .tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.75rem 0 1.5rem; }
-  .tab {
-    font-family: var(--font-mono); font-size: 0.82rem;
-    padding: 0.5rem 0.9rem; border-radius: var(--radius-pill);
-    border: 1px solid var(--border); background: var(--panel); color: var(--text-dim);
-    cursor: pointer; transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease), background var(--dur) var(--ease);
-  }
-  .tab:hover { color: var(--text); border-color: var(--accent-line); }
-  .tab:active { transform: scale(0.97); }
-  .tab.active { color: var(--text); background: var(--panel-2); border-color: var(--accent-line); }
+  .pb-tight { padding-bottom: 0; }
+  .blk { padding-block: clamp(var(--space-6), 4vw, var(--space-8)); }
+  .blk-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; margin-bottom: var(--space-5); padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-soft); }
+  .blk-title { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--text-xl); }
+  .blk-title [data-icon] { width: 22px; height: 22px; color: var(--accent); }
+  .blk-link { display: inline-flex; align-items: center; gap: 0.35rem; color: var(--text-dim); font-size: var(--text-sm); }
+  .blk-link:hover { color: var(--accent); }
+  .blk-link [data-icon] { width: 15px; height: 15px; }
+  .blk-sub { font-size: var(--text-sm); }
 
-  .ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
-  .ach-card { padding: 1.25rem; display: flex; flex-direction: column; }
-  .ach-top { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.7rem; }
-  .ach-icon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--radius); background: var(--bg-elev); border: 1px solid var(--border); color: var(--accent); flex-shrink: 0; }
-  .ach-icon [data-icon] { width: 20px; height: 20px; }
-  .ach-cat { font-size: 0.66rem; letter-spacing: 0.08em; }
-  .ach-year { margin-left: auto; color: var(--text-mute); font-size: 0.8rem; }
-  .ach-title { font-size: 1.05rem; line-height: 1.3; }
-  .ach-sub { color: var(--accent); font-size: 0.8rem; margin-top: 0.35rem; }
-  .ach-desc { color: var(--text-dim); font-size: 0.88rem; margin-top: 0.55rem; flex: 1; }
-  .ach-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; margin-top: 0.9rem; color: var(--accent); }
-  .ach-link [data-icon] { width: 14px; height: 14px; }
+  /* Featured CTF cards (open popups) */
+  .ctf-featured { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-4); }
+  .ctf-card { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4); text-align: left; cursor: pointer; color: var(--text); font: inherit; transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease); }
+  .ctf-card:hover { transform: translateY(-3px); border-color: var(--accent-line); }
+  .ctf-card:active { transform: translateY(0); }
+  .ctf-icon { display: grid; place-items: center; width: 42px; height: 42px; flex-shrink: 0; border-radius: var(--radius); background: var(--bg-elev); border: 1px solid var(--border); color: var(--accent); }
+  .ctf-icon [data-icon] { width: 21px; height: 21px; }
+  .ctf-cardbody { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; flex: 1; }
+  .ctf-cardbody b { font-size: var(--text-base); line-height: 1.3; }
+  .ctf-meta { font-size: var(--text-xs); color: var(--accent); }
+  .ctf-open { display: inline-flex; align-items: center; gap: 0.2rem; font-size: var(--text-xs); color: var(--text-mute); flex-shrink: 0; }
+  .ctf-open [data-icon] { width: 14px; height: 14px; }
 
-  .empty-state { text-align: center; padding: 3rem 1rem; color: var(--text-mute); }
-  .empty-state [data-icon] { width: 34px; height: 34px; margin: 0 auto 0.75rem; color: var(--accent); }
-  .empty-state p { max-width: 42ch; margin: 0 auto; }
+  /* Generic row list (other CTFs) */
+  .row-list { list-style: none; padding: 0; margin: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .row-item + .row-item { border-top: 1px solid var(--border-soft); }
+  .row-hit { display: flex; align-items: center; gap: var(--space-4); padding: 0.85rem var(--space-4); color: var(--text); transition: background var(--dur) var(--ease); }
+  .row-hit:hover { background: var(--panel); color: var(--text); }
+  a.row-hit[aria-disabled='true'] { cursor: default; }
+  a.row-hit[aria-disabled='true']:hover { background: transparent; }
+  .row-main { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; flex: 1; }
+  .row-title { font-weight: 600; font-size: var(--text-sm); }
+  .row-desc { font-size: var(--text-xs); color: var(--text-dim); }
+  .row-side { font-size: var(--text-xs); color: var(--text-mute); flex-shrink: 0; }
+  .row-go { width: 15px; height: 15px; color: var(--text-mute); flex-shrink: 0; }
+  .row-hit:hover .row-go { color: var(--accent); }
 
-  .certs-pointer { margin-top: 2rem; font-size: 0.9rem; }
+  /* CVE cards (open popups) */
+  .cve-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--space-3); }
+  .cve-card { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4); text-align: left; cursor: pointer; color: var(--text); font: inherit; transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease); }
+  .cve-card:hover { transform: translateY(-3px); border-color: var(--accent-line); }
+  .cve-card:active { transform: translateY(0); }
+  .cve-icon { display: grid; place-items: center; width: 40px; height: 40px; flex-shrink: 0; border-radius: var(--radius); background: var(--bg-elev); border: 1px solid var(--border); color: var(--accent); }
+  .cve-icon [data-icon] { width: 20px; height: 20px; }
+  .cve-num { font-size: var(--text-base); font-weight: 700; flex: 1; }
+  .cve-year { font-size: var(--text-xs); color: var(--text-mute); }
+  .cve-open { display: inline-flex; align-items: center; gap: 0.2rem; font-size: var(--text-xs); color: var(--accent); flex-shrink: 0; }
+  .cve-open [data-icon] { width: 14px; height: 14px; }
+
+  /* Hall of Fame list */
+  .hof-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+  .hof-item { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-4); }
+  .hof-icon { display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; border-radius: var(--radius); background: var(--bg-elev); border: 1px solid var(--border); color: var(--accent); }
+  .hof-icon [data-icon] { width: 22px; height: 22px; }
+  .hof-body { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; flex: 1; }
+  .hof-head { display: flex; align-items: baseline; gap: var(--space-3); }
+  .hof-program { font-size: var(--text-lg); }
+  .hof-year { font-size: var(--text-xs); color: var(--text-mute); }
+  .hof-desc { font-size: var(--text-sm); color: var(--text-dim); }
+  .hof-link { display: inline-flex; align-items: center; gap: 0.35rem; font-size: var(--text-sm); color: var(--accent); flex-shrink: 0; }
+  .hof-link [data-icon] { width: 15px; height: 15px; }
+  .hof-link.muted { color: var(--text-mute); }
+
+  /* Community cards */
+  .comm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--space-4); }
+  .comm-card { padding: var(--space-4); display: flex; flex-direction: column; }
+  .comm-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
+  .comm-icon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--radius); background: var(--bg-elev); border: 1px solid var(--border); color: var(--accent); }
+  .comm-icon [data-icon] { width: 20px; height: 20px; }
+  .comm-year { color: var(--text-mute); font-size: var(--text-xs); }
+  .comm-title { font-size: var(--text-base); line-height: 1.3; }
+  .comm-desc { color: var(--text-dim); font-size: var(--text-sm); margin-top: 0.5rem; flex: 1; }
+  .comm-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: var(--text-xs); margin-top: 0.9rem; color: var(--accent); }
+  .comm-link [data-icon] { width: 14px; height: 14px; }
+
+  .certs-pointer { margin-top: var(--space-6); font-size: var(--text-sm); }
   .certs-pointer a { color: var(--accent); }
 
-  .hidden { display: none !important; }
+  /* Popup dialog (shared) */
+  .pop-dialog { border: none; padding: 0; background: transparent; max-width: min(560px, 92vw); width: 100%; margin: auto; color: var(--text); }
+  .pop-dialog::backdrop { background: var(--scrim); backdrop-filter: blur(3px); }
+  .pop-modal { background: linear-gradient(180deg, var(--panel), var(--panel-2)); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+  .pop-head { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--border); }
+  .pop-head h3 { font-size: var(--text-lg); flex: 1; }
+  .pop-icon { display: grid; place-items: center; width: 38px; height: 38px; border-radius: var(--radius); background: var(--bg-elev); border: 1px solid var(--border); color: var(--accent); }
+  .pop-icon [data-icon] { width: 19px; height: 19px; }
+  .pop-close { display: grid; place-items: center; width: 34px; height: 34px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg-elev); color: var(--text-dim); cursor: pointer; }
+  .pop-close:hover { color: var(--accent); border-color: var(--accent-line); }
+  .pop-close [data-icon] { width: 18px; height: 18px; }
+  .pop-body { padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-3); }
+  .pop-body p { color: var(--text-dim); }
+  .pop-meta { color: var(--accent); font-size: var(--text-xs); }
+  .pop-link { display: inline-flex; align-items: center; gap: 0.45rem; align-self: flex-start; font-family: var(--font-mono); font-size: var(--text-sm); padding: 0.55rem 0.9rem; border-radius: var(--radius); border: 1px solid var(--accent-line); background: var(--accent-glow); color: var(--accent); }
+  .pop-link:hover { border-color: var(--accent); color: var(--accent-bright); }
+  .pop-link [data-icon] { width: 16px; height: 16px; }
+
+  @media (max-width: 560px) {
+    .hof-item { flex-wrap: wrap; }
+    .hof-link { margin-left: 60px; }
+  }
 </style>
 
 <script>
-  const tabs = document.querySelectorAll<HTMLButtonElement>('.tab');
-  const cards = document.querySelectorAll<HTMLElement>('#ach-grid > [data-cat]');
-  const emptyBB = document.getElementById('empty-bugbounty');
-
-  const apply = (id: string) => {
-    let shown = 0;
-    cards.forEach((c) => {
-      const show = id === 'all' ? true : c.dataset.cat === id;
-      c.classList.toggle('hidden', !show);
-      if (show) shown++;
+  document.querySelectorAll<HTMLButtonElement>('[data-popup]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const dlg = document.getElementById('pop-' + btn.dataset.popup) as HTMLDialogElement | null;
+      if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
     });
-    if (emptyBB) emptyBB.hidden = !(id === 'bugbounty' && shown === 0);
-  };
-
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      tabs.forEach((t) => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
-      tab.classList.add('active');
-      tab.setAttribute('aria-selected', 'true');
-      apply(tab.dataset.tab || 'all');
-    });
+  });
+  document.querySelectorAll<HTMLDialogElement>('.pop-dialog').forEach((dlg) => {
+    dlg.querySelector('.pop-close')?.addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
   });
 </script>

@@ -136,34 +136,6 @@
 
 # Note: the specific challenges I authored (MisCloud, Fishy HTTP, Private
 # Investigator, Stegoint) are listed on the Work page (challenges.yaml).
-
-# ---------------------------- Bug bounty & CVEs ------------------------------
-
-- id: cve-2026-21640
-  title: CVE-2026-21640
-  category: cve
-  issuer: MITRE / NVD
-  year: 2026
-  description: >-
-    Discovered and responsibly disclosed a security vulnerability, assigned
-    CVE-2026-21640 and published on the NVD under my name.
-  url: https://www.linkedin.com/posts/pakcyberbot_cve-vulnerability-nvd-activity-7419658768990429184-YW56
-  icon: bug
-  featured: true
-  rank: 1
-
-- id: meta-facebook-business
-  title: Security Bug in Meta (Facebook Business)
-  category: bugbounty
-  issuer: Meta
-  year: 2025
-  description: >-
-    Reported a security vulnerability affecting Meta's Facebook Business,
-    acknowledged by Meta's security team.
-  url: https://www.linkedin.com/posts/pakcyberbot_alhamdulillah-im-excited-to-share-that-activity-7455120930101518336-8kBF
-  icon: shield-check
-  featured: true
-  rank: 2
-
-# Add new bug bounty Hall-of-Fame entries and CVEs here (category: bugbounty | cve).
-# -----------------------------------------------------------------------------
+#
+# CVEs are maintained in cves.yaml and Bug Bounty Hall of Fame in
+# halloffame.yaml (both render as their own sections on the Achievements page).

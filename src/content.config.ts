@@ -151,6 +151,38 @@ const expertise = defineCollection({
   }),
 });
 
+/**
+ * CVEs I discovered/disclosed. Each opens a popup with the number, a short
+ * description and a link. Add entries over time in src/content/cves.yaml.
+ */
+const cves = defineCollection({
+  loader: file('./src/content/cves.yaml'),
+  schema: z.object({
+    id: z.string(),
+    cve: z.string(),          // e.g. CVE-2026-21640
+    year: z.number(),
+    summary: z.string(),      // short description shown in the popup
+    url: z.string().optional(), // disclosure / NVD / post link
+  }),
+});
+
+/**
+ * Bug bounty Hall of Fame — programs that recognized my reports. Leave `url`
+ * empty ("") until you have the acknowledgment/profile link, then fill it in.
+ * Add more entries in src/content/halloffame.yaml.
+ */
+const halloffame = defineCollection({
+  loader: file('./src/content/halloffame.yaml'),
+  schema: z.object({
+    id: z.string(),
+    program: z.string(),      // e.g. Meta
+    year: z.number().optional(),
+    summary: z.string(),
+    url: z.string().optional(), // profile / acknowledgment link ("" = not yet added)
+    icon: z.string().default('lucide:shield-check'),
+  }),
+});
+
 export const collections = {
   writeups,
   achievements,
@@ -160,4 +192,6 @@ export const collections = {
   research,
   external,
   expertise,
+  cves,
+  halloffame,
 };

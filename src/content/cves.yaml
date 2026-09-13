@@ -1,0 +1,13 @@
+# =============================================================================
+# CVEs — vulnerabilities I discovered / disclosed.
+# Each entry is a card that opens a popup showing the number, a short
+# description and the link. Add more entries over time.
+# =============================================================================
+
+- id: cve-2026-21640
+  cve: CVE-2026-21640
+  year: 2026
+  summary: >-
+    Discovered and responsibly disclosed a security vulnerability, assigned
+    CVE-2026-21640 and published on the NVD under my name.
+  url: https://www.linkedin.com/posts/pakcyberbot_cve-vulnerability-nvd-activity-7419658768990429184-YW56

@@ -17,6 +17,7 @@ export default defineConfig({
         'simple-icons': [
           'github', 'linkedin', 'medium', 'youtube', 'x', 'instagram',
           'facebook', 'hackthebox', 'tryhackme', 'hackerrank', 'googlecloud',
+          'meta',
         ],
         lucide: [
           'terminal', 'shield', 'shield-check', 'bug', 'search', 'code',

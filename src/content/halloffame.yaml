@@ -1,0 +1,15 @@
+# =============================================================================
+# Bug bounty Hall of Fame — programs that recognized my reports.
+# Leave `url` as "" until you have the acknowledgment/profile link, then paste
+# it in and the link appears automatically. Add more programs over time.
+# icon: any astro-icon name (e.g. simple-icons:meta, lucide:shield-check).
+# =============================================================================
+
+- id: meta
+  program: Meta
+  year: 2025
+  summary: >-
+    Reported a security vulnerability affecting Meta's Facebook Business,
+    acknowledged by Meta's security team.
+  url: ""   # <-- add your Meta acknowledgment / profile link here
+  icon: simple-icons:meta

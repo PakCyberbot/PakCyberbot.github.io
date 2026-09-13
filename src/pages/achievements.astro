@@ -26,53 +26,31 @@ const meta = (parts: (string | number | undefined)[]) => parts.filter(Boolean).j
     </div>
   </section>
 
-  <!-- ===================== CTF COMPETITIONS ===================== -->
-  <section class="section blk" aria-labelledby="ctf-title">
-    <div class="container">
-      <div class="blk-head">
-        <h2 class="blk-title" id="ctf-title"><Icon name="lucide:flag" /> CTF Competitions</h2>
-        <a class="blk-link mono" href="https://ctftime.org/user/138629" target="_blank" rel="noopener noreferrer">CTFtime <Icon name="lucide:arrow-up-right" /></a>
-      </div>
-
-      {ctfFeatured.length > 0 && (
-        <div class="ctf-featured">
-          {ctfFeatured.map((a) => (
-            <button class="ctf-card card" type="button" data-popup={a.id} aria-haspopup="dialog" data-reveal>
-              <span class="ctf-icon"><Icon name={`lucide:${a.data.icon}`} /></span>
-              <span class="ctf-cardbody">
-                <b>{a.data.title}</b>
-                <span class="ctf-meta mono">{meta([a.data.placement, a.data.team, a.data.year])}</span>
-              </span>
-              <span class="ctf-open mono">details <Icon name="lucide:chevron-right" /></span>
-            </button>
+  <!-- ===================== COMMUNITY ===================== -->
+  {community.length > 0 && (
+    <section class="section blk" aria-labelledby="comm-title">
+      <div class="container">
+        <div class="blk-head">
+          <h2 class="blk-title" id="comm-title"><Icon name="lucide:users" /> Community &amp; Recognition</h2>
+        </div>
+        <div class="comm-grid">
+          {community.map((a) => (
+            <article class="comm-card card" data-reveal>
+              <div class="comm-top">
+                <span class="comm-icon"><Icon name={`lucide:${a.data.icon}`} /></span>
+                <span class="comm-year mono">{a.data.year}</span>
+              </div>
+              <h3 class="comm-title">{a.data.title}</h3>
+              {a.data.description && <p class="comm-desc">{a.data.description}</p>}
+              {a.data.url && (
+                <a class="comm-link mono" href={a.data.url} target="_blank" rel="noopener noreferrer">evidence <Icon name="lucide:external-link" /></a>
+              )}
+            </article>
           ))}
         </div>
-      )}
-
-      {ctfOther.length > 0 && (
-        <ul class="row-list" aria-label="Other CTFs played">
-          {ctfOther.map((a) => (
-            <li class="row-item">
-              <a
-                class="row-hit"
-                href={a.data.url ?? undefined}
-                target={a.data.url ? '_blank' : undefined}
-                rel={a.data.url ? 'noopener noreferrer' : undefined}
-                aria-disabled={a.data.url ? undefined : 'true'}
-              >
-                <span class="row-main">
-                  <span class="row-title">{a.data.title}</span>
-                  {a.data.description && <span class="row-desc">{a.data.description}</span>}
-                </span>
-                <span class="row-side mono">{a.data.year}</span>
-                {a.data.url && <Icon name="lucide:arrow-up-right" class="row-go" />}
-              </a>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  </section>
+      </div>
+    </section>
+  )}
 
   <!-- ===================== CVEs ===================== -->
   <section class="section blk" aria-labelledby="cve-title">
@@ -125,31 +103,53 @@ const meta = (parts: (string | number | undefined)[]) => parts.filter(Boolean).j
     </div>
   </section>
 
-  <!-- ===================== COMMUNITY ===================== -->
-  {community.length > 0 && (
-    <section class="section blk" aria-labelledby="comm-title">
-      <div class="container">
-        <div class="blk-head">
-          <h2 class="blk-title" id="comm-title"><Icon name="lucide:users" /> Community &amp; Recognition</h2>
-        </div>
-        <div class="comm-grid">
-          {community.map((a) => (
-            <article class="comm-card card" data-reveal>
-              <div class="comm-top">
-                <span class="comm-icon"><Icon name={`lucide:${a.data.icon}`} /></span>
-                <span class="comm-year mono">{a.data.year}</span>
-              </div>
-              <h3 class="comm-title">{a.data.title}</h3>
-              {a.data.description && <p class="comm-desc">{a.data.description}</p>}
-              {a.data.url && (
-                <a class="comm-link mono" href={a.data.url} target="_blank" rel="noopener noreferrer">evidence <Icon name="lucide:external-link" /></a>
-              )}
-            </article>
+  <!-- ===================== CTF COMPETITIONS ===================== -->
+  <section class="section blk" aria-labelledby="ctf-title">
+    <div class="container">
+      <div class="blk-head">
+        <h2 class="blk-title" id="ctf-title"><Icon name="lucide:flag" /> CTF Competitions</h2>
+        <a class="blk-link mono" href="https://ctftime.org/user/138629" target="_blank" rel="noopener noreferrer">CTFtime <Icon name="lucide:arrow-up-right" /></a>
+      </div>
+
+      {ctfFeatured.length > 0 && (
+        <div class="ctf-featured">
+          {ctfFeatured.map((a) => (
+            <button class="ctf-card card" type="button" data-popup={a.id} aria-haspopup="dialog" data-reveal>
+              <span class="ctf-icon"><Icon name={`lucide:${a.data.icon}`} /></span>
+              <span class="ctf-cardbody">
+                <b>{a.data.title}</b>
+                <span class="ctf-meta mono">{meta([a.data.placement, a.data.team, a.data.year])}</span>
+              </span>
+              <span class="ctf-open mono">details <Icon name="lucide:chevron-right" /></span>
+            </button>
           ))}
         </div>
-      </div>
-    </section>
-  )}
+      )}
+
+      {ctfOther.length > 0 && (
+        <ul class="row-list" aria-label="Other CTFs played">
+          {ctfOther.map((a) => (
+            <li class="row-item">
+              <a
+                class="row-hit"
+                href={a.data.url ?? undefined}
+                target={a.data.url ? '_blank' : undefined}
+                rel={a.data.url ? 'noopener noreferrer' : undefined}
+                aria-disabled={a.data.url ? undefined : 'true'}
+              >
+                <span class="row-main">
+                  <span class="row-title">{a.data.title}</span>
+                  {a.data.description && <span class="row-desc">{a.data.description}</span>}
+                </span>
+                <span class="row-side mono">{a.data.year}</span>
+                {a.data.url && <Icon name="lucide:arrow-up-right" class="row-go" />}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </section>
 
   <div class="container">
     <p class="certs-pointer text-dim">

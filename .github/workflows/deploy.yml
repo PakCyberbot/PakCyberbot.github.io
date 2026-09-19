@@ -1,0 +1,48 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Deploy on every push to the production branch.
+  push:
+    branches: [main]
+  # Allow manual runs from the Actions tab.
+  workflow_dispatch:
+  # Rebuild daily so newly published Medium articles appear
+  # (the Medium feed is fetched at build time — see src/lib/posts.ts).
+  schedule:
+    - cron: '0 6 * * *'
+
+# Least-privilege permissions required by the Pages deploy.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; let an in-flight run finish (don't cancel
+# a live deploy) but coalesce queued runs.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Installs deps, runs `astro build`, and uploads ./dist as the Pages artifact.
+      - name: Build with Astro
+        uses: withastro/action@v3
+        with:
+          node-version: 20
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

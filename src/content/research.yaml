@@ -25,12 +25,11 @@
     3rd overall.
   # image: /work/cyberhackathon.png
 
-- id: journey-2024
-  title: My Cybersecurity Journey 2024 — Achievements & Milestones
+- id: phish-campaign-analysis
+  title: Massive Phishing Campaign Analysis on LinkedIn
   source: Medium
-  date: 2024
-  url: https://medium.com/@pakcyberbot/my-cybersecurity-journey-2024-achievements-challenges-and-milestones-c718793f7193
+  date: 2025
+  url: https://infosecwriteups.com/from-a-free-tryhackme-subscription-to-a-free-oscp-certification-b4002c230f54#1a71
   description: >-
-    A full recap of the year — certifications, CTF results, challenge authoring
-    and lessons learned.
-  # image: /work/journey-2024.png
+    Performed a detailed analysis of a large-scale phishing campaign targeting LinkedIn users, uncovering the tactics and techniques used by the attackers results in an invitation of private abuse program in Meta.
+  # image: /work/phish-campaign.png

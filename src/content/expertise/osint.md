@@ -19,4 +19,5 @@ and judged Trace Labs Search Party CTFs that support real missing-persons cases.
 
 - [Trace Labs participation](https://www.linkedin.com/posts/pakcyberbot_i-usually-participate-in-trace-labs-as-activity-7229046076530429952-AOLK)
 - [YT Evidence Collector (my OSINT tool)](https://github.com/PakCyberbot/YouTube-Evidence-Collector)
-- [CTFtime profile](https://ctftime.org/user/138629)
+- [Private Investigator — TryHackMe](https://tryhackme.com/jr/privateinvestigator)
+- [OSINT DOJO Winner](https://x.com/PakCyberbot/status/1556874963809959937)

@@ -8,6 +8,7 @@
 - id: oscp-notes
   title: OSCP Notes & Environment
   url: https://pakcyberbot.com/OSCP-Notes-and-Environment/
+  image: /blogs/oscp-notes.png
   category: OSCP Notes
   summary: >-
     My complete OSCP preparation notes and lab environment setup — methodology,
@@ -15,7 +16,7 @@
   tags: [OSCP, notes, methodology]
 
 - id: ctf-writeups
-  title: CTF Writeups
+  title: BlackHat 2023 CTF Writeups
   url: https://pakcyberbot.com/CTF-Writeups/
   category: CTF Writeups
   summary: >-

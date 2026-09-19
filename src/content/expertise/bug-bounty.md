@@ -17,9 +17,9 @@ so they can be reproduced and fixed.
 
 ## Proof & verification
 
-- [HackTheBox profile](https://app.hackthebox.com/profile/1098862)
+- [BugCrowd](https://bugcrowd.com/h/PakCyberbot)
+- [Hackerone](https://hackerone.com/pakcyberbot?type=user)
+- [YesWeHack](https://yeswehack.com/hunters/pakcyberbot)
+- [HackTheBox profile](https://app.hackthebox.com/public/users/1098862)
 - [TryHackMe profile](https://tryhackme.com/p/PakCyberbot)
 - Recognitions and CVEs are listed on the [Achievements page](/achievements).
-
-> [!NOTE]
-> Add specific Hall-of-Fame links or CVEs here as they are disclosed.

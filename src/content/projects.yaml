@@ -3,16 +3,15 @@
 # and reference its path). github/demo are optional links.
 # =============================================================================
 
-- id: yt-evidence-collector
-  title: YT Evidence Collector
+- id: pcb-life-manager
+  title: PakCyberbot Life Manager
   description: >-
-    A tool for gathering evidence from YouTube — video downloads, Wayback
-    Machine snapshots, and automatic documentation. Supports bulk downloads and
-    generates a browsable HTML report of the collected content.
-  tags: [Python, YouTube API, OSINT, Web Scraping]
-  image: /work/yt-evidence.jpg
+    Vibe Coded desktop and APK app but designed by me for managing tasks, files, books, budgets, and more. 
+  tags: [React Native, Capacitor, Task Manager, Productivity]
+  image: /work/pcblifemanager.png
   github: https://github.com/PakCyberbot/YouTube-Evidence-Collector
   featured: true
+
 
 - id: fuzzy-httpserver
   title: fuzzy-httpserver
@@ -24,4 +23,15 @@
   tags: [Python 3, HTTP Server, Red Team, CTF, Zero Deps]
   image: /work/fuzzy-httpserver.png
   github: https://github.com/PakCyberbot/fuzzy-httpserver
+  featured: true
+
+- id: yt-evidence-collector
+  title: YT Evidence Collector
+  description: >-
+    A tool for gathering evidence from YouTube — video downloads, Wayback
+    Machine snapshots, and automatic documentation. Supports bulk downloads and
+    generates a browsable HTML report of the collected content.
+  tags: [Python, YouTube API, OSINT, Web Scraping]
+  image: /work/yt-evidence.jpg
+  github: https://github.com/PakCyberbot/YouTube-Evidence-Collector
   featured: true

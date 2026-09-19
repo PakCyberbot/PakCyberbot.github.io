@@ -85,19 +85,32 @@ const personLd = {
     <!-- Scroll reveal: progressive enhancement, respects reduced-motion. -->
     <script>
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const els = document.querySelectorAll('[data-reveal]');
+      const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+
+      const reveal = (el: HTMLElement, animate: boolean) => {
+        if (animate) {
+          const delay = el.dataset.revealDelay;
+          if (delay) el.style.transitionDelay = `${delay}ms`;
+        }
+        el.classList.add('is-visible');
+      };
+
+      const revealAll = () => els.forEach((el) => reveal(el, false));
+
       if (prefersReduced || !('IntersectionObserver' in window)) {
-        els.forEach((el) => el.classList.add('is-visible'));
+        revealAll();
       } else {
         const io = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                const el = entry.target as HTMLElement;
-                const delay = el.dataset.revealDelay;
-                if (delay) el.style.transitionDelay = `${delay}ms`;
-                el.classList.add('is-visible');
-                io.unobserve(el);
+              // Reveal on scroll-in (animated), OR immediately if the element is
+              // already above the viewport — e.g. a back/forward that restored
+              // scroll mid-page without bfcache, where those cards will never
+              // intersect and would otherwise stay invisible.
+              const scrolledPast = entry.boundingClientRect.top < 0;
+              if (entry.isIntersecting || scrolledPast) {
+                reveal(entry.target as HTMLElement, entry.isIntersecting);
+                io.unobserve(entry.target);
               }
             });
           },
@@ -105,6 +118,14 @@ const personLd = {
         );
         els.forEach((el) => io.observe(el));
       }
+
+      // bfcache restore (Back/Forward): the module script does NOT re-run, but this
+      // listener survives in the cached page and still fires. The entrance animation
+      // already played on the first visit, so just reveal everything instantly —
+      // this is what prevents the "only some articles show until refresh" glitch.
+      window.addEventListener('pageshow', (e) => {
+        if (e.persisted) revealAll();
+      });
     </script>
   </body>
 </html>

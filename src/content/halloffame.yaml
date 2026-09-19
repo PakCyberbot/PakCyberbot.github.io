@@ -7,9 +7,9 @@
 
 - id: meta
   program: Meta
-  year: 2025
+  year: 2026
   summary: >-
     Reported a security vulnerability affecting Meta's Facebook Business,
     acknowledged by Meta's security team.
-  url: ""   # <-- add your Meta acknowledgment / profile link here
+  url: "https://bugbounty.meta.com/profile/949882561546398/"
   icon: simple-icons:meta

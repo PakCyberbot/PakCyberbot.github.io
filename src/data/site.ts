@@ -70,10 +70,10 @@ export const roles = [
 
 // Skills shown on Home / About.
 export const skills = [
-  { name: 'Red Teaming', level: 85, icon: 'lucide:crosshair' },
-  { name: 'Bug Bounty', level: 80, icon: 'lucide:bug' },
+  { name: 'Red Teaming', level: 65, icon: 'lucide:crosshair' },
+  { name: 'Bug Bounty', level: 70, icon: 'lucide:bug' },
   { name: 'OSINT', level: 85, icon: 'lucide:search' },
-  { name: 'Cloud Security', level: 70, icon: 'lucide:shield' },
+  { name: 'Cloud Security', level: 40, icon: 'lucide:shield' },
   { name: 'Challenge Creation', level: 75, icon: 'lucide:flag' },
   { name: 'Programming', level: 75, icon: 'lucide:code' },
 ];

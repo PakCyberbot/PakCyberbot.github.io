@@ -19,4 +19,4 @@ programming across several languages.
 
 - [GitHub profile](https://github.com/PakCyberbot)
 - [fuzzy-httpserver](https://github.com/PakCyberbot/fuzzy-httpserver)
-- [HackerRank profile](https://www.hackerrank.com/pakcyberbot)
+- [HackerRank profile](https://www.hackerrank.com/pakcyberbot) BEFORE AI

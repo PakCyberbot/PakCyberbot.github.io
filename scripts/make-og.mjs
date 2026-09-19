@@ -24,7 +24,7 @@ const svg = `<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http:/
     <text x="90" y="150" fill="#2f9c5a" font-size="26">// security researcher</text>
     <text x="86" y="270" fill="#dbe2df" font-size="94" font-weight="700">Faraz Ahmed</text>
     <text x="90" y="340" fill="#5c8f74" font-size="40">@PakCyberbot</text>
-    <text x="90" y="470" fill="#8a938e" font-size="30">Red Team · Bug Bounty · OSINT · CTF</text>
+    <text x="90" y="470" fill="#8a938e" font-size="30">Red Teaming · Bug Bounty · OSINT · CTF</text>
     <text x="90" y="520" fill="#565f5a" font-size="26">OSCP · eJPTv2 · GCP Security Engineer</text>
   </g>
   <image href="data:image/png;base64,${logo}" x="905" y="150" width="215" height="284" preserveAspectRatio="xMidYMid meet" opacity="0.9"/>

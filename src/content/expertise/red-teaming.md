@@ -19,5 +19,6 @@ clear, reproducible report as about the exploit itself.
 ## Proof & verification
 
 - [OSCP credential (OffSec)](https://credentials.offsec.com/7d159261-fceb-4503-8531-eeef31b68969)
-- [HackTheBox profile](https://app.hackthebox.com/profile/1098862)
+- [TryHackMe Profile](https://tryhackme.com/p/PakCyberbot)
+- [HackTheBox profile](https://app.hackthebox.com/public/users/1098862)
 - [How I earned the OSCP](https://youtu.be/8BnOxdsT7qY)
